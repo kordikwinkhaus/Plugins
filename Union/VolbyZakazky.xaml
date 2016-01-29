@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Union.VolbyZakazky"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             Background="{StaticResource {x:Static SystemColors.ControlLightLightBrushKey}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+
+    <GroupBox Header="Odvodnění rámů pro prvky otevíravé dovnitř">
+      <StackPanel>
+        <StackPanel.Resources>
+          <Style TargetType="RadioButton">
+            <Setter Property="Margin" Value="2"/>
+          </Style>
+        </StackPanel.Resources>
+
+        <RadioButton Name="rbOdvodneniDopredu" Content="dopředu" IsChecked="{Binding OdvodneniDopredu}" />
+        <RadioButton Name="rbOdvodneniDolu" Content="dolu" IsChecked="{Binding OdvodneniDolu}" />
+        <RadioButton Name="rbBezOdvodneni" Content="bez odvodnění" IsChecked="{Binding BezOdvodneni}" />
+      </StackPanel>
+    </GroupBox>
+
+    <GroupBox Header="Odvodnění rámů pro prvky otevíravé ven"
+              Grid.Row="1"
+              >
+      <StackPanel>
+        <StackPanel.Resources>
+          <Style TargetType="RadioButton">
+            <Setter Property="Margin" Value="2"/>
+          </Style>
+        </StackPanel.Resources>
+
+        <RadioButton Name="rbOdvodneniZasklList" Content="na straně zasklívacích lišt" IsChecked="{Binding OdvodneniZasklList}" />
+        <RadioButton Name="rbBezOdvodneniVen" Content="bez odvodnění" IsChecked="{Binding BezOdvodneniVen}" />
+      </StackPanel>
+    </GroupBox>
+  </Grid>
+</UserControl>
