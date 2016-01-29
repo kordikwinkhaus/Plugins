@@ -1,0 +1,11 @@
+*.sln
+*.sln.recipe
+*.suo
+*/bin
+*/bin/*
+*/obj
+*/obj/*
+*.vsmdi
+Thumbs.db
+packages/*
+Libs/*
