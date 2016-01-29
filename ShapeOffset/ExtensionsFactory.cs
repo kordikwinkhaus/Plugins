@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using ShapeOffset;
+using ShapeOffset.ViewModels;
 using UserExtensions;
 
 namespace UserExt
@@ -11,7 +12,8 @@ namespace UserExt
             switch (pg)
             {
                 case EPropPage.pDziura:
-                    return new ShapeOffsetPage();
+                    var vm = new CanvasViewModel();
+                    return new ShapeOffsetPage { DataContext = vm };
             }
 
             return null;
