@@ -24,6 +24,20 @@ namespace ShapeOffset.ViewModels
 
         public ObservableCollection<ItemViewModel> Items { get; set; } = new ObservableCollection<ItemViewModel>();
 
+        private ItemViewModel _selectedItem;
+        public ItemViewModel SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                if (_selectedItem != value)
+                {
+                    _selectedItem = value;
+                    OnPropertyChanged(nameof(SelectedItem));
+                }
+            }
+        }
+
         #region Drawing shape
 
         private Point _mousePosition;

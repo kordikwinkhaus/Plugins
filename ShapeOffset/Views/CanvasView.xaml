@@ -31,6 +31,7 @@
     <v:DrawingArea x:Name="canvas"
                    Grid.Row="1"
                    ItemsSource="{Binding Items}"
+                   SelectedItem="{Binding SelectedItem}"
                    MouseLeftButtonUp="DrawingCanvas_MouseLeftButtonUp" 
                    ItemContainerStyleSelector="{x:Static v:DrawingItemStyleSelector.Instance}"
                    MousePosition="{Binding MousePosition, Mode=OneWayToSource}"

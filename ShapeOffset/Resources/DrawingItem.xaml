@@ -22,16 +22,36 @@
     <Setter Property="ContentTemplate">
       <Setter.Value>
         <DataTemplate>
-          <Line X1="{Binding X1}" 
-                X2="{Binding X2}" 
-                Y1="{Binding Y1}"
-                Y2="{Binding Y2}"
-                Stroke="Blue"
-                StrokeThickness="2"
-                />
+          <Grid>
+            <Line X1="{Binding X1}" 
+                  X2="{Binding X2}" 
+                  Y1="{Binding Y1}"
+                  Y2="{Binding Y2}"
+                  Stroke="Transparent"
+                  StrokeThickness="10"
+                  />
+            <Line x:Name="line" 
+                  X1="{Binding X1}" 
+                  X2="{Binding X2}" 
+                  Y1="{Binding Y1}"
+                  Y2="{Binding Y2}"
+                  Stroke="Blue"
+                  StrokeThickness="2"
+                  StrokeStartLineCap="Round"
+                  StrokeEndLineCap="Round"
+                  Panel.ZIndex="0"
+                  />
+          </Grid>
+          <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+              <Setter TargetName="line" Property="Stroke" Value="Red"/>
+              <Setter Property="Panel.ZIndex" Value="100"/>
+            </DataTrigger>
+          </DataTemplate.Triggers>
         </DataTemplate>
       </Setter.Value>
     </Setter>
+    <Setter Property="Panel.ZIndex" Value="0"/>
   </Style>
     
 </ResourceDictionary>
