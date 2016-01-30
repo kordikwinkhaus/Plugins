@@ -62,7 +62,19 @@ namespace ShapeOffset.ViewModels
 
         private void CloseShape(object param)
         {
-            // TODO
+            if (ClosedShape) return;
+            if (_points.Count < 3) return;
+
+            this.Items.Remove(_lastLine);
+            _lastLine = null;
+            this.Items.Remove(_closeLine);
+            _closeLine = null;
+
+            var firstPoint = _points.First();
+            var lastPoint = _points.Last();
+            var line = new LineViewModel(lastPoint.X, lastPoint.Y, firstPoint.X, firstPoint.Y);
+            this.Items.Add(line);
+            this.ClosedShape = true;
         }
 
         internal bool NotifyMouseClick(Point currentPoint)

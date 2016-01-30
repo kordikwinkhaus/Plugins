@@ -45,5 +45,17 @@ namespace ShapeOffset.Tests.ViewModels
             Assert.IsTrue(target.ClosedShape);
             Assert.AreEqual(3, target.Items.Count);
         }
+
+        [TestMethod]
+        public void CloseShapeCommand_Test()
+        {
+            var target = GetTarget();
+            target.NotifyMouseClick(new Point(0, 0));
+            target.NotifyMouseClick(new Point(0, 100));
+
+            target.CloseShapeCommand.Execute(null);
+
+            Assert.IsFalse(target.ClosedShape);
+        }
     }
 }
