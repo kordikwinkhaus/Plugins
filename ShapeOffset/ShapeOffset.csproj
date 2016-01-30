@@ -69,12 +69,16 @@
     </Compile>
     <Compile Include="ViewModels\CanvasViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\LineViewModel.cs" />
     <Compile Include="ViewModels\PointViewModel.cs" />
+    <Compile Include="ViewModels\Snap.cs" />
     <Compile Include="Views\CanvasView.xaml.cs">
       <DependentUpon>CanvasView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConstructionPoint.cs" />
+    <Compile Include="Views\DrawingItem.cs" />
+    <Compile Include="Views\DrawingArea.cs" />
     <Compile Include="Views\DrawingCanvas.cs" />
+    <Compile Include="Views\DrawingItemStyleSelector.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -86,7 +90,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Resources\ConstructionPoint.xaml">
+    <Page Include="Resources\DrawingItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

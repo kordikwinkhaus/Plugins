@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace ShapeOffset.Views
 {
-    public class ConstructionPoint : ContentPresenter
+    public class DrawingItem : ContentPresenter
     {
     }
 }

@@ -34,7 +34,7 @@ namespace ShapeOffset.Views
             var position = Mouse.GetPosition(canvas);
             if (_viewmodel != null)
             {
-                _viewmodel.AddPoint((int)position.X, (int)position.Y);
+                e.Handled = _viewmodel.NotifyMouseClick(position);
             }
         }
     }

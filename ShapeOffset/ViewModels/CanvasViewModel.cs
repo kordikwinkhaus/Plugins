@@ -3,40 +3,114 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
+using System.Windows.Input;
+using Okna.Plugins;
 using Okna.Plugins.ViewModels;
 
 namespace ShapeOffset.ViewModels
 {
     public class CanvasViewModel : ViewModelBase
     {
-        const int GRID_SIZE = 50;
-        const int MIDDLE = GRID_SIZE / 2;
+        LineViewModel _lastLine;
+        LineViewModel _closeLine;
+        List<Point> _points = new List<Point>();
 
         public CanvasViewModel()
         {
-            this.AddPoint(10, 50);
-            this.AddPoint(100, 20);
+            this.CloseShapeCommand = new RelayCommand(CloseShape);
         }
 
         public ObservableCollection<ItemViewModel> Items { get; set; } = new ObservableCollection<ItemViewModel>();
 
-        internal void AddPoint(int x, int y)
+        private Point _mousePosition;
+        public Point MousePosition
         {
-            this.Items.Add(new PointViewModel(Snap(x), Snap(y)));
+            get { return _mousePosition; }
+            set
+            {
+                _mousePosition = value;
+
+                if (_lastLine != null)
+                {
+                    _lastLine.X2 = _mousePosition.X;
+                    _lastLine.Y2 = _mousePosition.Y;
+                }
+                if (_closeLine != null)
+                {
+                    _closeLine.X1 = _mousePosition.X;
+                    _closeLine.Y1 = _mousePosition.Y;
+                }
+            }
         }
 
-        private int Snap(int coord)
+        private bool _closedShape;
+        public bool ClosedShape
         {
-            int snap = coord % GRID_SIZE;
+            get { return _closedShape; }
+            set
+            {
+                if (_closedShape != value)
+                {
+                    _closedShape = value;
+                    OnPropertyChanged(nameof(ClosedShape));
+                }
+            }
+        }
 
-            if (snap <= MIDDLE)
+        public ICommand CloseShapeCommand { get; private set; }
+
+        private void CloseShape(object param)
+        {
+            // TODO
+        }
+
+        internal bool NotifyMouseClick(Point currentPoint)
+        {
+            if (ClosedShape) return false;
+
+            currentPoint = Snap.ToGrid(currentPoint);
+
+            if (_points.Count != 0)
             {
-                return coord - snap;
+                // check if new point has same coordinations as last point
+                var lastPoint = _points.Last();
+                if (DoubleUtils.Equals(lastPoint, currentPoint)) return true;
+
+                // check if new point has same coordinations as first pont
+                var firstPoint = _points[0];
+                if (DoubleUtils.Equals(firstPoint, currentPoint))
+                {
+                    CloseShape();
+                    return true;
+                }
             }
-            else
+
+            _points.Add(currentPoint);
+            _lastLine = new LineViewModel(currentPoint.X, currentPoint.Y, _mousePosition.X, _mousePosition.Y);
+            this.Items.Add(_lastLine);
+
+            if (_closeLine == null && this.Items.Count == 2)
             {
-                return coord + GRID_SIZE - snap;
+                var firstPoint = _points[0];
+                _closeLine = new LineViewModel(_mousePosition.X, _mousePosition.Y, firstPoint.X, firstPoint.Y);
+                this.Items.Add(_closeLine);
             }
+            
+            return true;
+        }
+
+        private void CloseShape()
+        {
+            var firstPoint = _points[0];
+
+            _lastLine.X2 = firstPoint.X;
+            _lastLine.Y2 = firstPoint.Y;
+            this.Items.Remove(_closeLine);
+            _closeLine = null;
+            _lastLine = null;
+
+            ClosedShape = true;
         }
     }
 }

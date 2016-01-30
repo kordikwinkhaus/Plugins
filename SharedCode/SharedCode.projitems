@@ -9,6 +9,8 @@
     <Import_RootNamespace>Okna.Plugins</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)DoubleUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WpfExtensions.cs" />
   </ItemGroup>

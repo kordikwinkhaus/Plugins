@@ -17,7 +17,7 @@
                 if (_X != value)
                 {
                     _X = value;
-                    OnPropertyChanged("X");
+                    OnPropertyChanged(nameof(X));
                 }
             }
         }
@@ -31,7 +31,7 @@
                 if (_Y != value)
                 {
                     _Y = value;
-                    OnPropertyChanged("Y");
+                    OnPropertyChanged(nameof(Y));
                 }
             }
         }
