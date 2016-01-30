@@ -18,7 +18,17 @@
   </UserControl.Resources>
   
   <Grid x:Name="grid">
-    <v:DrawingArea x:Name="canvas" 
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <StackPanel Orientation="Horizontal">
+      <Button Command="{Binding ClearShapeCommand}">Clear &amp; start new</Button>
+    </StackPanel>
+    
+    <v:DrawingArea x:Name="canvas"
+                   Grid.Row="1"
                    ItemsSource="{Binding Items}"
                    MouseLeftButtonUp="DrawingCanvas_MouseLeftButtonUp" 
                    ItemContainerStyleSelector="{x:Static v:DrawingItemStyleSelector.Instance}"

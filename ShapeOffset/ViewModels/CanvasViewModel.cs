@@ -19,9 +19,12 @@ namespace ShapeOffset.ViewModels
         public CanvasViewModel()
         {
             this.CloseShapeCommand = new RelayCommand(CloseShape);
+            this.ClearShapeCommand = new RelayCommand(ClearShape);
         }
 
         public ObservableCollection<ItemViewModel> Items { get; set; } = new ObservableCollection<ItemViewModel>();
+
+        #region Drawing shape
 
         private Point _mousePosition;
         public Point MousePosition
@@ -65,16 +68,7 @@ namespace ShapeOffset.ViewModels
             if (ClosedShape) return;
             if (_points.Count < 3) return;
 
-            this.Items.Remove(_lastLine);
-            _lastLine = null;
-            this.Items.Remove(_closeLine);
-            _closeLine = null;
-
-            var firstPoint = _points.First();
-            var lastPoint = _points.Last();
-            var line = new LineViewModel(lastPoint.X, lastPoint.Y, firstPoint.X, firstPoint.Y);
-            this.Items.Add(line);
-            this.ClosedShape = true;
+            CloseShape();
         }
 
         internal bool NotifyMouseClick(Point currentPoint)
@@ -124,5 +118,18 @@ namespace ShapeOffset.ViewModels
 
             ClosedShape = true;
         }
+
+        public ICommand ClearShapeCommand { get; private set; }
+
+        private void ClearShape(object param)
+        {
+            this.Items.Clear();
+            _points.Clear();
+            _lastLine = null;
+            _closeLine = null;
+            ClosedShape = false;
+        }
+
+        #endregion
     }
 }
