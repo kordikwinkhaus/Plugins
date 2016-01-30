@@ -83,6 +83,7 @@
     <Compile Include="Views\DrawingArea.cs" />
     <Compile Include="Views\DrawingCanvas.cs" />
     <Compile Include="Views\DrawingItemStyleSelector.cs" />
+    <Compile Include="Views\SnapGrid.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

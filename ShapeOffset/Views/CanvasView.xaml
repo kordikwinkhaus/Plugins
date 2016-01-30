@@ -26,7 +26,8 @@
     <StackPanel Orientation="Horizontal">
       <Button Command="{Binding ClearShapeCommand}">Clear &amp; start new</Button>
     </StackPanel>
-    
+
+    <v:SnapGrid Grid.Row="1"/>
     <v:DrawingArea x:Name="canvas"
                    Grid.Row="1"
                    ItemsSource="{Binding Items}"
@@ -40,6 +41,7 @@
         </i:EventTrigger>
       </i:Interaction.Triggers>
     </v:DrawingArea>
+    
 
     
   </Grid>
