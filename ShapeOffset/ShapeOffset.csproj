@@ -76,6 +76,7 @@
     <Compile Include="ViewModels\LineViewModel.cs" />
     <Compile Include="ViewModels\PointViewModel.cs" />
     <Compile Include="ViewModels\Snap.cs" />
+    <Compile Include="Views\Arc.cs" />
     <Compile Include="Views\CanvasView.xaml.cs">
       <DependentUpon>CanvasView.xaml</DependentUpon>
     </Compile>
