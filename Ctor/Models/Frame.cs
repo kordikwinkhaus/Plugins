@@ -7,9 +7,9 @@ namespace Ctor.Models
 {
     public class Frame
     {
-        private readonly IFrameBase _frame;
+        private readonly IFrame _frame;
 
-        internal Frame(IFrameBase frame)
+        internal Frame(IFrame frame)
         {
             if (frame == null) throw new ArgumentNullException(nameof(frame));
 
@@ -26,9 +26,9 @@ namespace Ctor.Models
 
         public IEnumerable<Sash> GetSashes()
         {
-            foreach (IFrameBase frame in _frame.FindParts(EProfileType.tSkrz, false))
+            foreach (ISash sash in _frame.FindParts(EProfileType.tSkrz, false))
             {
-                yield return new Sash(frame);
+                yield return new Sash(sash);
             }
         }
 

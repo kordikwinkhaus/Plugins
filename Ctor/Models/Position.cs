@@ -74,7 +74,7 @@ namespace Ctor.Models
 
         public Frame GetFrame(int id)
         {
-            foreach (IFrameBase frame in _position.Data.FindParts(EProfileType.tOsciez, false))
+            foreach (IFrame frame in _position.Data.FindParts(EProfileType.tOsciez, false))
             {
                 int number = frame.GetNumber(EProfileType.tOsciez);
                 if (id == number)
@@ -88,7 +88,7 @@ namespace Ctor.Models
 
         public IEnumerable<Frame> GetFrames()
         {
-            foreach (IFrameBase frame in _position.Data.FindParts(EProfileType.tOsciez, false))
+            foreach (IFrame frame in _position.Data.FindParts(EProfileType.tOsciez, false))
             {
                 yield return new Frame(frame);
             }

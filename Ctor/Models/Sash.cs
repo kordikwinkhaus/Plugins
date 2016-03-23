@@ -7,9 +7,9 @@ namespace Ctor.Models
 {
     public class Sash
     {
-        private readonly IFrameBase _sash;
+        private readonly ISash _sash;
 
-        internal Sash(IFrameBase sash)
+        internal Sash(ISash sash)
         {
             if (sash == null) throw new ArgumentNullException(nameof(sash));
 
