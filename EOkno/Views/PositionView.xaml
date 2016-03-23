@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:v="clr-namespace:EOkno.Views"
-             xmlns:shared="clr-namespace:Okna.Plugins"
-             Background="{StaticResource {x:Static SystemColors.ControlLightLightBrushKey}}"
+             Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             DataContextChanged="UserControl_DataContextChanged"
+             >
   <UserControl.Resources>
-    <shared:BoolNegateConverter x:Key="BoolNegateConverter"/>
+    <v:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter"/>
   </UserControl.Resources>
   
   <Grid>
@@ -18,14 +19,14 @@
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
 
-    <CheckBox x:Name="chkInheritDoc" 
-              Margin="6"
+    <CheckBox Margin="6"
+              IsChecked="{Binding InheritFromDocument}"
               >
       Podle nastavení dokumentu
     </CheckBox>
 
     <v:ColorsAndComponentsView Grid.Row="1"
-                               IsEnabled="{Binding IsChecked, ElementName=chkInheritDoc, Converter={StaticResource BoolNegateConverter}}"
+                               Visibility="{Binding InheritFromDocument, Converter={StaticResource NegateBoolToVisibilityConverter}}"
                                />
   </Grid>
 </UserControl>

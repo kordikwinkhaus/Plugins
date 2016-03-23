@@ -21,7 +21,9 @@
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
     
-    <GroupBox Header="Povrchová úprava">
+    <GroupBox Header="Povrchová úprava"
+              Margin="3"
+              >
       <StackPanel Margin="4">
         <Label>Typ povrchové úpravy</Label>
         <ComboBox ItemsSource="{Binding PovrchoveUpravy}"
@@ -46,7 +48,10 @@
       </StackPanel>
     </GroupBox>
 
-    <GroupBox Header="Požaduji tyto komponenty:" Grid.Row="1">
+    <GroupBox Header="Požaduji tyto komponenty:" 
+              Grid.Row="1"
+              Margin="3"
+              >
       <ItemsControl Margin="0,6,0,0"
                     ItemsSource="{Binding Komponenty}"
                     >

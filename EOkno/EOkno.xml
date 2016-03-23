@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <config>
   <povrchoveUpravy>
-    <povrchovaUprava kod="A" nazev="bez povrchové úpravy">
-    </povrchovaUprava>
+    <povrchovaUprava kod="A" nazev="bez povrchové úpravy"/>
     <povrchovaUprava kod="B" nazev="olej">
       <odstin kod="K">Kaštan</odstin>
       <odstin kod="T">Teak</odstin>

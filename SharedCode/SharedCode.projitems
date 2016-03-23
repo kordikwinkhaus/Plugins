@@ -15,5 +15,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WpfExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XmlExtensions.cs" />
   </ItemGroup>
 </Project>

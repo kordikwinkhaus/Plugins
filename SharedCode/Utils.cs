@@ -1,5 +1,6 @@
 ﻿using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace Okna.Plugins
 {
@@ -37,6 +38,12 @@ namespace Okna.Plugins
             }
 
             return sqlConnBuilder.ToString();
+        }
+
+        public static string GetPluginDirectory<T>()
+        {
+            string filename = typeof(T).Assembly.CodeBase.Replace("file:///", "");
+            return new FileInfo(filename).DirectoryName;
         }
     }
 }

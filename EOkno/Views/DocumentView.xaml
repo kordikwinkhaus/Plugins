@@ -6,6 +6,7 @@
              xmlns:v="clr-namespace:EOkno.Views"
              Background="{StaticResource {x:Static SystemColors.ControlLightLightBrushKey}}"
              mc:Ignorable="d" 
+             DataContextChanged="UserControl_DataContextChanged"
              d:DesignHeight="300" d:DesignWidth="300">
   <v:ColorsAndComponentsView/>
 </UserControl>
