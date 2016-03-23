@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<config>
+  <povrchoveUpravy>
+    <povrchovaUprava kod="A" nazev="bez povrchové úpravy">
+    </povrchovaUprava>
+    <povrchovaUprava kod="B" nazev="olej">
+      <odstin kod="K">Kaštan</odstin>
+      <odstin kod="T">Teak</odstin>
+      <odstin kod="D">Dub</odstin>
+      <odstin kod="B">Buk</odstin>
+    </povrchovaUprava>
+    <povrchovaUprava kod="C" nazev="lazura">
+      <odstin kod="KL">Kaštan lazura</odstin>
+      <odstin kod="TL">Teak lazura</odstin>
+      <odstin kod="DL">Dub lazura</odstin>
+      <odstin kod="BL">Buk lazura</odstin>
+    </povrchovaUprava>
+  </povrchoveUpravy>
+  <komponenty>
+    <komponenta material="1">Profily</komponenta>
+    <komponenta material="2">Kování</komponenta>
+    <komponenta material="3">Vrchní PÚ</komponenta>
+    <komponenta material="4">Impregnace</komponenta>
+    <komponenta material="5">Silikonový tmel</komponenta>
+    <komponenta prace="23">Pokosy a drážky</komponenta>
+    <komponenta material="6">Sklo</komponenta>
+  </komponenty>
+</config>

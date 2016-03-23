@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="EOkno.Views.ColorsAndComponentsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:EOkno.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="300">
+  <UserControl.Resources>
+    <Style TargetType="{x:Type RadioButton}">
+      <Setter Property="Margin" Value="5,5,10,5"/>
+    </Style>
+    <Style TargetType="{x:Type CheckBox}">
+      <Setter Property="Margin" Value="3"/>
+    </Style>
+  </UserControl.Resources>
+  
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    
+    <GroupBox Header="Povrchová úprava">
+      <StackPanel Margin="4">
+        <Label>Typ povrchové úpravy</Label>
+        <ComboBox ItemsSource="{Binding PovrchoveUpravy}"
+                  SelectedItem="{Binding VybranaPU}"
+                  DisplayMemberPath="Nazev"
+                  />
+
+        <StackPanel DataContext="{Binding VybranaPU}"
+                    IsEnabled="{Binding MaOdstiny}">
+          <Label>Odstín exterier</Label>
+          <ComboBox ItemsSource="{Binding Odstiny}"
+                    SelectedItem="{Binding VnejsiOdstin}"
+                    DisplayMemberPath="Nazev"
+                    />
+
+          <Label>Odstín interier</Label>
+          <ComboBox ItemsSource="{Binding Odstiny}"
+                    SelectedItem="{Binding VnitrniOdstin}"
+                    DisplayMemberPath="Nazev"
+                    />
+        </StackPanel>
+      </StackPanel>
+    </GroupBox>
+
+    <GroupBox Header="Požaduji tyto komponenty:" Grid.Row="1">
+      <ItemsControl Margin="0,6,0,0"
+                    ItemsSource="{Binding Komponenty}"
+                    >
+        <ItemsControl.Resources>
+          <DataTemplate DataType="{x:Type vm:KomponentaViewModel}">
+            <CheckBox Content="{Binding Nazev}"
+                      IsChecked="{Binding Vybrano}"
+                      />
+          </DataTemplate>
+        </ItemsControl.Resources>
+      </ItemsControl>
+    </GroupBox>
+  </Grid>
+</UserControl>

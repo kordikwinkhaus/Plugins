@@ -9,6 +9,7 @@
     <Import_RootNamespace>Okna.Plugins</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BoolNegateConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DoubleUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
