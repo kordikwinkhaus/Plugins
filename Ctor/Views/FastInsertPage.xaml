@@ -4,9 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ctor.Views"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-    <Button Command="{Binding RunCommand}">RUN</Button>
-    </Grid>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    
+    <Button Command="{Binding RunCommand}"
+            CommandParameter="{Binding Text, ElementName=txtCode}"
+            >RUN</Button>
+
+    <TextBox x:Name="txtCode" 
+             FontFamily="Consolas" 
+             FontSize="13.333" 
+             Grid.Row="1"
+             AcceptsReturn="True"
+             AcceptsTab="True"
+             Height="250"
+             VerticalAlignment="Top"
+             >
+      <sys:String xml:space="preserve">pos.InsertFrames(109, 253)
+frame = pos.GetFrame(1)
+#frame.InsertSashes()
+frame.InsertGlasspackets("PLU4/12/P4/12/PLU4")
+      </sys:String>
+    </TextBox>
+  </Grid>
 </UserControl>

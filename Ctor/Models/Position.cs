@@ -16,6 +16,26 @@ namespace Ctor.Models
             _position = position;
         }
 
+        public void Msg(object o)
+        {
+            string msg = o?.ToString() ?? "NULL";
+            System.Windows.MessageBox.Show(msg);
+        }
+
+        public void Areas(int type, int color)
+        {
+            var parameters = Parameters.ForFrameType(type, color);
+            // TODO: area lze dostat přes Rectangle
+            foreach (var a in _position.Data.Areas)
+            {
+                if (a.Rectangle.X > 400 & a.Rectangle.Y > 400)
+                {
+                    a.AddChild(EProfileType.tOsciez, parameters);
+
+                }
+            }
+        }
+
         public void Clear()
         {
             ITopObject top = _position.Data;
