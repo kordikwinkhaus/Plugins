@@ -36,6 +36,7 @@ namespace Ctor.ViewModels
             string code = (string)param;
 
             _engine.Variables.SetVariable("pos", new Position(this.Document.ActivePos));
+            _engine.Variables.SetVariable("ctx", new Context(this));
 
             try
             {

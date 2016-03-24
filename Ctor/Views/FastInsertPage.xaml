@@ -27,9 +27,8 @@
              VerticalAlignment="Top"
              >
       <sys:String xml:space="preserve">if pos.IsConstruction:
-  pos.InsertFrames(109, 253)
-  frame = pos.GetFrame(1)
-  #frame.InsertSashes()
+  frame = pos.InsertFrame(ctx.Type, ctx.Color)
+  frame.InsertSashes()
   frame.InsertGlasspackets("PLU4/12/P4/12/PLU4")</sys:String>
     </TextBox>
   </Grid>

@@ -65,6 +65,7 @@
     <Compile Include="Models\CompilationException.cs" />
     <Compile Include="Models\Frame.cs" />
     <Compile Include="Models\IAreaExtensions.cs" />
+    <Compile Include="Models\IContext.cs" />
     <Compile Include="Models\ModelException.cs" />
     <Compile Include="Models\Parameters.cs" />
     <Compile Include="Models\Position.cs" />
@@ -83,6 +84,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\Context.cs" />
     <Compile Include="ViewModels\FastInsertViewModel.cs" />
     <Compile Include="Views\FastInsertPage.xaml.cs">
       <DependentUpon>FastInsertPage.xaml</DependentUpon>
