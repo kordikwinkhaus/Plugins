@@ -64,6 +64,8 @@
     <Compile Include="Models\Commands.cs" />
     <Compile Include="Models\CompilationException.cs" />
     <Compile Include="Models\Frame.cs" />
+    <Compile Include="Models\IAreaExtensions.cs" />
+    <Compile Include="Models\ModelException.cs" />
     <Compile Include="Models\Parameters.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\PythonScriptEngine.cs" />
