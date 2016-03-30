@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Ctor.Models;
 using Microsoft.Scripting;
+using Okna.Data;
 using Okna.Documents;
 using Okna.Plugins.ViewModels;
 using WHOkna;
@@ -16,11 +13,16 @@ namespace Ctor.ViewModels
         private readonly string _connection;
         private readonly string _lang;
         private readonly PythonScriptEngine _engine;
+        private readonly IRepository _repository;
 
         public FastInsertViewModel(string connection, string lang)
         {
             _connection = connection;
             _lang = lang;
+
+            var sqlConn = new SqlConnectionWrapper(Utils.ModifyConnString(connection));
+            sqlConn.TrySetLang();
+            _repository = new Repository(sqlConn);
 
             _engine = new PythonScriptEngine();
 
@@ -35,8 +37,10 @@ namespace Ctor.ViewModels
         {
             string code = (string)param;
 
+            _engine.InitVariablesScope();
             _engine.Variables.SetVariable("pos", new Position(this.Document.ActivePos));
             _engine.Variables.SetVariable("ctx", new Context(this));
+            _engine.Variables.SetVariable("msg", new Msg());
 
             try
             {
@@ -58,13 +62,6 @@ namespace Ctor.ViewModels
                     System.Windows.MessageBox.Show(inner.Message);
                 }
             }
-
-            //var pos = new Position(this.Document.ActivePos);
-            ////pos.Clear();
-            //pos.InsertFrames(109, 253);
-            //var frame = pos.GetFrame(1);
-            ////frame.InsertSashes();
-            //frame.InsertGlasspackets("PLU4/12/P4/12/PLU4");
         }
 
         private IDocumentsDialogFactory _dialogFactory;
@@ -77,8 +74,8 @@ namespace Ctor.ViewModels
                     var oknaApp = this.Document?.Application;
                     if (oknaApp != null)
                     {
-                        _dialogFactory = new DocumentsDialogFactory();
-                        _dialogFactory.Init(oknaApp, _connection);
+                        //_dialogFactory = DocumentsDialogFactory.Instance;
+                        //_dialogFactory.Init(oknaApp, _connection);
                     }
                 }
                 return _dialogFactory;

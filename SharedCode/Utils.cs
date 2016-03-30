@@ -16,16 +16,16 @@ namespace Okna.Plugins
             {
                 sqlConnBuilder.ApplicationName = tokenValue.ToString();
             }
-            
+
             object val;
-            oleConnBuilder.TryGetValue ("Server", out val);
+            oleConnBuilder.TryGetValue("Server", out val);
             if (val != null) sqlConnBuilder.Add("Server", val.ToString());
 
             oleConnBuilder.TryGetValue("Database", out val);
             if (val != null) sqlConnBuilder.Add("Database", val.ToString());
             if (oleConnBuilder.TryGetValue("Trusted_Connection", out tokenValue))
             {
-                sqlConnBuilder.IntegratedSecurity = (string.Compare(tokenValue.ToString(), "yes", System.StringComparison.OrdinalIgnoreCase) == 0);
+                sqlConnBuilder.IntegratedSecurity = (string.Compare(tokenValue.ToString(), "yes", true) == 0);
             }
             if (!sqlConnBuilder.IntegratedSecurity)
             {
@@ -34,7 +34,11 @@ namespace Okna.Plugins
             }
             if (oleConnBuilder.TryGetValue("MARS Connection", out tokenValue))
             {
-                sqlConnBuilder.MultipleActiveResultSets = (string.Compare(tokenValue.ToString(), "true", System.StringComparison.OrdinalIgnoreCase) == 0);
+                sqlConnBuilder.MultipleActiveResultSets = (string.Compare(tokenValue.ToString(), "true", true) == 0);
+            }
+            if (oleConnBuilder.TryGetValue("Language", out tokenValue))
+            {
+                sqlConnBuilder.CurrentLanguage = tokenValue.ToString();
             }
 
             return sqlConnBuilder.ToString();

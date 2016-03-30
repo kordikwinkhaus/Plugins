@@ -10,23 +10,34 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
+
+    <StackPanel>
+      <Label>Type</Label>
+      <ComboBox />
+      <Label>Color</Label>
+      <ComboBox/>
+    </StackPanel>
     
     <Button Command="{Binding RunCommand}"
             CommandParameter="{Binding Text, ElementName=txtCode}"
+            Grid.Row="1"
             >RUN</Button>
 
     <TextBox x:Name="txtCode" 
              FontFamily="Consolas" 
              FontSize="13.333" 
-             Grid.Row="1"
+             Grid.Row="2"
              AcceptsReturn="True"
              AcceptsTab="True"
              Height="250"
              VerticalAlignment="Top"
              >
       <sys:String xml:space="preserve">if pos.IsConstruction:
+  if pos.Width &lt; 400: msg.fail("okno je příliš úzké.")
+  if pos.height &lt; 500: msg.fail("okno je příliš nízké.")
   frame = pos.InsertFrame(ctx.Type, ctx.Color)
   frame.InsertSashes()
   frame.InsertGlasspackets("PLU4/12/P4/12/PLU4")</sys:String>

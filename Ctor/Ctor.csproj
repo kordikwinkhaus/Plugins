@@ -37,6 +37,9 @@
       <HintPath>C:\Program Files (x86)\IronPython 2.7\Platforms\Net40\IronPython.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1" />
+    <Reference Include="Okna.Data">
+      <HintPath>..\Libs\Okna.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Okna.Documents">
       <HintPath>..\Libs\Okna.Documents.dll</HintPath>
     </Reference>
@@ -66,10 +69,13 @@
     <Compile Include="Models\Frame.cs" />
     <Compile Include="Models\IAreaExtensions.cs" />
     <Compile Include="Models\IContext.cs" />
+    <Compile Include="Models\IRepository.cs" />
+    <Compile Include="Models\Msg.cs" />
     <Compile Include="Models\ModelException.cs" />
     <Compile Include="Models\Parameters.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\PythonScriptEngine.cs" />
+    <Compile Include="Models\Repository.cs" />
     <Compile Include="Models\Sash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

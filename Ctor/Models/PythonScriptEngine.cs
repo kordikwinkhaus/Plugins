@@ -10,12 +10,16 @@ namespace Ctor.Models
     {
         private readonly ScriptEngine _engine;
         private readonly ScriptRuntime _runtime;
-        private readonly ScriptScope _scope;
+        private ScriptScope _scope;
 
         internal PythonScriptEngine()
         {
             _engine = IronPython.Hosting.Python.CreateEngine();
             _runtime = _engine.Runtime;
+        }
+
+        internal void InitVariablesScope()
+        {
             _scope = _engine.CreateScope();
             _scope.SetVariable("__name__", "__main__");
         }
@@ -54,6 +58,10 @@ namespace Ctor.Models
             try
             {
                 code.Execute(_scope);
+                return true;
+            }
+            catch (IronPython.Runtime.Exceptions.SystemExitException)
+            {
                 return true;
             }
             catch (Exception e)
