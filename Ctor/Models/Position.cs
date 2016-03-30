@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ctor.Resources;
 using WHOkna;
 
 namespace Ctor.Models
@@ -270,7 +271,7 @@ namespace Ctor.Models
 
         private void CheckTopObject()
         {
-            if (_position.Data == null) throw new ModelException("This position doesn't have top object.");
+            if (_position.Data == null) throw new ModelException(Strings.NoTopObject);
         }
 
         public void Msg(object o)

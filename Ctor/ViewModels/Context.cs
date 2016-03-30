@@ -1,4 +1,5 @@
 ﻿using Ctor.Models;
+using Ctor.Resources;
 
 namespace Ctor.ViewModels
 {
@@ -18,7 +19,7 @@ namespace Ctor.ViewModels
                 int id = _parent.WindowTypeID;
                 if (id == 0)
                 {
-                    throw new ModelException("Vyberte nejdříve typ okna.");
+                    throw new ModelException(Strings.SelectWindowTypeFirst);
                 }
                 return id;
             }

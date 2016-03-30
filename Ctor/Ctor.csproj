@@ -73,13 +73,13 @@
     <Compile Include="Models\Frame.cs" />
     <Compile Include="Models\IAreaExtensions.cs" />
     <Compile Include="Models\IContext.cs" />
-    <Compile Include="Models\IRepository.cs" />
+    <Compile Include="Models\IDatabase.cs" />
     <Compile Include="Models\Msg.cs" />
     <Compile Include="Models\ModelException.cs" />
     <Compile Include="Models\Parameters.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\PythonScriptEngine.cs" />
-    <Compile Include="Models\Repository.cs" />
+    <Compile Include="Models\Database.cs" />
     <Compile Include="Models\Sash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -94,6 +94,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Resources\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Context.cs" />
     <Compile Include="ViewModels\ContextViewModel.cs" />
     <Compile Include="ViewModels\FastInsertViewModel.cs" />
@@ -106,6 +111,10 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

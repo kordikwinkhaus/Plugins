@@ -13,7 +13,7 @@ namespace Ctor.ViewModels
         private readonly string _connection;
         private readonly string _lang;
         private readonly PythonScriptEngine _engine;
-        private readonly IRepository _repository;
+        private readonly IDatabase _repository;
 
         public FastInsertViewModel(string connection, string lang)
         {
@@ -22,7 +22,7 @@ namespace Ctor.ViewModels
 
             var sqlConn = new SqlConnectionWrapper(Okna.Data.Utils.ModifyConnString(connection));
             sqlConn.TrySetLang();
-            _repository = new Repository(sqlConn);
+            _repository = new Database(sqlConn);
 
             _engine = new PythonScriptEngine();
 

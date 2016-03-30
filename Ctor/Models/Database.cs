@@ -7,11 +7,11 @@ using Okna.Data;
 
 namespace Ctor.Models
 {
-    public class Repository : IRepository
+    public class Database : IDatabase
     {
         private ISqlConnectionWrapper _conn;
 
-        internal Repository(ISqlConnectionWrapper conn)
+        internal Database(ISqlConnectionWrapper conn)
         {
             _conn = conn;
         }

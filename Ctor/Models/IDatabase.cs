@@ -1,6 +1,6 @@
 ﻿namespace Ctor.Models
 {
-    public interface IRepository
+    public interface IDatabase
     {
     }
 }
