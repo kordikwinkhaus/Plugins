@@ -5,11 +5,11 @@
         /// <summary>
         /// ID typu okna.
         /// </summary>
-        int Type { get; }
+        int WindowsType { get; }
 
         /// <summary>
         /// ID barvy typu.
         /// </summary>
-        int Color { get; }
+        int WindowsColor { get; }
     }
 }

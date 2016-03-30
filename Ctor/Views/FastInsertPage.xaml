@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Ctor.Views"
+             xmlns:v="clr-namespace:Ctor.Views"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -14,16 +14,27 @@
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
 
-    <StackPanel>
-      <Label>Type</Label>
-      <ComboBox />
-      <Label>Color</Label>
-      <ComboBox/>
+    <StackPanel DataContext="{Binding Context}">
+      <StackPanel.Resources>
+        <Style TargetType="{x:Type v:SelectItemControl}">
+          <Setter Property="Margin" Value="4"/>
+        </Style>
+      </StackPanel.Resources>
+      
+      <v:SelectItemControl HintText="Vyberte typ okna"
+                           DisplayText="{Binding WindowTypeName}"
+                           SelectValueCommand="{Binding SelectWindowTypeCommand}"
+                           />
+      <v:SelectItemControl HintText="Vyberte barvu okna"
+                           DisplayText="{Binding WindowColorName}"
+                           SelectValueCommand="{Binding SelectWindowColorCommand}"
+                           />
     </StackPanel>
     
     <Button Command="{Binding RunCommand}"
             CommandParameter="{Binding Text, ElementName=txtCode}"
             Grid.Row="1"
+            Margin="4,20,4,4"
             >RUN</Button>
 
     <TextBox x:Name="txtCode" 
@@ -36,11 +47,18 @@
              VerticalAlignment="Top"
              >
       <sys:String xml:space="preserve">if pos.IsConstruction:
-  if pos.Width &lt; 400: msg.fail("okno je příliš úzké.")
-  if pos.height &lt; 500: msg.fail("okno je příliš nízké.")
-  frame = pos.InsertFrame(ctx.Type, ctx.Color)
-  frame.InsertSashes()
-  frame.InsertGlasspackets("PLU4/12/P4/12/PLU4")</sys:String>
+  if pos.Width &lt; 400: 
+    msg.fail("Okno je příliš úzké.")
+  if pos.Height &lt; 500:
+    msg.fail("Okno je příliš nízké.")
+
+  winType = ctx.WindowsType
+  winColor = ctx.WindowsColor
+
+  frame = pos.InsertFrame(winType, winColor)
+  if frame != None:
+    frame.InsertSashes()
+    frame.InsertGlasspackets("PLU4/12/P4/12/PLU4")</sys:String>
     </TextBox>
   </Grid>
 </UserControl>

@@ -64,6 +64,11 @@ namespace Ctor.Models
             {
                 return true;
             }
+            catch (ModelException mex)
+            {
+                this.ErrorMessage = mex.Message;
+                return false;
+            }
             catch (Exception e)
             {
                 ExceptionOperations eo = _engine.GetService<ExceptionOperations>();

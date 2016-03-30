@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="Ctor.Views.SelectItemControl"
+             x:Name="SelectItemCtrl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="300">
+  <Grid Background="Transparent">
+    <i:Interaction.Triggers>
+      <i:EventTrigger EventName="MouseLeftButtonUp">
+        <i:InvokeCommandAction Command="{Binding SelectValueCommand, ElementName=SelectItemCtrl}"/>
+      </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+
+    <TextBox x:Name="txt" 
+             Text="{Binding DisplayText, ElementName=SelectItemCtrl}" 
+             VerticalContentAlignment="Center"
+             IsReadOnly="True"
+             IsTabStop="False"
+             IsHitTestVisible="False"
+             />
+
+    <TextBlock Foreground="DarkGray"
+               VerticalAlignment="Center"
+               Margin="5,0"
+               IsHitTestVisible="False"
+               Text="{Binding HintText, ElementName=SelectItemCtrl}"
+               >
+      <TextBlock.Style>
+        <Style TargetType="{x:Type TextBlock}">
+          <Setter Property="Visibility" Value="Collapsed"/>
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding Text, ElementName=txt}" Value="">
+              <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Text, ElementName=txt}" Value="{x:Null}">
+              <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </TextBlock.Style>
+    </TextBlock>
+    <!--
+    <Button Grid.Column="1" 
+            Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+            Content="✕"
+            Visibility="Collapsed"
+            />
+    -->
+
+    <Button Grid.Column="1" 
+            Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+            Command="{Binding SelectValueCommand, ElementName=SelectItemCtrl}"
+            Content="..."
+            />
+  </Grid>
+</UserControl>

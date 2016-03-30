@@ -46,6 +46,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -91,9 +95,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\Context.cs" />
+    <Compile Include="ViewModels\ContextViewModel.cs" />
     <Compile Include="ViewModels\FastInsertViewModel.cs" />
     <Compile Include="Views\FastInsertPage.xaml.cs">
       <DependentUpon>FastInsertPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelectItemControl.xaml.cs">
+      <DependentUpon>SelectItemControl.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -107,6 +115,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\FastInsertPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelectItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

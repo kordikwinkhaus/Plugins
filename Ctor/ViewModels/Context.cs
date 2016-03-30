@@ -4,19 +4,27 @@ namespace Ctor.ViewModels
 {
     public class Context : IContext
     {
-        private FastInsertViewModel _fastInsertViewModel;
+        private ContextViewModel _parent;
 
-        internal Context(FastInsertViewModel fastInsertViewModel)
+        internal Context(ContextViewModel parent)
         {
-            _fastInsertViewModel = fastInsertViewModel;
+            _parent = parent;
         }
 
-        public int Type
+        public int WindowsType
         {
-            get { return 109; }
+            get
+            {
+                int id = _parent.WindowTypeID;
+                if (id == 0)
+                {
+                    throw new ModelException("Vyberte nejdříve typ okna.");
+                }
+                return id;
+            }
         }
 
-        public int Color
+        public int WindowsColor
         {
             get { return 253; }
         }
