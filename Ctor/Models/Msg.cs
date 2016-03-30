@@ -14,7 +14,7 @@ namespace Ctor.Models
         /// Zobrazí okno se zprávou jako informaci.
         /// </summary>
         /// <param name="msg">Zpráva.</param>
-        public void info(string msg)
+        public void Info(string msg)
         {
             MessageBox.Show(msg, CAPTION, MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -23,7 +23,7 @@ namespace Ctor.Models
         /// Zobrazí okno se zprávou jako výstrahu.
         /// </summary>
         /// <param name="msg">Zpráva.</param>
-        public void alert(string msg)
+        public void Alert(string msg)
         {
             MessageBox.Show(msg, CAPTION, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
@@ -32,7 +32,7 @@ namespace Ctor.Models
         /// Zobrazí okno se zprávou jako chybu.
         /// </summary>
         /// <param name="msg">Zpráva.</param>
-        public void error(string msg)
+        public void Error(string msg)
         {
             MessageBox.Show(msg, CAPTION, MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -41,9 +41,9 @@ namespace Ctor.Models
         /// Zobrazí okno se zprávou jako chybu a ukončí provádění skriptu.
         /// </summary>
         /// <param name="msg">Zpráva.</param>
-        public void fail(string msg)
+        public void Fail(string msg)
         {
-            this.error(msg);
+            this.Error(msg);
             throw new IronPython.Runtime.Exceptions.SystemExitException();
         }
     }

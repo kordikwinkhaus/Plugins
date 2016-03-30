@@ -79,7 +79,7 @@ namespace Ctor.ViewModels
             {
                 if (!_engine.Execute(code))
                 {
-                    msg.error(_engine.ErrorMessage);
+                    msg.Error(_engine.ErrorMessage);
                 }
             }
             catch (CompilationException ex)
@@ -88,11 +88,11 @@ namespace Ctor.ViewModels
                 var syntaxError = inner as SyntaxErrorException;
                 if (syntaxError != null)
                 {
-                    msg.error("Syntax error at line " + syntaxError.Line + ", column " + syntaxError.Column);
+                    msg.Error("Syntax error at line " + syntaxError.Line + ", column " + syntaxError.Column);
                 }
                 else
                 {
-                    msg.error(inner.Message);
+                    msg.Error(inner.Message);
                 }
             }
         }

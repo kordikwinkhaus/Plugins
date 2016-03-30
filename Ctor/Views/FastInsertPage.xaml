@@ -49,9 +49,9 @@
              >
       <sys:String xml:space="preserve">if pos.IsConstruction:
   if pos.Width &lt; 400: 
-    msg.fail("Okno je příliš úzké.")
+    msg.Fail("Okno je příliš úzké.")
   if pos.Height &lt; 500:
-    msg.fail("Okno je příliš nízké.")
+    msg.Fail("Okno je příliš nízké.")
 
   winType = ctx.WindowsType
   winColor = ctx.WindowsColor
