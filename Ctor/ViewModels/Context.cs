@@ -27,7 +27,15 @@ namespace Ctor.ViewModels
 
         public int WindowsColor
         {
-            get { return 253; }
+            get
+            {
+                int id = _parent.WindowColorID;
+                if (id == 0)
+                {
+                    throw new ModelException("select color dude!");
+                }
+                return id;
+            }
         }
     }
 }

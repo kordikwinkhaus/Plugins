@@ -12,17 +12,16 @@ namespace Ctor.ViewModels
     {
         private readonly string _connection;
         private readonly string _lang;
+        private readonly ISqlConnectionWrapper _conn;
         private readonly PythonScriptEngine _engine;
-        private readonly IDatabase _repository;
 
         public FastInsertViewModel(string connection, string lang)
         {
             _connection = connection;
             _lang = lang;
 
-            var sqlConn = new SqlConnectionWrapper(Okna.Data.Utils.ModifyConnString(connection));
-            sqlConn.TrySetLang();
-            _repository = new Database(sqlConn);
+            _conn = new SqlConnectionWrapper(Okna.Data.Utils.ModifyConnString(connection));
+            _conn.TrySetLang();
 
             _engine = new PythonScriptEngine();
 
@@ -37,6 +36,19 @@ namespace Ctor.ViewModels
         internal IOknaApplication Application
         {
             get { return this.Document?.Application; }
+        }
+
+        private IDatabase _database;
+        internal IDatabase Database
+        {
+            get
+            {
+                if (_database == null)
+                {
+                    _database = new Database(_conn, this.Application);
+                }
+                return _database;
+            }
         }
 
         private IDocumentsDialogFactory _dialogFactory;
@@ -74,6 +86,7 @@ namespace Ctor.ViewModels
             _engine.Variables.SetVariable("ctx", new Context(this.Context));
             var msg = new Msg();
             _engine.Variables.SetVariable("msg", msg);
+            _engine.Variables.SetVariable("db", this.Database);
 
             try
             {

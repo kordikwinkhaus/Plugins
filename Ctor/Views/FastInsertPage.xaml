@@ -6,8 +6,9 @@
              xmlns:v="clr-namespace:Ctor.Views"
              xmlns:res="clr-namespace:Ctor.Resources"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="300">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -18,7 +19,7 @@
     <StackPanel DataContext="{Binding Context}">
       <StackPanel.Resources>
         <Style TargetType="{x:Type v:SelectItemControl}">
-          <Setter Property="Margin" Value="4"/>
+          <Setter Property="Margin" Value="5"/>
         </Style>
       </StackPanel.Resources>
       
@@ -35,7 +36,7 @@
     <Button Command="{Binding RunCommand}"
             CommandParameter="{Binding Text, ElementName=txtCode}"
             Grid.Row="1"
-            Margin="4,20,4,4"
+            Margin="5,20,5,5"
             >RUN</Button>
 
     <TextBox x:Name="txtCode" 

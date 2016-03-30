@@ -120,13 +120,16 @@
   <data name="NoTopObject" xml:space="preserve">
     <value>This position doesn't have top object.</value>
   </data>
-  <data name="SelectWindowColor" xml:space="preserve">
-    <value>Select window color</value>
+  <data name="NoWindowTypeWithID" xml:space="preserve">
+    <value>No window type with ID = {0}.</value>
+  </data>
+  <data name="SelectWindowTypeFirst" xml:space="preserve">
+    <value>Select window type first and repeat it again.</value>
   </data>
   <data name="SelectWindowType" xml:space="preserve">
     <value>Select window type</value>
   </data>
-  <data name="SelectWindowTypeFirst" xml:space="preserve">
-    <value>Select window type first and repeat it again.</value>
+  <data name="SelectWindowColor" xml:space="preserve">
+    <value>Select window color</value>
   </data>
 </root>

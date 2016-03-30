@@ -22,7 +22,7 @@ namespace Ctor.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Ctor.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ctor.Resources.Strings", typeof(Strings).Assembly);
@@ -51,7 +51,7 @@ namespace Ctor.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,16 +63,25 @@ namespace Ctor.Resources {
         /// <summary>
         ///   Looks up a localized string similar to This position doesn&apos;t have top object..
         /// </summary>
-        internal static string NoTopObject {
+        public static string NoTopObject {
             get {
                 return ResourceManager.GetString("NoTopObject", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No window type with ID = {0}..
+        /// </summary>
+        public static string NoWindowTypeWithID {
+            get {
+                return ResourceManager.GetString("NoWindowTypeWithID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select window color.
         /// </summary>
-        internal static string SelectWindowColor {
+        public static string SelectWindowColor {
             get {
                 return ResourceManager.GetString("SelectWindowColor", resourceCulture);
             }
@@ -81,7 +90,7 @@ namespace Ctor.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Select window type.
         /// </summary>
-        internal static string SelectWindowType {
+        public static string SelectWindowType {
             get {
                 return ResourceManager.GetString("SelectWindowType", resourceCulture);
             }
@@ -90,7 +99,7 @@ namespace Ctor.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Select window type first and repeat it again..
         /// </summary>
-        internal static string SelectWindowTypeFirst {
+        public static string SelectWindowTypeFirst {
             get {
                 return ResourceManager.GetString("SelectWindowTypeFirst", resourceCulture);
             }

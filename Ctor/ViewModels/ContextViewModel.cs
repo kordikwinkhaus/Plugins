@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using Ctor.Models;
 using Okna.Plugins.ViewModels;
 
 namespace Ctor.ViewModels
@@ -49,6 +50,8 @@ namespace Ctor.ViewModels
             }
         }
 
+        internal WindowType WindowType { get; private set; }
+
         public ICommand SelectWindowTypeCommand { get; private set; }
 
         private void SelectWindowType(object param)
@@ -63,6 +66,14 @@ namespace Ctor.ViewModels
             {
                 this.WindowTypeName = (string)dialog.SelectedText;
                 this.WindowTypeID = (int)dialog.Selected;
+
+                this.WindowType = _parent.Database.GetWindowType(this.WindowTypeID);
+                var colors = this.WindowType.GetProfileColors();
+                if (!colors.ContainsColor(this.WindowColorID))
+                {
+                    this.WindowColorID = 0;
+                    this.WindowColorName = null;
+                }
             }
         }
 
@@ -102,7 +113,23 @@ namespace Ctor.ViewModels
 
         private void SelectWindowColor(object param)
         {
+            if (this.WindowType == null) return;
 
+            var dealer = _parent.Document.Dealer;
+            var app = _parent.Application;
+            var elementFilter = app.HideAtDealerFilter("koloryp", dealer, "e.");
+            elementFilter += " AND e.indeks IN(" + string.Join(",", this.WindowType.GetProfileColors().GetColors()) + ")";
+
+            var dialog = _parent.DialogFactory.GetSearchDialog("SelectTypeColor", elementFilter, null);
+            if (this.WindowColorID != 0)
+            {
+                dialog.Selected = this.WindowColorID;
+            }
+            if (dialog.ShowDialog(app.MainWindowHWND()) == true)
+            {
+                this.WindowColorName = (string)dialog.SelectedText;
+                this.WindowColorID = (int)dialog.Selected;
+            }
         }
 
         #endregion
