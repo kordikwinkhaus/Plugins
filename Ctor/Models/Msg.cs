@@ -4,11 +4,15 @@ namespace Ctor.Models
 {
     /// <summary>
     /// Pomocná třída pro zobrazování zpráv.
-    /// Instance třídy nastavena jako proměnná "msg".
+    /// Instance třídy je ve skriptu nastavena jako proměnná "msg".
     /// </summary>
     public class Msg
     {
         private const string CAPTION = "Ctor plugin";
+
+        internal Msg()
+        {
+        }
 
         /// <summary>
         /// Zobrazí okno se zprávou jako informaci.

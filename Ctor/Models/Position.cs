@@ -8,6 +8,7 @@ namespace Ctor.Models
 {
     /// <summary>
     /// Objekt pozice.
+    /// Instance třídy je ve skriptu nastavena jako proměnná "pos".
     /// </summary>
     public class Position
     {
@@ -74,7 +75,7 @@ namespace Ctor.Models
         }
 
         /// <summary>
-        /// Vrací šířku pozice.
+        /// Vrací šířku konstrukční plochy pozice.
         /// </summary>
         public float Width
         {
@@ -86,7 +87,7 @@ namespace Ctor.Models
         }
 
         /// <summary>
-        /// Vrací výšku pozice.
+        /// Vrací výšku konstrukční plochy pozice.
         /// </summary>
         public float Height
         {
@@ -274,13 +275,7 @@ namespace Ctor.Models
             if (_position.Data == null) throw new ModelException(Strings.NoTopObject);
         }
 
-        public void Msg(object o)
-        {
-            string msg = o?.ToString() ?? "NULL";
-            System.Windows.MessageBox.Show(msg);
-        }
-
-        public void Areas(int type, int color)
+        internal void Areas(int type, int color)
         {
             var parameters = Parameters.ForFrameType(type, color);
             // TODO: area lze dostat přes Rectangle

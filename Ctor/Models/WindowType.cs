@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Okna.Data;
 
 namespace Ctor.Models
 {
+    /// <summary>
+    /// Typ okna.
+    /// </summary>
     public class WindowType
     {
         private static string[] s_frames = new[] { "osciez1", "osciez2", "osciez3", "osciez4", "osciez5", "osciez6" };
@@ -20,21 +22,34 @@ namespace Ctor.Models
             _database = database;
         }
 
+        /// <summary>
+        /// Index typu okna.
+        /// </summary>
         public int ID
         {
             get { return (int)_data.indeks; }
         }
 
+        /// <summary>
+        /// Název typu okna.
+        /// </summary>
         public int Name
         {
             get { return (int)_data.nazwa; }
         }
 
+        /// <summary>
+        /// Číslo výrobku výchozího paketu.
+        /// </summary>
         public string DefaultGlasspacket
         {
             get { return _data.szybadef as string; }
         }
 
+        /// <summary>
+        /// Vrací hodnotu předaného pole.
+        /// </summary>
+        /// <param name="fieldname">Název pole (tabulka dbo.typyp). Umožňuje načíst i doplňková pole.</param>
         public object GetField(string fieldname)
         {
             return _dict.GetValue(fieldname);

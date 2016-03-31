@@ -5,6 +5,9 @@ using WHOkna;
 
 namespace Ctor.Models
 {
+    /// <summary>
+    /// Objekt rámu.
+    /// </summary>
     public class Frame
     {
         private readonly IFrame _frame;
@@ -16,6 +19,9 @@ namespace Ctor.Models
             _frame = frame;
         }
 
+        /// <summary>
+        /// Vloží křídla do prázdných polí.
+        /// </summary>
         public void InsertSashes()
         {
             foreach (IArea area in _frame.Areas.Where(a => a.Child == null))
@@ -24,6 +30,10 @@ namespace Ctor.Models
             }
         }
 
+        /// <summary>
+        /// Vrací všechna křídla.
+        /// </summary>
+        /// <returns>Kolekce křídel.</returns>
         public IEnumerable<Sash> GetSashes()
         {
             foreach (ISash sash in _frame.FindParts(EProfileType.tSkrz, false))
@@ -32,6 +42,10 @@ namespace Ctor.Models
             }
         }
 
+        /// <summary>
+        /// Vloží zadaný paket do prázdných polí rámu a křídel v něm obsažených.
+        /// </summary>
+        /// <param name="nrArt">Číslo výrobku paketu.</param>
         public void InsertGlasspackets(string nrArt)
         {
             InsertGlasspackets(Parameters.ForGlasspacket(nrArt));

@@ -12,10 +12,6 @@ namespace Ctor.ViewModels
             _parent = parent;
         }
 
-        /// <summary>
-        /// ID vybraného typu okna.
-        /// Pokud není vybráno, vyhodí výjimku <see cref="ModelException"/>.
-        /// </summary>
         public int WindowsType
         {
             get
@@ -29,10 +25,6 @@ namespace Ctor.ViewModels
             }
         }
 
-        /// <summary>
-        /// ID vybrané barvy.
-        /// Pokud není vybráno, vyhodí výjimku <see cref="ModelException"/>.
-        /// </summary>
         public int WindowsColor
         {
             get
@@ -46,11 +38,6 @@ namespace Ctor.ViewModels
             }
         }
 
-        /// <summary>
-        /// Číslo paketu (buďto výchozího z typu nebo vybraného).
-        /// Pokud není vybráno, popř. zadána platná volba, 
-        /// vyhodí výjimku <see cref="ModelException"/>.
-        /// </summary>
         public string Glasspacket
         {
             get

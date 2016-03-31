@@ -144,4 +144,13 @@
   <data name="UseDefaultGlasspacket" xml:space="preserve">
     <value>Use default glasspacket</value>
   </data>
+  <data name="InsertFittings" xml:space="preserve">
+    <value>Insert fittings</value>
+  </data>
+  <data name="SelectFittingsGroup" xml:space="preserve">
+    <value>Select fittings group</value>
+  </data>
+  <data name="UseDefaultFittingsGroup" xml:space="preserve">
+    <value>Use default fittings group</value>
+  </data>
 </root>

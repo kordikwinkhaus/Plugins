@@ -61,6 +61,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert fittings.
+        /// </summary>
+        public static string InsertFittings {
+            get {
+                return ResourceManager.GetString("InsertFittings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This position doesn&apos;t have top object..
         /// </summary>
         public static string NoTopObject {
@@ -75,6 +84,15 @@ namespace Ctor.Resources {
         public static string NoWindowTypeWithID {
             get {
                 return ResourceManager.GetString("NoWindowTypeWithID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select fittings group.
+        /// </summary>
+        public static string SelectFittingsGroup {
+            get {
+                return ResourceManager.GetString("SelectFittingsGroup", resourceCulture);
             }
         }
         
@@ -129,6 +147,15 @@ namespace Ctor.Resources {
         public static string SelectWindowTypeFirst {
             get {
                 return ResourceManager.GetString("SelectWindowTypeFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use default fittings group.
+        /// </summary>
+        public static string UseDefaultFittingsGroup {
+            get {
+                return ResourceManager.GetString("UseDefaultFittingsGroup", resourceCulture);
             }
         }
         
