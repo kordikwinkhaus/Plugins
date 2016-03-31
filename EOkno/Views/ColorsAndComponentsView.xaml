@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="EOkno.Views.ColorsAndComponentsView"
+             x:Name="CaCView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -52,17 +53,27 @@
               Grid.Row="1"
               Margin="3"
               >
-      <ItemsControl Margin="0,6,0,0"
-                    ItemsSource="{Binding Komponenty}"
+      <ScrollViewer VerticalScrollBarVisibility="{Binding ComponentsScrollbar, ElementName=CaCView}"
+                    HorizontalScrollBarVisibility="Disabled"
+                    Margin="0,6,0,0"
                     >
-        <ItemsControl.Resources>
-          <DataTemplate DataType="{x:Type vm:KomponentaViewModel}">
-            <CheckBox Content="{Binding Nazev}"
-                      IsChecked="{Binding Vybrano}"
-                      />
-          </DataTemplate>
-        </ItemsControl.Resources>
-      </ItemsControl>
+        <ItemsControl ItemsSource="{Binding Komponenty}">
+          <ItemsControl.Resources>
+            <DataTemplate DataType="{x:Type vm:KomponentaViewModel}">
+              <CheckBox Content="{Binding Nazev}"
+                        IsChecked="{Binding Vybrano}"
+                        MinWidth="200"
+                        />
+            </DataTemplate>
+          </ItemsControl.Resources>
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <WrapPanel Orientation="Vertical" 
+                         />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+        </ItemsControl>
+      </ScrollViewer>
     </GroupBox>
   </Grid>
 </UserControl>

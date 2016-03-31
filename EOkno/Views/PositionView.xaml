@@ -27,6 +27,7 @@
 
     <v:ColorsAndComponentsView Grid.Row="1"
                                Visibility="{Binding InheritFromDocument, Converter={StaticResource NegateBoolToVisibilityConverter}}"
+                               ComponentsScrollbar="Auto"
                                />
   </Grid>
 </UserControl>

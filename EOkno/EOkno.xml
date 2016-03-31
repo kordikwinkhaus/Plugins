@@ -1,18 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <config>
   <povrchoveUpravy>
-    <povrchovaUprava kod="A" nazev="bez povrchové úpravy"/>
-    <povrchovaUprava kod="B" nazev="olej">
-      <odstin kod="K">Kaštan</odstin>
-      <odstin kod="T">Teak</odstin>
-      <odstin kod="D">Dub</odstin>
-      <odstin kod="B">Buk</odstin>
+    <povrchovaUprava kod="bez PU" nazev="bez povrchové úpravy"/>
+    <povrchovaUprava kod="olej" nazev="olej">
+      <odstin kod="WenO">Wenge</odstin>
+      <odstin kod="PalO">Palisander</odstin>
+      <odstin kod="KasO">Kaštan</odstin>
+      <odstin kod="ModO">Modřín</odstin>
+      <odstin kod="PinO">Pinie</odstin>
+      <odstin kod="OliO">Oliva</odstin>
+      <odstin kod="PlaO">Patina-Grau</odstin>
+      <odstin kod="BilO">Bílá</odstin>
+      <odstin kod="MahO">Mahagon</odstin>
+      <odstin kod="BroO">Bronz</odstin>
+      <odstin kod="MekO">Metal Efekt Kaštan</odstin>
+      <odstin kod="MeaO">Metal Efekt Akat</odstin>
+      <odstin kod="MeoO">Metal Efekt Onyx</odstin>
+      <odstin kod="MebO">Metal Efekt Bronz</odstin>
+      <odstin kod="DgeO">Dunkelgrau Effekt</odstin>
+      <odstin kod="MgeO">Mittelgrau Effekt</odstin>
+      <odstin kod="BroO">Bronze</odstin>
     </povrchovaUprava>
-    <povrchovaUprava kod="C" nazev="lazura">
-      <odstin kod="KL">Kaštan lazura</odstin>
-      <odstin kod="TL">Teak lazura</odstin>
-      <odstin kod="DL">Dub lazura</odstin>
-      <odstin kod="BL">Buk lazura</odstin>
+    <povrchovaUprava kod="lazura" nazev="lazura">
+      <odstin kod="HemL">Hemlock</odstin>
+      <odstin kod="KieL">Kiefer</odstin>
+      <odstin kod="PinL">Pinie</odstin>
+      <odstin kod="OreL">Ořech</odstin>
+      <odstin kod="DubL">Dub</odstin>
+      <odstin kod="OliL">Oliva</odstin>
+      <odstin kod="MahL">Mahagon</odstin>
+      <odstin kod="TeaL">Teak</odstin>
+      <odstin kod="KasL">Kaštan</odstin>
+      <odstin kod="AfrL">Afromorsia</odstin>
+      <odstin kod="PalL">Palisander</odstin>
+      <odstin kod="JezL">Jedlová zeleň</odstin>
+      <odstin kod="0100L">Bílá 0100</odstin>
+      <odstin kod="0603L">Bílá sl.kost 0603</odstin>
+      <odstin kod="0620L">Žlutá sv. 0620</odstin>
+      <odstin kod="0670L">Žlutá tm. 0670</odstin>
+      <odstin kod="0820L">Červená 0820</odstin>
+      <odstin kod="0440L">Modrá 0440</odstin>
+      <odstin kod="0530L">Zelená sv. 0530</odstin>
+      <odstin kod="0540L">Zelená tm. 0540</odstin>
+      <odstin kod="0840L">Hnědá sv. 0840</odstin>
+      <odstin kod="0260L">Hnědá tm. 0260</odstin>
+      <odstin kod="0199L">Černá 0199</odstin>
     </povrchovaUprava>
   </povrchoveUpravy>
   <komponenty>
@@ -21,7 +53,15 @@
     <komponenta material="3">Vrchní PÚ</komponenta>
     <komponenta material="4">Impregnace</komponenta>
     <komponenta material="5">Silikonový tmel</komponenta>
-    <komponenta prace="23">Pokosy a drážky</komponenta>
-    <komponenta material="6">Sklo</komponenta>
+    <komponenta material="6">Lepidlo</komponenta>
+    <komponenta material="7">Těsnění celoobv.</komponenta>
+    <komponenta material="8">Těsnění pod sklo</komponenta>
+    <komponenta material="9">Podložky mont.</komponenta>
+    <komponenta material="10">Hřebíky do lišt</komponenta>
+    <komponenta material="11">Kliky</komponenta>
+    <komponenta material="12">Spojky N</komponenta>
+    <komponenta material="13">Kontraprofily</komponenta>
+    <komponenta material="14">Sklo</komponenta>
+    <komponenta prace="20">Pokosy a drážky</komponenta>
   </komponenty>
 </config>
