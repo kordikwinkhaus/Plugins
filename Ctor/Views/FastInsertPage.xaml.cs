@@ -42,5 +42,15 @@ namespace Ctor.Views
         {
             return true;
         }
+
+        private void Clear_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            _viewModel.RunCommand.Execute("if pos.IsConstruction: pos.Clear()");
+        }
+
+        private void Mirror_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            _viewModel.RunCommand.Execute("if pos.IsConstruction: pos.Mirror()");
+        }
     }
 }

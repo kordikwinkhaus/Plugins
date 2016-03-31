@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Ctor.Models;
 using Okna.Plugins.ViewModels;
 
@@ -16,8 +12,11 @@ namespace Ctor.ViewModels
         {
             _parent = parent;
 
+            this.UseDefaultGlasspacket = true;
+
             this.SelectWindowTypeCommand = new RelayCommand(SelectWindowType);
             this.SelectWindowColorCommand = new RelayCommand(SelectWindowColor);
+            this.SelectGlasspacketCommand = new RelayCommand(SelectGlasspacket);
         }
 
         #region Windows type
@@ -129,6 +128,75 @@ namespace Ctor.ViewModels
             {
                 this.WindowColorName = (string)dialog.SelectedText;
                 this.WindowColorID = (int)dialog.Selected;
+            }
+        }
+
+        #endregion
+
+        #region Glasspacket
+
+        private int _glasspacketRecno;
+        public int GlasspacketRecno
+        {
+            get { return _glasspacketRecno; }
+            set
+            {
+                if (_glasspacketRecno != value)
+                {
+                    _glasspacketRecno = value;
+                    OnPropertyChanged(nameof(GlasspacketRecno));
+                }
+            }
+        }
+
+        private string _glasspacketNrArt;
+        public string GlasspacketNrArt
+        {
+            get { return _glasspacketNrArt; }
+            set
+            {
+                if (_glasspacketNrArt != value)
+                {
+                    _glasspacketNrArt = value;
+                    OnPropertyChanged(nameof(GlasspacketNrArt));
+                }
+            }
+        }
+
+        private bool _useDefaultGlasspacket;
+        public bool UseDefaultGlasspacket
+        {
+            get { return _useDefaultGlasspacket; }
+            set
+            {
+                if (_useDefaultGlasspacket != value)
+                {
+                    _useDefaultGlasspacket = value;
+                    OnPropertyChanged(nameof(UseDefaultGlasspacket));
+                }
+            }
+        }
+
+        public ICommand SelectGlasspacketCommand { get; private set; }
+
+        private void SelectGlasspacket(object param)
+        {
+            var dealer = _parent.Document.Dealer;
+            var app = _parent.Application;
+            var elementFilter = app.HideAtDealerFilter("pak_szyb", dealer, "e.");
+            // TODO: filtrování podle dostupných tlouštěk zaklívacích lišt?
+            //elementFilter += " AND e.indeks IN(" + string.Join(",", this.WindowType.GetProfileColors().GetColors()) + ")";
+            var groupFilter = app.HideAtDealerFilter("gruptech", dealer, "g.");
+
+            var dialog = _parent.DialogFactory.GetSearchDialog("SelectGlazing", elementFilter, groupFilter);
+            if (_glasspacketRecno != 0)
+            {
+                dialog.Selected = _glasspacketRecno;
+            }
+            if (dialog.ShowDialog(app.MainWindowHWND()) == true)
+            {
+                this.GlasspacketNrArt = (string)dialog.SelectedText;
+                this.GlasspacketRecno = (int)dialog.Selected;
             }
         }
 

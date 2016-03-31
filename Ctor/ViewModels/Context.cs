@@ -12,6 +12,10 @@ namespace Ctor.ViewModels
             _parent = parent;
         }
 
+        /// <summary>
+        /// ID vybraného typu okna.
+        /// Pokud není vybráno, vyhodí výjimku <see cref="ModelException"/>.
+        /// </summary>
         public int WindowsType
         {
             get
@@ -25,6 +29,10 @@ namespace Ctor.ViewModels
             }
         }
 
+        /// <summary>
+        /// ID vybrané barvy.
+        /// Pokud není vybráno, vyhodí výjimku <see cref="ModelException"/>.
+        /// </summary>
         public int WindowsColor
         {
             get
@@ -32,9 +40,37 @@ namespace Ctor.ViewModels
                 int id = _parent.WindowColorID;
                 if (id == 0)
                 {
-                    throw new ModelException("select color dude!");
+                    throw new ModelException(Strings.SelectWindowColorFirst);
                 }
                 return id;
+            }
+        }
+
+        /// <summary>
+        /// Číslo paketu (buďto výchozího z typu nebo vybraného).
+        /// Pokud není vybráno, popř. zadána platná volba, 
+        /// vyhodí výjimku <see cref="ModelException"/>.
+        /// </summary>
+        public string Glasspacket
+        {
+            get
+            {
+                string nr_art = null;
+                if (_parent.UseDefaultGlasspacket)
+                {
+                    nr_art = _parent.WindowType?.DefaultGlasspacket;
+                }
+                else
+                {
+                    nr_art = _parent.GlasspacketNrArt;
+                }
+
+                if (string.IsNullOrEmpty(nr_art))
+                {
+                    throw new ModelException(Strings.SelectGlasspacketFirst);
+                }
+
+                return nr_art;
             }
         }
     }

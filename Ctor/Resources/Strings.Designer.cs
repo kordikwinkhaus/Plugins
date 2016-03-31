@@ -79,11 +79,38 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select glasspacket.
+        /// </summary>
+        public static string SelectGlasspacket {
+            get {
+                return ResourceManager.GetString("SelectGlasspacket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select glasspacket first and repeat it again..
+        /// </summary>
+        public static string SelectGlasspacketFirst {
+            get {
+                return ResourceManager.GetString("SelectGlasspacketFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select window color.
         /// </summary>
         public static string SelectWindowColor {
             get {
                 return ResourceManager.GetString("SelectWindowColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select window color first and repeat it again..
+        /// </summary>
+        public static string SelectWindowColorFirst {
+            get {
+                return ResourceManager.GetString("SelectWindowColorFirst", resourceCulture);
             }
         }
         
@@ -102,6 +129,15 @@ namespace Ctor.Resources {
         public static string SelectWindowTypeFirst {
             get {
                 return ResourceManager.GetString("SelectWindowTypeFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use default glasspacket.
+        /// </summary>
+        public static string UseDefaultGlasspacket {
+            get {
+                return ResourceManager.GetString("UseDefaultGlasspacket", resourceCulture);
             }
         }
     }

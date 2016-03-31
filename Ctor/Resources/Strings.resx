@@ -132,4 +132,16 @@
   <data name="SelectWindowColor" xml:space="preserve">
     <value>Select window color</value>
   </data>
+  <data name="SelectGlasspacket" xml:space="preserve">
+    <value>Select glasspacket</value>
+  </data>
+  <data name="SelectGlasspacketFirst" xml:space="preserve">
+    <value>Select glasspacket first and repeat it again.</value>
+  </data>
+  <data name="SelectWindowColorFirst" xml:space="preserve">
+    <value>Select window color first and repeat it again.</value>
+  </data>
+  <data name="UseDefaultGlasspacket" xml:space="preserve">
+    <value>Use default glasspacket</value>
+  </data>
 </root>

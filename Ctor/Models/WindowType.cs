@@ -30,6 +30,16 @@ namespace Ctor.Models
             get { return (int)_data.nazwa; }
         }
 
+        public string DefaultGlasspacket
+        {
+            get { return _data.szybadef as string; }
+        }
+
+        public object GetField(string fieldname)
+        {
+            return _dict.GetValue(fieldname);
+        }
+
         internal ProfileColors GetProfileColors()
         {
             if (_colors == null)

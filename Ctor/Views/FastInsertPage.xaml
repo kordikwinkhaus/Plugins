@@ -21,6 +21,9 @@
         <Style TargetType="{x:Type v:SelectItemControl}">
           <Setter Property="Margin" Value="5"/>
         </Style>
+        <Style TargetType="{x:Type CheckBox}">
+          <Setter Property="Margin" Value="5,8,5,-3"/>
+        </Style>
       </StackPanel.Resources>
       
       <v:SelectItemControl HintText="{x:Static res:Strings.SelectWindowType}"
@@ -31,13 +34,33 @@
                            DisplayText="{Binding WindowColorName}"
                            SelectValueCommand="{Binding SelectWindowColorCommand}"
                            />
+
+      <CheckBox Content="{x:Static res:Strings.UseDefaultGlasspacket}" 
+                IsChecked="{Binding UseDefaultGlasspacket}"
+                />
+      <v:SelectItemControl HintText="{x:Static res:Strings.SelectGlasspacket}"
+                           DisplayText="{Binding GlasspacketNrArt}"
+                           SelectValueCommand="{Binding SelectGlasspacketCommand}"
+                           />
     </StackPanel>
-    
-    <Button Command="{Binding RunCommand}"
-            CommandParameter="{Binding Text, ElementName=txtCode}"
-            Grid.Row="1"
-            Margin="5,20,5,5"
-            >RUN</Button>
+
+    <StackPanel Margin="0,20,5,0"
+                Grid.Row="1"
+                >
+      <StackPanel.Resources>
+        <Style TargetType="{x:Type Button}">
+          <Setter Property="Margin" Value="5,0,0,5"/>
+        </Style>
+      </StackPanel.Resources>
+      <WrapPanel>
+        <Button Click="Clear_Click">Clear</Button>
+        <Button Click="Mirror_Click">Mirror</Button>
+      </WrapPanel>
+
+      <Button Command="{Binding RunCommand}"
+              CommandParameter="{Binding Text, ElementName=txtCode}"
+              >RUN</Button>
+    </StackPanel>
 
     <TextBox x:Name="txtCode" 
              FontFamily="Consolas" 
@@ -49,18 +72,19 @@
              VerticalAlignment="Top"
              >
       <sys:String xml:space="preserve">if pos.IsConstruction:
-  if pos.Width &lt; 400: 
-    msg.Fail("Okno je příliš úzké.")
-  if pos.Height &lt; 500:
-    msg.Fail("Okno je příliš nízké.")
+    if pos.Width &lt; 400:
+        msg.Fail("Okno je příliš úzké.")
+    if pos.Height &lt; 500:
+        msg.Fail("Okno je příliš nízké.")
 
-  winType = ctx.WindowsType
-  winColor = ctx.WindowsColor
+    winType = ctx.WindowsType
+    winColor = ctx.WindowsColor
+    glasspacket = ctx.Glasspacket
 
-  frame = pos.InsertFrame(winType, winColor)
-  if frame != None:
-    frame.InsertSashes()
-    frame.InsertGlasspackets("PLU4/12/P4/12/PLU4")</sys:String>
+    frame = pos.InsertFrame(winType, winColor)
+    if frame != None:
+        frame.InsertSashes()
+        frame.InsertGlasspackets(glasspacket)</sys:String>
     </TextBox>
   </Grid>
 </UserControl>
