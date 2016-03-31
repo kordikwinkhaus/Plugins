@@ -12,6 +12,8 @@ namespace EOkno.ViewModels
         private const string s_UpravaKod = "k";
         private const string s_OdstinExterier = "e";
         private const string s_OdstinInterier = "i";
+        private const string s_OdstinNazevExterier = "en";
+        private const string s_OdstinNazevInterier = "in";
 
         private XElement _data;
         private XElement _povrchUprava;
@@ -55,7 +57,10 @@ namespace EOkno.ViewModels
             if (_povrchUprava != null)
             {
                 string kod = _vnitrniOdstin?.Kod;
+                string nazev = _vnitrniOdstin?.Nazev;
+
                 _povrchUprava.SetAttributeValue(s_OdstinInterier, kod);
+                _povrchUprava.SetAttributeValue(s_OdstinNazevInterier, nazev);
             }
         }
 
@@ -79,7 +84,10 @@ namespace EOkno.ViewModels
             if (_povrchUprava != null)
             {
                 string kod = _vnejsiOdstin?.Kod;
+                string nazev = _vnejsiOdstin?.Nazev;
+
                 _povrchUprava.SetAttributeValue(s_OdstinExterier, kod);
+                _povrchUprava.SetAttributeValue(s_OdstinNazevExterier, nazev);
             }
         }
 

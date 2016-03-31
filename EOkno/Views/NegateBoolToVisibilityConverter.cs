@@ -12,7 +12,7 @@ namespace EOkno.Views
             try
             {
                 var val = (bool)value;
-                return (val) ? Visibility.Hidden : Visibility.Visible;
+                return (val) ? Visibility.Collapsed : Visibility.Visible;
             }
             catch
             {

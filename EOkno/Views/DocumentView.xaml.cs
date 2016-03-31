@@ -10,7 +10,7 @@ namespace EOkno.Views
 {
     public partial class DocumentView : UserControl, IUserForm, INotifyPropertyChanged
     {
-        private const string s_MainElement = "EOkno";
+        internal const string s_MainElement = "EOkno";
 
         private DocumentViewModel _viewmodel;
 

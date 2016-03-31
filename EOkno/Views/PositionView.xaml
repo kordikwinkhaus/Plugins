@@ -16,6 +16,7 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
 
@@ -25,9 +26,16 @@
       Podle nastavení dokumentu
     </CheckBox>
 
-    <v:ColorsAndComponentsView Grid.Row="1"
+    <Button Grid.Row="1"
+            Margin="6,3"
+            Command="{Binding CopyFromDocumentCommand}"
+            Visibility="{Binding InheritFromDocument, Converter={StaticResource NegateBoolToVisibilityConverter}}"
+            >
+      Zkopírovat z nastavení dokumentu
+    </Button>
+
+    <v:ColorsAndComponentsView Grid.Row="2"
                                Visibility="{Binding InheritFromDocument, Converter={StaticResource NegateBoolToVisibilityConverter}}"
-                               ComponentsScrollbar="Auto"
                                />
   </Grid>
 </UserControl>

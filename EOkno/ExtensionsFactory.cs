@@ -30,7 +30,7 @@ namespace UserExt
             return null;
         }
 
-        private void Nacist(DocumentViewModel vm)
+        internal static void Nacist(DocumentViewModel vm)
         {
             try
             {
