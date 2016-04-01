@@ -47,6 +47,44 @@ namespace Ctor.Models
         }
 
         /// <summary>
+        /// Index výchozí skupiny kování.
+        /// </summary>
+        public int DefaultFittingsGroup
+        {
+            get { return (int)_data.grupadef; }
+        }
+
+        /// <summary>
+        /// Číslo výrobku prvního zadaného štulpu.
+        /// </summary>
+        public string DefaultFalseMullion
+        {
+            get { return (string)_data.przymyk1; }
+        }
+
+        /// <summary>
+        /// Vrací pole všech zadaných štulpů (nevrací nezadané prvky).
+        /// </summary>
+        public IList<string> FalseMullions
+        {
+            get
+            {
+                List<string> mullions = new List<string>();
+
+                for (int i = 1; i < 6; i++)
+                {
+                    string nrArt = (string)_dict.GetValue("przymyk" + i);
+                    if (!string.IsNullOrWhiteSpace(nrArt))
+                    {
+                        mullions.Add(nrArt);
+                    }
+                }
+
+                return mullions;
+            }
+        }
+
+        /// <summary>
         /// Vrací hodnotu předaného pole.
         /// </summary>
         /// <param name="fieldname">Název pole (tabulka dbo.typyp). Umožňuje načíst i doplňková pole.</param>

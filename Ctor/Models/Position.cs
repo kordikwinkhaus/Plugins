@@ -173,7 +173,7 @@ namespace Ctor.Models
                     IFrame frame = area.FindFrame();
                     if (frame != null)
                     {
-                        return new Frame(frame);
+                        return new Frame(frame, this);
                     }
                 }
             }
@@ -193,8 +193,6 @@ namespace Ctor.Models
 
             var areas = _position.Data.Areas.Where(a => a.Child == null).ToList();
 
-            var barvy = _position.Data.CommonColors();
-
             if (areas.Count == 1)
             {
                 var area = areas[0];
@@ -202,9 +200,10 @@ namespace Ctor.Models
                 area.AddChild(EProfileType.tOsciez, parameters);
 
                 IFrame frame = area.FindFrame();
+                int newColor = frame.Color;
                 if (frame != null)
                 {
-                    return new Frame(frame);
+                    return new Frame(frame, this);
                 }
             }
             else
@@ -237,7 +236,7 @@ namespace Ctor.Models
                 int number = frame.GetNumber(EProfileType.tOsciez);
                 if (id == number)
                 {
-                    return new Frame(frame);
+                    return new Frame(frame, this);
                 }
             }
 
@@ -253,7 +252,7 @@ namespace Ctor.Models
 
             foreach (IFrame frame in _position.Data.FindParts(EProfileType.tOsciez, false))
             {
-                yield return new Frame(frame);
+                yield return new Frame(frame, this);
             }
         }
 

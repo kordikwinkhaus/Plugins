@@ -61,6 +61,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot find fittings type for given parameters..
+        /// </summary>
+        public static string CannotFindFittingsType {
+            get {
+                return ResourceManager.GetString("CannotFindFittingsType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insert fittings.
         /// </summary>
         public static string InsertFittings {
@@ -70,11 +79,29 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No fittings group with ID = {0}..
+        /// </summary>
+        public static string NoFittingsGroupWithID {
+            get {
+                return ResourceManager.GetString("NoFittingsGroupWithID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This position doesn&apos;t have top object..
         /// </summary>
         public static string NoTopObject {
             get {
                 return ResourceManager.GetString("NoTopObject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The sash is not standard and therefore cannot be set as tilt-only..
+        /// </summary>
+        public static string NotStandardSash {
+            get {
+                return ResourceManager.GetString("NotStandardSash", resourceCulture);
             }
         }
         
@@ -93,6 +120,15 @@ namespace Ctor.Resources {
         public static string SelectFittingsGroup {
             get {
                 return ResourceManager.GetString("SelectFittingsGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select fittings group and repeat it again..
+        /// </summary>
+        public static string SelectFittingsGroupFirst {
+            get {
+                return ResourceManager.GetString("SelectFittingsGroupFirst", resourceCulture);
             }
         }
         

@@ -12,6 +12,7 @@ namespace Ctor.Models
         private readonly IOknaApplication _app;
         private readonly ISqlConnectionWrapper _conn;
         private readonly Dictionary<int, WindowType> _windowTypes = new Dictionary<int, WindowType>();
+        private readonly Dictionary<int, FittingsGroup> _fittingsGroups = new Dictionary<int, FittingsGroup>();
         private readonly Dictionary<string, List<string>> _virtualProfiles = new Dictionary<string, List<string>>();
 
         internal Database(ISqlConnectionWrapper conn, IOknaApplication app)
@@ -19,6 +20,8 @@ namespace Ctor.Models
             _conn = conn;
             _app = app;
         }
+
+        internal IOknaDocument CurrentDocument { get; set; }
 
         public WindowType GetWindowType(int id)
         {
@@ -45,6 +48,34 @@ namespace Ctor.Models
                 throw new ModelException(string.Format(Strings.NoWindowTypeWithID, id));
             }
             return new WindowType(types[0], this);
+        }
+
+        public FittingsGroup GetFittingsGroup(int id)
+        {
+            FittingsGroup result;
+            if (!_fittingsGroups.TryGetValue(id, out result))
+            {
+                result = GetFittingsGroupCore(id);
+                _fittingsGroups.Add(id, result);
+            }
+            result.Init(this.CurrentDocument);
+            return result;
+        }
+
+        private FittingsGroup GetFittingsGroupCore(int id)
+        {
+            DatabaseCommand cmd = new DatabaseCommand
+            {
+                CommandText = "SELECT * FROM dbo.grupy WHERE indeks=@id"
+            };
+            cmd.AddParameter("@id", id);
+
+            var groups = _conn.ExecuteQuery(cmd);
+            if (groups.Count != 1)
+            {
+                throw new ModelException(string.Format(Strings.NoFittingsGroupWithID, id));
+            }
+            return new FittingsGroup(groups[0], this);
         }
 
         public bool IsVirtual(string nr_art, string table)
@@ -93,6 +124,17 @@ namespace Ctor.Models
             }
 
             return result;
+        }
+
+        public IList<DynamicDictionary> ExecuteQuery(DatabaseCommand cmd)
+        {
+            return _conn.ExecuteQuery(cmd);
+        }
+
+        public int FindFittingType(int fittingsGroupID, FittingsFindArgs args)
+        {
+            var fittingsGroup = GetFittingsGroup(fittingsGroupID);
+            return fittingsGroup.FindFittingType(args);
         }
     }
 }

@@ -8,7 +8,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="300">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -44,8 +44,10 @@
                            />
 
       <CheckBox Content="{x:Static res:Strings.InsertFittings}"
+                IsChecked="{Binding InsertFittings}"
                 />
       <CheckBox Content="{x:Static res:Strings.UseDefaultFittingsGroup}"
+                IsChecked="{Binding UseDefaultFittingsGroup}"
                 />
       <v:SelectItemControl HintText="{x:Static res:Strings.SelectFittingsGroup}"
                            />
@@ -76,7 +78,7 @@
              Grid.Row="2"
              AcceptsReturn="True"
              AcceptsTab="True"
-             Height="250"
+             Height="300"
              VerticalAlignment="Top"
              >
       <sys:String xml:space="preserve">if pos.IsConstruction:
@@ -90,9 +92,14 @@
     glasspacket = ctx.Glasspacket
 
     frame = pos.InsertFrame(winType, winColor)
-    if frame != None:
-        frame.InsertSashes()
-        frame.InsertGlasspackets(glasspacket)</sys:String>
+    sash = frame.InsertSash()
+    sash.InsertGlasspackets(glasspacket)
+    if ctx.InsertFittings:
+        args = sash.GetFittingsFindArgs()
+        #args.TiltOnly = True
+        fittingsType = db.FindFittingType(ctx.FittingsGroup, args)
+        sash.InsertFittings(fittingsType)
+</sys:String>
     </TextBox>
   </Grid>
 </UserControl>

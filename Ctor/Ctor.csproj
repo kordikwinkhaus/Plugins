@@ -71,6 +71,8 @@
     <Compile Include="ExtensionsFactory.cs" />
     <Compile Include="Models\Commands.cs" />
     <Compile Include="Models\CompilationException.cs" />
+    <Compile Include="Models\FittingsFindArgs.cs" />
+    <Compile Include="Models\FittingsGroup.cs" />
     <Compile Include="Models\Frame.cs" />
     <Compile Include="Models\IAreaExtensions.cs" />
     <Compile Include="Models\IContext.cs" />

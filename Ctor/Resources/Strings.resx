@@ -153,4 +153,16 @@
   <data name="UseDefaultFittingsGroup" xml:space="preserve">
     <value>Use default fittings group</value>
   </data>
+  <data name="SelectFittingsGroupFirst" xml:space="preserve">
+    <value>Select fittings group and repeat it again.</value>
+  </data>
+  <data name="NoFittingsGroupWithID" xml:space="preserve">
+    <value>No fittings group with ID = {0}.</value>
+  </data>
+  <data name="NotStandardSash" xml:space="preserve">
+    <value>The sash is not standard and therefore cannot be set as tilt-only.</value>
+  </data>
+  <data name="CannotFindFittingsType" xml:space="preserve">
+    <value>Cannot find fittings type for given parameters.</value>
+  </data>
 </root>

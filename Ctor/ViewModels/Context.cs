@@ -45,7 +45,8 @@ namespace Ctor.ViewModels
                 string nr_art = null;
                 if (_parent.UseDefaultGlasspacket)
                 {
-                    nr_art = _parent.WindowType?.DefaultGlasspacket;
+                    int winType = this.WindowsType; // throws exception if nothing selected
+                    nr_art = _parent.WindowType.DefaultGlasspacket;
                 }
                 else
                 {
@@ -58,6 +59,32 @@ namespace Ctor.ViewModels
                 }
 
                 return nr_art;
+            }
+        }
+
+        public bool InsertFittings
+        {
+            get { return _parent.InsertFittings; }
+        }
+
+        public int FittingsGroup
+        {
+            get
+            {
+                if (_parent.UseDefaultFittingsGroup)
+                {
+                    int winType = this.WindowsType; // throws exception if nothing selected
+                    return _parent.WindowType.DefaultFittingsGroup;
+                }
+                else
+                {
+                    int id = _parent.FittingsGroupID;
+                    if (id == 0)
+                    {
+                        throw new ModelException(Strings.SelectFittingsGroupFirst);
+                    }
+                    return id;
+                }
             }
         }
     }

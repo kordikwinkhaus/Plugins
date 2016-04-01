@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Okna.Data;
 
 namespace Ctor.Models
 {
@@ -15,6 +16,12 @@ namespace Ctor.Models
         WindowType GetWindowType(int id);
 
         /// <summary>
+        /// Vrací skupinu kování.
+        /// </summary>
+        /// <param name="id">ID skupiny kování.</param>
+        FittingsGroup GetFittingsGroup(int id);
+
+        /// <summary>
         /// Ověří, zda-li je daný profil virtuální.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu profilu.</param>
@@ -27,5 +34,19 @@ namespace Ctor.Models
         /// <param name="articles">Čísla artiklů.</param>
         /// <returns>Vrací indexy společných barev.</returns>
         List<int> GetCommonColors(IList<string> articles);
+
+        /// <summary>
+        /// Provede databázový dotaz.
+        /// </summary>
+        /// <param name="cmd">Dotaz.</param>
+        /// <returns>Seznam načtených záznamů.</returns>
+        IList<DynamicDictionary> ExecuteQuery(DatabaseCommand cmd);
+
+        /// <summary>
+        /// Vyhledá kování v této skupině a vrátí první nalezený typ.
+        /// </summary>
+        /// <param name="fittingsGroupID">ID skupiny kování.</param>
+        /// <param name="args">Parametry pro vyhledání kování.</param>
+        int FindFittingType(int fittingsGroupID, FittingsFindArgs args);
     }
 }

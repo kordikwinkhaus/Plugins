@@ -31,14 +31,29 @@ namespace Ctor.ViewModels
 
         #region Contextual info
 
-        internal IOknaDocument Document { get; set; }
+        private IOknaDocument _document;
+        internal IOknaDocument Document
+        {
+            get { return _document; }
+            set
+            {
+                if (_document != value)
+                {
+                    _document = value;
+                    if (_database != null)
+                    {
+                        _database.CurrentDocument = _document;
+                    }
+                }
+            }
+        }
 
         internal IOknaApplication Application
         {
             get { return this.Document?.Application; }
         }
 
-        private IDatabase _database;
+        private Database _database;
         internal IDatabase Database
         {
             get
@@ -46,6 +61,7 @@ namespace Ctor.ViewModels
                 if (_database == null)
                 {
                     _database = new Database(_conn, this.Application);
+                    _database.CurrentDocument = this.Document;
                 }
                 return _database;
             }

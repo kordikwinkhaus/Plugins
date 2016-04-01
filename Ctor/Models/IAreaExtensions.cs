@@ -21,5 +21,13 @@ namespace Ctor.Models
 
             return null;
         }
+
+        public static ISash FindSash(this IArea area)
+        {
+            if (area == null) return null;
+
+            ISash sash = area.Child as ISash;
+            return sash;
+        }
     }
 }

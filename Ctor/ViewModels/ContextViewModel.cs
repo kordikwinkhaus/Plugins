@@ -13,6 +13,8 @@ namespace Ctor.ViewModels
             _parent = parent;
 
             this.UseDefaultGlasspacket = true;
+            this.InsertFittings = true;
+            this.UseDefaultFittingsGroup = true;
 
             this.SelectWindowTypeCommand = new RelayCommand(SelectWindowType);
             this.SelectWindowColorCommand = new RelayCommand(SelectWindowColor);
@@ -199,6 +201,41 @@ namespace Ctor.ViewModels
                 this.GlasspacketRecno = (int)dialog.Selected;
             }
         }
+
+        #endregion
+
+        #region Fittings group
+
+        private bool _insertFittings;
+        public bool InsertFittings
+        {
+            get { return _insertFittings; }
+            set
+            {
+                if (_insertFittings != value)
+                {
+                    _insertFittings = value;
+                    OnPropertyChanged(nameof(InsertFittings));
+                }
+            }
+        }
+
+        private bool _useDefaultFittingsGroup;
+        public bool UseDefaultFittingsGroup
+        {
+            get { return _useDefaultFittingsGroup; }
+            set
+            {
+                if (_useDefaultFittingsGroup != value)
+                {
+                    _useDefaultFittingsGroup = value;
+                    OnPropertyChanged(nameof(UseDefaultFittingsGroup));
+                }
+            }
+        }
+
+        public int FittingsGroupID { get; internal set; }
+
 
         #endregion
     }

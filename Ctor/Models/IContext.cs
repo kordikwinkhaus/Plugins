@@ -1,4 +1,6 @@
-﻿namespace Ctor.Models
+﻿using WHOkna;
+
+namespace Ctor.Models
 {
     /// <summary>
     /// Kontext vkládání.
@@ -23,5 +25,15 @@
         /// Pokud není vybráno, implementace by měla vyhodit výjimku <see cref="ModelException"/>.
         /// </summary>
         string Glasspacket { get; }
+
+        /// <summary>
+        /// Zda-li vkládat kování. Skripty by měly tuto volbu respektovat.
+        /// </summary>
+        bool InsertFittings { get; }
+
+        /// <summary>
+        /// ID skupiny kování (buďto výchozí z typu nebo vybrané).
+        /// </summary>
+        int FittingsGroup { get; }
     }
 }
