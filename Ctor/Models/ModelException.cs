@@ -7,7 +7,8 @@ namespace Ctor.Models
     /// </summary>
     /// <remarks>
     /// Tato výjimka je při vykonání skriptu obsloužena speciálně - nepovažuje
-    /// se za neočekávaný chybový stav, ale slouží k předčasnému ukončení skriptu (např. z důvodu chybějícího vstupu); 
+    /// se za neočekávaný chybový stav, ale slouží k předčasnému ukončení skriptu 
+    /// (např. z důvodu chybějícího vstupu); 
     /// a zpráva výjimky je zobrazena v okně se zprávou po dokončení skriptu.
     /// </remarks>
     public class ModelException : Exception

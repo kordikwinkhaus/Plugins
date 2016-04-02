@@ -24,5 +24,17 @@ namespace Ctor.Models
             parameters.Add("Article", nrArt);
             return parameters;
         }
+
+        internal static Dictionary<string, object> ForFalseMullion(string nrArt, int color, bool isLeftSide)
+        {
+            if (string.IsNullOrEmpty(nrArt)) throw new ArgumentNullException(nameof(nrArt));
+            if (color <= 0) throw new ArgumentOutOfRangeException(nameof(color));
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("Article", nrArt);
+            parameters.Add("Color", color);
+            parameters.Add("Side", isLeftSide);
+            return parameters;
+        }
     }
 }

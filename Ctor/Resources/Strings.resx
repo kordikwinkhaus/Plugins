@@ -165,4 +165,28 @@
   <data name="CannotFindFittingsType" xml:space="preserve">
     <value>Cannot find fittings type for given parameters.</value>
   </data>
+  <data name="CannotFindAreaInFrame" xml:space="preserve">
+    <value>Cannot find area in frame {0} at point ({1}, {2}).</value>
+  </data>
+  <data name="CannotInsertSash" xml:space="preserve">
+    <value>Cannot insert sash.</value>
+  </data>
+  <data name="NoSashInFrame" xml:space="preserve">
+    <value>Frame {0} does not contain sash {1}.</value>
+  </data>
+  <data name="CannotFindAreaInPosition" xml:space="preserve">
+    <value>Cannot find area in position at point ({0}, {1}).</value>
+  </data>
+  <data name="NoFrameInPosition" xml:space="preserve">
+    <value>Position does not contain frame {0}.</value>
+  </data>
+  <data name="CannotInsertFrame" xml:space="preserve">
+    <value>Cannot insert frame.</value>
+  </data>
+  <data name="NoEmptyAreaInPosition" xml:space="preserve">
+    <value>Position does not contain empty area.</value>
+  </data>
+  <data name="NoEmptyAreaInFrame" xml:space="preserve">
+    <value>Frame does not contain empty area.</value>
+  </data>
 </root>

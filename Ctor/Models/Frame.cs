@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ctor.Resources;
 using WHOkna;
 
 namespace Ctor.Models
@@ -22,6 +23,11 @@ namespace Ctor.Models
             _parent = parent;
         }
 
+        internal IFrame Data
+        {
+            get { return _frame; }
+        }
+
         /// <summary>
         /// Vrací pozici, ve které je tento rám.
         /// </summary>
@@ -31,11 +37,56 @@ namespace Ctor.Models
         }
 
         /// <summary>
+        /// Vrací ID rámu (pořadová čísla od jedné).
+        /// </summary>
+        public int ID
+        {
+            get { return _frame.GetNumber(EProfileType.tOsciez); }
+        }
+
+        /// <summary>
         /// ID typu okna.
         /// </summary>
         public int WindowTypeID
         {
             get { return _frame.FrameType; }
+        }
+
+        /// <summary>
+        /// Vrací oblast na zadané souřadnici.
+        /// </summary>
+        /// <param name="pointInAreaX">X-ová souřadnice bodu pro výběr pole.</param>
+        /// <param name="pointInAreaY">Y-ová souřadnice bodu pro výběr pole.</param>
+        public FrameArea GetArea(float pointInAreaX, float pointInAreaY)
+        {
+            var area = _frame.GetArea(pointInAreaX, pointInAreaY);
+            if (area != null)
+            {
+                return new FrameArea(area, this);
+            }
+            
+            string msg = string.Format(Strings.CannotFindAreaInFrame, this.ID, pointInAreaX, pointInAreaY);
+            throw new ModelException(msg);
+        }
+
+        /// <summary>
+        /// Vrací prázdnou oblast. Pokud existuje více oblastí, zobrazí dialog pro výběr.
+        /// </summary>
+        public FrameArea GetEmptyArea()
+        {
+            var areas = _frame.Areas.Where(a => a.Child == null).ToList();
+            if (areas.Count == 1)
+            {
+                return new FrameArea(areas[0], this);
+            }
+            else if (areas.Count > 1)
+            {
+                // TODO: zobrazit dialog; storno z dialogu by mělo vyvolat systemexit exception
+                // + udělat interface pro výběr oblastí (jeden dialog vládne všem);
+                // interface pak implementovat explicitně
+            }
+
+            throw new ModelException(Strings.NoEmptyAreaInFrame);
         }
 
         /// <summary>
@@ -50,54 +101,13 @@ namespace Ctor.Models
         }
 
         /// <summary>
-        /// Vloží křídlo do prázdného pole, které obsahuje předaný bod.
-        /// </summary>
-        /// <param name="pointInAreaX">X-ová souřadnice bodu pro výběr pole.</param>
-        /// <param name="pointInAreaY">Y-ová souřadnice bodu pro výběr pole.</param>
-        public Sash InsertSash(float pointInAreaX, float pointInAreaY)
-        {
-            foreach (IArea area in _frame.Areas.Where(a => a.Child == null))
-            {
-                if (area.Rectangle.Contains(pointInAreaX, pointInAreaY))
-                {
-                    area.AddChild(EProfileType.tSkrz, null);
-
-                    ISash sash = area.FindSash();
-                    if (sash != null)
-                    {
-                        return new Sash(sash, this);
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Vloží křídlo do prázdného pole. Pokud rám obsahuje více prázdných polí,
+        /// Vloží křídlo do prázdného pole. Pokud rám obsahuje více prázdných polí, 
         /// zobrazí dialog pro výběr pole.
         /// </summary>
         public Sash InsertSash()
         {
-            var areas = _frame.Areas.Where(a => a.Child == null).ToList();
-
-            if (areas.Count == 1)
-            {
-                var area = areas[0];
-                area.AddChild(EProfileType.tSkrz, null);
-
-                ISash sash = area.FindSash();
-                if (sash != null)
-                {
-                    return new Sash(sash, this);
-                }
-            }
-            else
-            {
-                // TODO: zobrazit dialog
-            }
-
-            return null;
+            var area = this.GetEmptyArea();
+            return area.InsertSash();
         }
 
         /// <summary>
@@ -136,7 +146,8 @@ namespace Ctor.Models
                 }
             }
 
-            return null;
+            string msg = string.Format(Strings.NoSashInFrame, this.ID, id);
+            throw new ModelException(msg);
         }
 
         /// <summary>
@@ -161,6 +172,58 @@ namespace Ctor.Models
             }
         }
 
+        #region FalseMullion(s)
+
+        /// <summary>
+        /// Vloží štulp do prázdného pole na střed. Pokud rám obsahuje více prázdných polí,
+        /// zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Artikl štulpu.</param>
+        /// <param name="isLeftSide">Zda-li je štulp levý.</param>
+        public void InsertFalseMullion(string nrArt, bool isLeftSide)
+        {
+            this.InsertFalseMullion(nrArt, isLeftSide, 0.5f);
+        }
+
+        /// <summary>
+        /// Vloží štulp do prázdného pole na střed. Pokud rám obsahuje více prázdných polí,
+        /// zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Artikl štulpu.</param>
+        /// <param name="isLeftSide">Zda-li je štulp levý.</param>
+        /// <param name="color">ID barvy.</param>
+        public void InsertFalseMullion(string nrArt, bool isLeftSide, int color)
+        {
+            this.InsertFalseMullion(nrArt, isLeftSide, 0.5f, color);
+        }
+
+        /// <summary>
+        /// Vloží štulp do prázdného pole. Pokud rám obsahuje více prázdných polí,
+        /// zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Artikl štulpu.</param>
+        /// <param name="isLeftSide">Zda-li je štulp levý.</param>
+        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        public void InsertFalseMullion(string nrArt, bool isLeftSide, float dimX)
+        {
+            this.InsertFalseMullion(nrArt, isLeftSide, dimX, _frame.Color);
+        }
+
+        /// <summary>
+        /// Vloží štulp do prázdného pole. Pokud rám obsahuje více prázdných polí,
+        /// zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Artikl štulpu.</param>
+        /// <param name="isLeftSide">Zda-li je štulp levý.</param>
+        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        /// <param name="color">ID barvy.</param>
+        public void InsertFalseMullion(string nrArt, bool isLeftSide, float dimX, int color)
+        {
+            // TODO: tohle by mohlo vracet přímo ty dvě nové oblasti/křídla? (zabalené do nějakého objektu)
+            var area = GetEmptyArea();
+            area.InsertFalseMullion(nrArt, isLeftSide, dimX, color);
+        }
+
         internal IFalseMullion FindFalseMullion(ISash sash)
         {
             foreach (IFalseMullion falseMullion in _frame.FindParts(EProfileType.tPrzymyk, true))
@@ -173,5 +236,7 @@ namespace Ctor.Models
 
             return null;
         }
+
+        #endregion
     }
 }

@@ -61,11 +61,47 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot find area in frame {0} at point ({1}, {2})..
+        /// </summary>
+        public static string CannotFindAreaInFrame {
+            get {
+                return ResourceManager.GetString("CannotFindAreaInFrame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find area in position at point ({0}, {1})..
+        /// </summary>
+        public static string CannotFindAreaInPosition {
+            get {
+                return ResourceManager.GetString("CannotFindAreaInPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot find fittings type for given parameters..
         /// </summary>
         public static string CannotFindFittingsType {
             get {
                 return ResourceManager.GetString("CannotFindFittingsType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot insert frame..
+        /// </summary>
+        public static string CannotInsertFrame {
+            get {
+                return ResourceManager.GetString("CannotInsertFrame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot insert sash..
+        /// </summary>
+        public static string CannotInsertSash {
+            get {
+                return ResourceManager.GetString("CannotInsertSash", resourceCulture);
             }
         }
         
@@ -79,11 +115,47 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Frame does not contain empty area..
+        /// </summary>
+        public static string NoEmptyAreaInFrame {
+            get {
+                return ResourceManager.GetString("NoEmptyAreaInFrame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position does not contain empty area..
+        /// </summary>
+        public static string NoEmptyAreaInPosition {
+            get {
+                return ResourceManager.GetString("NoEmptyAreaInPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No fittings group with ID = {0}..
         /// </summary>
         public static string NoFittingsGroupWithID {
             get {
                 return ResourceManager.GetString("NoFittingsGroupWithID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position does not contain frame {0}..
+        /// </summary>
+        public static string NoFrameInPosition {
+            get {
+                return ResourceManager.GetString("NoFrameInPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frame {0} does not contain sash {1}..
+        /// </summary>
+        public static string NoSashInFrame {
+            get {
+                return ResourceManager.GetString("NoSashInFrame", resourceCulture);
             }
         }
         

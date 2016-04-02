@@ -137,6 +137,47 @@ namespace Ctor.Models
         }
 
         /// <summary>
+        /// Vrací oblast na zadané souřadnici.
+        /// </summary>
+        /// <param name="pointInAreaX">X-ová souřadnice bodu pro výběr pole.</param>
+        /// <param name="pointInAreaY">Y-ová souřadnice bodu pro výběr pole.</param>
+        public PositionArea GetArea(float pointInAreaX, float pointInAreaY)
+        {
+            CheckTopObject();
+
+            var area = _position.Data.GetArea(pointInAreaX, pointInAreaY);
+            if (area != null)
+            {
+                return new PositionArea(area, this);
+            }
+
+            string msg = string.Format(Strings.CannotFindAreaInPosition, pointInAreaX, pointInAreaY);
+            throw new ModelException(msg);
+        }
+
+        /// <summary>
+        /// Vrací prázdnou oblast. Pokud existuje více oblastí, zobrazí dialog pro výběr.
+        /// </summary>
+        public PositionArea GetEmptyArea()
+        {
+            CheckTopObject();
+
+            var areas = _position.Data.Areas.Where(a => a.Child == null).ToList();
+            if (areas.Count == 1)
+            {
+                return new PositionArea(areas[0], this);
+            }
+            else if (areas.Count > 1)
+            {
+                // TODO: zobrazit dialog; storno z dialogu by mělo vyvolat systemexit exception
+                // + udělat interface pro výběr oblastí (jeden dialog vládne všem);
+                // interface pak implementovat explicitně
+            }
+
+            throw new ModelException(Strings.NoEmptyAreaInPosition);
+        }
+
+        /// <summary>
         /// Vloží rámy do prázdných polí.
         /// </summary>
         /// <param name="type">ID typu.</param>
@@ -153,35 +194,6 @@ namespace Ctor.Models
         }
 
         /// <summary>
-        /// Vloží rám do prázdného pole, které obsahuje předaný bod.
-        /// </summary>
-        /// <param name="type">ID typu.</param>
-        /// <param name="color">ID barvy.</param>
-        /// <param name="pointInAreaX">X-ová souřadnice bodu pro výběr pole.</param>
-        /// <param name="pointInAreaY">Y-ová souřadnice bodu pro výběr pole.</param>
-        public Frame InsertFrame(int type, int color, float pointInAreaX, float pointInAreaY)
-        {
-            CheckTopObject();
-
-            foreach (IArea area in _position.Data.Areas.Where(a => a.Child == null))
-            {
-                if (area.Rectangle.Contains(pointInAreaX, pointInAreaY))
-                {
-                    var parameters = Parameters.ForFrameType(type, color);
-                    area.AddChild(EProfileType.tOsciez, parameters);
-
-                    IFrame frame = area.FindFrame();
-                    if (frame != null)
-                    {
-                        return new Frame(frame, this);
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// Vloží rám do prázdného pole. Pokud pozice obsahuje více prázdných polí, 
         /// zobrazí dialog pro výběr pole.
         /// </summary>
@@ -189,29 +201,8 @@ namespace Ctor.Models
         /// <param name="color">ID barvy.</param>
         public Frame InsertFrame(int type, int color)
         {
-            CheckTopObject();
-
-            var areas = _position.Data.Areas.Where(a => a.Child == null).ToList();
-
-            if (areas.Count == 1)
-            {
-                var area = areas[0];
-                var parameters = Parameters.ForFrameType(type, color);
-                area.AddChild(EProfileType.tOsciez, parameters);
-
-                IFrame frame = area.FindFrame();
-                int newColor = frame.Color;
-                if (frame != null)
-                {
-                    return new Frame(frame, this);
-                }
-            }
-            else
-            {
-                // TODO: zobrazit dialog
-            }
-
-            return null;
+            var area = this.GetEmptyArea();
+            return area.InsertFrame(type, color);
         }
 
         /// <summary>
@@ -240,7 +231,7 @@ namespace Ctor.Models
                 }
             }
 
-            return null;
+            throw new ModelException(string.Format(Strings.NoFrameInPosition, id));
         }
 
         /// <summary>
@@ -272,20 +263,6 @@ namespace Ctor.Models
         private void CheckTopObject()
         {
             if (_position.Data == null) throw new ModelException(Strings.NoTopObject);
-        }
-
-        internal void Areas(int type, int color)
-        {
-            var parameters = Parameters.ForFrameType(type, color);
-            // TODO: area lze dostat přes Rectangle
-            foreach (var a in _position.Data.Areas)
-            {
-                if (a.Rectangle.X > 400 & a.Rectangle.Y > 400)
-                {
-                    a.AddChild(EProfileType.tOsciez, parameters);
-
-                }
-            }
         }
     }
 }
