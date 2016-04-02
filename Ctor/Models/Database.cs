@@ -131,7 +131,7 @@ namespace Ctor.Models
             return _conn.ExecuteQuery(cmd);
         }
 
-        public int FindFittingType(int fittingsGroupID, FittingsFindArgs args)
+        public int FindFittingsType(int fittingsGroupID, FittingsFindArgs args)
         {
             var fittingsGroup = GetFittingsGroup(fittingsGroupID);
             return fittingsGroup.FindFittingType(args);

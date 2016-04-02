@@ -82,23 +82,28 @@
              VerticalAlignment="Top"
              >
       <sys:String xml:space="preserve">if pos.IsConstruction:
-    if pos.Width &lt; 400:
-        msg.Fail("Okno je příliš úzké.")
-    if pos.Height &lt; 500:
-        msg.Fail("Okno je příliš nízké.")
+    area = pos.GetEmptyArea()
+    if area.Width &lt; 400:
+        msg.Fail("Oblast pro okno je příliš úzká.")
+    if area.Height &lt; 500:
+        msg.Fail("Oblast pro okno je příliš nízká.")
 
-    winType = ctx.WindowsType
-    winColor = ctx.WindowsColor
+    typeID = ctx.WindowsType
+    colorID = ctx.WindowsColor
     glasspacket = ctx.Glasspacket
+    type = db.GetWindowType(typeID)
+    fittingsGroup = ctx.FittingsGroup
 
-    frame = pos.InsertFrame(winType, winColor)
-    sash = frame.InsertSash()
-    sash.InsertGlasspackets(glasspacket)
+    frame = area.InsertFrame(typeID, colorID)
+    frame.InsertFalseMullion(type.DefaultFalseMullion, False)
+    frame.InsertSashes()
+    frame.InsertGlasspackets(glasspacket)
     if ctx.InsertFittings:
-        args = sash.GetFittingsFindArgs()
-        #args.TiltOnly = True
-        fittingsType = db.FindFittingType(ctx.FittingsGroup, args)
-        sash.InsertFittings(fittingsType)
+        for sash in frame.GetSashes():
+            args = sash.GetFittingsFindArgs()
+            #args.TiltOnly = True
+            fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
+            sash.InsertFittings(fittingsTypeID)
 </sys:String>
     </TextBox>
   </Grid>

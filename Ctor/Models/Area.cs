@@ -25,6 +25,20 @@ namespace Ctor.Models
             get { return _area.Child == null; }
         }
 
+        /// <summary>
+        /// Vrací šířku oblasti.
+        /// </summary>
+        public float Width
+        {
+            get { return _area.Rectangle.Width; }
+        }
 
+        /// <summary>
+        /// Vrací výšku oblasti.
+        /// </summary>
+        public float Height
+        {
+            get { return _area.Rectangle.Height; }
+        }
     }
 }

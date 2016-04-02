@@ -47,6 +47,6 @@ namespace Ctor.Models
         /// </summary>
         /// <param name="fittingsGroupID">ID skupiny kování.</param>
         /// <param name="args">Parametry pro vyhledání kování.</param>
-        int FindFittingType(int fittingsGroupID, FittingsFindArgs args);
+        int FindFittingsType(int fittingsGroupID, FittingsFindArgs args);
     }
 }
