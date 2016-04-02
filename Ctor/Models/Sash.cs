@@ -53,15 +53,20 @@ namespace Ctor.Models
         /// <param name="type">ID typu kování.</param>
         public void InsertFittings(int type)
         {
-            this.InsertFittings(type, false);
+            this.InsertFittingsCore(type, null);
         }
 
         /// <summary>
         /// Vloží kování do křídla.
         /// </summary>
         /// <param name="type">ID typu kování.</param>
-        /// <param name="inversion">Zda-li použít inverzi. Pokud křídlo inverzi neumožňuje, parametr je ignorován.</param>
+        /// <param name="inversion">Zda-li použít inverzi.</param>
         public void InsertFittings(int type, bool inversion)
+        {
+            this.InsertFittingsCore(type, inversion);
+        }
+
+        private void InsertFittingsCore(int type, bool? inversion)
         {
             var doc = _sash.TopObject.Position.Document;
             bool oldUpdateTechnology = doc.UpdateTechnology;
@@ -76,7 +81,10 @@ namespace Ctor.Models
                 // ISash.FittingsInversionEnabled není implementováno
                 //if (_sash.FittingsInversionEnabled)
                 //{
-                _sash.FittingsInversion = inversion;
+                if (inversion.HasValue)
+                {
+                    _sash.FittingsInversion = inversion.Value;
+                }
                 //}
 
                 if (_sash.Update(true))
