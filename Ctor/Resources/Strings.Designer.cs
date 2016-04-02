@@ -88,6 +88,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot insert false mullion..
+        /// </summary>
+        public static string CannotInsertFalseMullion {
+            get {
+                return ResourceManager.GetString("CannotInsertFalseMullion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot insert frame..
         /// </summary>
         public static string CannotInsertFrame {
@@ -111,6 +120,15 @@ namespace Ctor.Resources {
         public static string InsertFittings {
             get {
                 return ResourceManager.GetString("InsertFittings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This area has been invalidated..
+        /// </summary>
+        public static string InvalidArea {
+            get {
+                return ResourceManager.GetString("InvalidArea", resourceCulture);
             }
         }
         

@@ -1,4 +1,5 @@
 ﻿using System;
+using Ctor.Resources;
 using WHOkna;
 
 namespace Ctor.Models
@@ -8,6 +9,7 @@ namespace Ctor.Models
     /// </summary>
     public abstract class Area
     {
+        private bool _isInvalid;
         protected readonly IArea _area;
 
         internal Area(IArea area)
@@ -22,7 +24,35 @@ namespace Ctor.Models
         /// </summary>
         public bool IsEmpty
         {
-            get { return _area.Child == null; }
+            get
+            {
+                CheckInvalidation();
+                return _area.Child == null;
+            }
+        }
+
+        /// <summary>
+        /// Vrací true, pokud byla tato oblast zneplatněna (po vložení sloupku, štulpu).
+        /// </summary>
+        public bool IsInvalid
+        {
+            get { return _isInvalid; }
+        }
+
+        /// <summary>
+        /// Ověří, zda-li oblast není zneplatněna.
+        /// </summary>
+        protected void CheckInvalidation()
+        {
+            if (_isInvalid) throw new ModelException(Strings.InvalidArea);
+        }
+
+        /// <summary>
+        /// Zneplatní oblast.
+        /// </summary>
+        protected void Invalidate()
+        {
+            _isInvalid = true;
         }
 
         /// <summary>
@@ -30,7 +60,11 @@ namespace Ctor.Models
         /// </summary>
         public float Width
         {
-            get { return _area.Rectangle.Width; }
+            get
+            {
+                CheckInvalidation();
+                return _area.Rectangle.Width;
+            }
         }
 
         /// <summary>
@@ -38,7 +72,11 @@ namespace Ctor.Models
         /// </summary>
         public float Height
         {
-            get { return _area.Rectangle.Height; }
+            get
+            {
+                CheckInvalidation();
+                return _area.Rectangle.Height;
+            }
         }
     }
 }

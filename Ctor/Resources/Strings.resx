@@ -189,4 +189,10 @@
   <data name="NoEmptyAreaInFrame" xml:space="preserve">
     <value>Frame does not contain empty area.</value>
   </data>
+  <data name="InvalidArea" xml:space="preserve">
+    <value>This area has been invalidated.</value>
+  </data>
+  <data name="CannotInsertFalseMullion" xml:space="preserve">
+    <value>Cannot insert false mullion.</value>
+  </data>
 </root>

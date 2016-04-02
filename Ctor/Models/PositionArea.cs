@@ -23,6 +23,8 @@ namespace Ctor.Models
         /// <param name="color">ID barvy.</param>
         public Frame InsertFrame(int type, int color)
         {
+            CheckInvalidation();
+
             var parameters = Parameters.ForFrameType(type, color);
             _area.AddChild(EProfileType.tOsciez, parameters);
 

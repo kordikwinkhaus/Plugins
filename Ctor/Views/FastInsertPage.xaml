@@ -96,7 +96,6 @@
 
     frame = area.InsertFrame(typeID, colorID)
     frame.InsertFalseMullion(type.DefaultFalseMullion, False)
-    frame.InsertSashes()
     frame.InsertGlasspackets(glasspacket)
     if ctx.InsertFittings:
         for sash in frame.GetSashes():

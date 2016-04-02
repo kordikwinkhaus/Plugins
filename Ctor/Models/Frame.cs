@@ -186,18 +186,6 @@ namespace Ctor.Models
         }
 
         /// <summary>
-        /// Vloží štulp do prázdného pole na střed. Pokud rám obsahuje více prázdných polí,
-        /// zobrazí dialog pro výběr pole.
-        /// </summary>
-        /// <param name="nrArt">Artikl štulpu.</param>
-        /// <param name="isLeftSide">Zda-li je štulp levý.</param>
-        /// <param name="color">ID barvy.</param>
-        public void InsertFalseMullion(string nrArt, bool isLeftSide, int color)
-        {
-            this.InsertFalseMullion(nrArt, isLeftSide, 0.5f, color);
-        }
-
-        /// <summary>
         /// Vloží štulp do prázdného pole. Pokud rám obsahuje více prázdných polí,
         /// zobrazí dialog pro výběr pole.
         /// </summary>
@@ -219,7 +207,6 @@ namespace Ctor.Models
         /// <param name="color">ID barvy.</param>
         public void InsertFalseMullion(string nrArt, bool isLeftSide, float dimX, int color)
         {
-            // TODO: tohle by mohlo vracet přímo ty dvě nové oblasti/křídla? (zabalené do nějakého objektu)
             var area = GetEmptyArea();
             area.InsertFalseMullion(nrArt, isLeftSide, dimX, color);
         }
