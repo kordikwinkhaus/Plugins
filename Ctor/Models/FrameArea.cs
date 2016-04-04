@@ -45,7 +45,7 @@ namespace Ctor.Models
         /// Po vložení štulpu je tato oblast zneplatněna.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu štulpu.</param>
-        /// <param name="isLeftSide">Zda-li je štulp levý.</param>
+        /// <param name="isLeftSide">Strana montáže štulpu.</param>
         public FalseMullionInsertionResult InsertFalseMullion(string nrArt, bool isLeftSide)
         {
             return this.InsertFalseMullion(nrArt, isLeftSide, 0.5f);
@@ -56,7 +56,7 @@ namespace Ctor.Models
         /// Po vložení štulpu je tato oblast zneplatněna.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu štulpu.</param>
-        /// <param name="isLeftSide">Zda-li je štulp levý.</param>
+        /// <param name="isLeftSide">Strana montáže štulpu.</param>
         /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
         public FalseMullionInsertionResult InsertFalseMullion(string nrArt, bool isLeftSide, float dimX)
         {
@@ -68,7 +68,7 @@ namespace Ctor.Models
         /// Po vložení štulpu je tato oblast zneplatněna.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu štulpu.</param>
-        /// <param name="isLeftSide">Zda-li je štulp levý.</param>
+        /// <param name="isLeftSide">Strana montáže štulpu.</param>
         /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
         /// <param name="color">ID barvy.</param>
         public FalseMullionInsertionResult InsertFalseMullion(string nrArt, bool isLeftSide, float dimX, int color)
@@ -123,9 +123,9 @@ namespace Ctor.Models
         /// Po vložení sloupku je tato oblast zneplatněna.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
-        public void InsertHorizontalMullion(string nrArt)
+        public MullionInsertionResult<FrameArea> InsertHorizontalMullion(string nrArt)
         {
-            this.InsertHorizontalMullion(nrArt, 0.5f);
+            return this.InsertHorizontalMullion(nrArt, 0.5f);
         }
 
         /// <summary>
@@ -134,9 +134,9 @@ namespace Ctor.Models
         /// </summary>
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
         /// <param name="dimY">Relativní souřadnice v ose Y vzhledem k výšce pole.</param>
-        public void InsertHorizontalMullion(string nrArt, float dimY)
+        public MullionInsertionResult<FrameArea> InsertHorizontalMullion(string nrArt, float dimY)
         {
-            this.InsertHorizontalMullion(nrArt, dimY, _parent.Data.Color);
+            return this.InsertHorizontalMullion(nrArt, dimY, _parent.Data.Color);
         }
 
         /// <summary>
@@ -146,9 +146,9 @@ namespace Ctor.Models
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
         /// <param name="dimY">Relativní souřadnice v ose Y vzhledem k výšce pole.</param>
         /// <param name="color">ID barvy.</param>
-        public void InsertHorizontalMullion(string nrArt, float dimY, int color)
+        public MullionInsertionResult<FrameArea> InsertHorizontalMullion(string nrArt, float dimY, int color)
         {
-            this.InsertMullionCore(nrArt, dimY, color, EDir.dLeft);
+            return this.InsertMullionCore<FrameArea>(nrArt, dimY, color, EDir.dLeft);
         }
 
         /// <summary>
@@ -156,9 +156,9 @@ namespace Ctor.Models
         /// Po vložení sloupku je tato oblast zneplatněna.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
-        public void InsertVerticalMullion(string nrArt)
+        public MullionInsertionResult<FrameArea> InsertVerticalMullion(string nrArt)
         {
-            this.InsertVerticalMullion(nrArt, 0.5f);
+            return this.InsertVerticalMullion(nrArt, 0.5f);
         }
 
         /// <summary>
@@ -167,9 +167,9 @@ namespace Ctor.Models
         /// </summary>
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
         /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
-        public void InsertVerticalMullion(string nrArt, float dimX)
+        public MullionInsertionResult<FrameArea> InsertVerticalMullion(string nrArt, float dimX)
         {
-            this.InsertVerticalMullion(nrArt, dimX, _parent.Data.Color);
+            return this.InsertVerticalMullion(nrArt, dimX, _parent.Data.Color);
         }
 
         /// <summary>
@@ -179,12 +179,12 @@ namespace Ctor.Models
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
         /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
         /// <param name="color">ID barvy.</param>
-        public void InsertVerticalMullion(string nrArt, float dimX, int color)
+        public MullionInsertionResult<FrameArea> InsertVerticalMullion(string nrArt, float dimX, int color)
         {
-            this.InsertMullionCore(nrArt, dimX, color, EDir.dTop);
+            return this.InsertMullionCore<FrameArea>(nrArt, dimX, color, EDir.dTop);
         }
 
-        private void InsertMullionCore(string nrArt, float dim, int color, EDir direction)
+        private MullionInsertionResult<TArea> InsertMullionCore<TArea>(string nrArt, float dim, int color, EDir direction) where TArea : Area
         {
             CheckInvalidation();
 
@@ -218,6 +218,21 @@ namespace Ctor.Models
                 top.Invalidate();
 
                 this.Invalidate();
+
+                var result = new MullionInsertionResult<TArea>();
+
+                foreach (IBar bar in _parent.Data.FindParts(EProfileType.tSlupek, true))
+                {
+                    if (bar.Rectangle.Contains(insertionPoint))
+                    {
+                        result.Mullion = new Mullion(bar);
+                        break;
+                    }
+                }
+
+                // TODO: find areas
+
+                return result;
             }
             else
             {

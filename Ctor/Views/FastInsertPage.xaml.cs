@@ -239,9 +239,9 @@ namespace Ctor.Views
     frame = area.InsertFrame(typeID, colorID)
     x = frame.Left + 200;
     y = (frame.Top + frame.Bottom) / 2.0
-    frame.InsertVerticalMullion('14842', 0.6666)
+    mir = frame.InsertVerticalMullion('14842', 0.6666)
     area = frame.GetArea(x, y)
-    area.InsertFalseMullion(type.DefaultFalseMullion, True)
+    fir = area.InsertFalseMullion(type.DefaultFalseMullion, True)
     frame.InsertSashes()
     frame.InsertGlasspackets(glasspacket)
     if ctx.InsertFittings:
@@ -251,7 +251,10 @@ namespace Ctor.Views
             if sash.ID == 3:
                 sash.InsertFittings(fittingsTypeID, True)
             else:
-                sash.InsertFittings(fittingsTypeID)";
+                sash.InsertFittings(fittingsTypeID)
+    fir.FalseMullion.InsertionPointX -= 100;
+    mir.Mullion.InsertionPointX += 100;
+";
         }
     }
 }

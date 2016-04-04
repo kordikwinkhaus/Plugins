@@ -1,12 +1,11 @@
-﻿using System.Drawing;
-using WHOkna;
+﻿using WHOkna;
 
 namespace Ctor.Models
 {
     /// <summary>
     /// Objekt štulpu.
     /// </summary>
-    public class FalseMullion : Part
+    public class FalseMullion : Mullion
     {
         private readonly IFalseMullion _falseMullion;
 
@@ -17,12 +16,12 @@ namespace Ctor.Models
         }
 
         /// <summary>
-        /// Bod vložení štulpu.
+        /// Strana montáže štulpu.
         /// </summary>
-        public PointF InsertionPoint
+        public bool IsLeftSide
         {
-            get { return _falseMullion.Offset; }
-            set { _falseMullion.Offset = value; }
+            get { return _falseMullion.MountSide == EMountSide.msLeft; }
+            set { _falseMullion.MountSide = (value) ? EMountSide.msLeft : EMountSide.msRight; }
         }
     }
 }

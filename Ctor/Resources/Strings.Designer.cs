@@ -61,6 +61,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot change insertion point..
+        /// </summary>
+        public static string CannotChangeInsertionPoint {
+            get {
+                return ResourceManager.GetString("CannotChangeInsertionPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot find area in frame {0} at point ({1}, {2})..
         /// </summary>
         public static string CannotFindAreaInFrame {

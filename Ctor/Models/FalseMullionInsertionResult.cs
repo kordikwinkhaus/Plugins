@@ -20,7 +20,7 @@
         public Sash RightSash { get; internal set; }
 
         /// <summary>
-        /// Štulp.
+        /// Vložený štulp.
         /// </summary>
         public FalseMullion FalseMullion { get; internal set; }
     }

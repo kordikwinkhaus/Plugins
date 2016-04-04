@@ -73,6 +73,7 @@
     <Compile Include="Models\Commands.cs" />
     <Compile Include="Models\CompilationException.cs" />
     <Compile Include="Models\FalseMullion.cs" />
+    <Compile Include="Models\FalseMullionInsertionResult.cs" />
     <Compile Include="Models\FittingsFindArgs.cs" />
     <Compile Include="Models\FittingsGroup.cs" />
     <Compile Include="Models\Frame.cs" />
@@ -83,6 +84,8 @@
     <Compile Include="Models\IFrameBaseExtensions.cs" />
     <Compile Include="Models\Msg.cs" />
     <Compile Include="Models\ModelException.cs" />
+    <Compile Include="Models\Mullion.cs" />
+    <Compile Include="Models\MullionInsertionResult.cs" />
     <Compile Include="Models\Parameters.cs" />
     <Compile Include="Models\Part.cs" />
     <Compile Include="Models\Position.cs" />
