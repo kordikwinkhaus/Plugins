@@ -65,6 +65,16 @@
       <WrapPanel>
         <Button Click="Clear_Click">Clear</Button>
         <Button Click="Mirror_Click">Mirror</Button>
+        <Button Click="Fix_Click">FIX</Button>
+        <Button Click="FixVS_Click">FIX+VS</Button>
+        <Button Click="FixHS_Click">FIX+HS</Button>
+        <Button Click="_1kl_Click">1kl</Button>
+        <Button Click="_1kp_Click">1kp</Button>
+        <Button Click="_1ks_Click">1ks</Button>
+        <Button Click="_2kl_Click">2kl</Button>
+        <Button Click="_2kp_Click">2kp</Button>
+        <Button Click="_3kl_Click">3kl</Button>
+        <Button Click="_3kp_Click">3kp</Button>
       </WrapPanel>
 
       <Button Command="{Binding RunCommand}"
