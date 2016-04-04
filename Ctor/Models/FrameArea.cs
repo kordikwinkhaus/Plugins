@@ -46,9 +46,9 @@ namespace Ctor.Models
         /// </summary>
         /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Zda-li je štulp levý.</param>
-        public void InsertFalseMullion(string nrArt, bool isLeftSide)
+        public FalseMullionInsertionResult InsertFalseMullion(string nrArt, bool isLeftSide)
         {
-            this.InsertFalseMullion(nrArt, isLeftSide, 0.5f);
+            return this.InsertFalseMullion(nrArt, isLeftSide, 0.5f);
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace Ctor.Models
         /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Zda-li je štulp levý.</param>
         /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
-        public void InsertFalseMullion(string nrArt, bool isLeftSide, float dimX)
+        public FalseMullionInsertionResult InsertFalseMullion(string nrArt, bool isLeftSide, float dimX)
         {
-            this.InsertFalseMullion(nrArt, isLeftSide, dimX, _parent.Data.Color);
+            return this.InsertFalseMullion(nrArt, isLeftSide, dimX, _parent.Data.Color);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Ctor.Models
         /// <param name="isLeftSide">Zda-li je štulp levý.</param>
         /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
         /// <param name="color">ID barvy.</param>
-        public void InsertFalseMullion(string nrArt, bool isLeftSide, float dimX, int color)
+        public FalseMullionInsertionResult InsertFalseMullion(string nrArt, bool isLeftSide, float dimX, int color)
         {
             CheckInvalidation();
 
@@ -94,11 +94,17 @@ namespace Ctor.Models
 
                 this.Invalidate();
 
+                var result = new FalseMullionInsertionResult();
                 var area1 = _parent.GetArea((origRectangle.Left + insertionPoint.X) / 2, insertionPoint.Y);
                 var area2 = _parent.GetArea((origRectangle.Right + insertionPoint.X) / 2, insertionPoint.Y);
 
-                area1.InsertSash();
-                area2.InsertSash();
+                result.LeftSash = area1.InsertSash();
+                result.RightSash = area2.InsertSash();
+
+                IFalseMullion falseMullion = _parent.FindFalseMullion(result.LeftSash.Data);
+                result.FalseMullion = new FalseMullion(falseMullion);
+
+                return result;
             }
             else
             {

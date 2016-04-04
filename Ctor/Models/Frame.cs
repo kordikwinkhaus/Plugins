@@ -180,10 +180,10 @@ namespace Ctor.Models
         /// </summary>
         /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Zda-li je štulp levý.</param>
-        public void InsertFalseMullion(string nrArt, bool isLeftSide)
+        public FalseMullionInsertionResult InsertFalseMullion(string nrArt, bool isLeftSide)
         {
             var area = GetEmptyArea();
-            area.InsertFalseMullion(nrArt, isLeftSide);
+            return area.InsertFalseMullion(nrArt, isLeftSide);
         }
 
         /// <summary>
@@ -193,10 +193,10 @@ namespace Ctor.Models
         /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Zda-li je štulp levý.</param>
         /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
-        public void InsertFalseMullion(string nrArt, bool isLeftSide, float dimX)
+        public FalseMullionInsertionResult InsertFalseMullion(string nrArt, bool isLeftSide, float dimX)
         {
             var area = GetEmptyArea();
-            area.InsertFalseMullion(nrArt, isLeftSide, dimX);
+            return area.InsertFalseMullion(nrArt, isLeftSide, dimX);
         }
 
         /// <summary>
@@ -207,10 +207,10 @@ namespace Ctor.Models
         /// <param name="isLeftSide">Zda-li je štulp levý.</param>
         /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
         /// <param name="color">ID barvy.</param>
-        public void InsertFalseMullion(string nrArt, bool isLeftSide, float dimX, int color)
+        public FalseMullionInsertionResult InsertFalseMullion(string nrArt, bool isLeftSide, float dimX, int color)
         {
             var area = GetEmptyArea();
-            area.InsertFalseMullion(nrArt, isLeftSide, dimX, color);
+            return area.InsertFalseMullion(nrArt, isLeftSide, dimX, color);
         }
 
         internal IFalseMullion FindFalseMullion(ISash sash)

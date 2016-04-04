@@ -22,6 +22,11 @@ namespace Ctor.Models
             _parent = parent;
         }
 
+        public ISash Data
+        {
+            get { return _sash; }
+        }
+
         /// <summary>
         /// Vrací rám, ve kterém je toto křídlo.
         /// </summary>
