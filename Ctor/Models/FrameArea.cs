@@ -38,13 +38,13 @@ namespace Ctor.Models
             throw new ModelException(Strings.CannotInsertSash);
         }
 
-        #region Insert mullion
+        #region Insert false mullion
 
         /// <summary>
-        /// Vloží štulp do prázdného pole na střed. Pokud rám obsahuje více prázdných polí,
-        /// zobrazí dialog pro výběr pole.
+        /// Vloží štulp v barvě rámu do tohoto pole na střed. 
+        /// Po vložení štulpu je tato oblast zneplatněna.
         /// </summary>
-        /// <param name="nrArt">Artikl štulpu.</param>
+        /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Zda-li je štulp levý.</param>
         public void InsertFalseMullion(string nrArt, bool isLeftSide)
         {
@@ -52,10 +52,10 @@ namespace Ctor.Models
         }
 
         /// <summary>
-        /// Vloží štulp do prázdného pole. Pokud rám obsahuje více prázdných polí,
-        /// zobrazí dialog pro výběr pole.
+        /// Vloží štulp v barvě rámu do tohoto pole. 
+        /// Po vložení štulpu je tato oblast zneplatněna.
         /// </summary>
-        /// <param name="nrArt">Artikl štulpu.</param>
+        /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Zda-li je štulp levý.</param>
         /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
         public void InsertFalseMullion(string nrArt, bool isLeftSide, float dimX)
@@ -64,10 +64,10 @@ namespace Ctor.Models
         }
 
         /// <summary>
-        /// Vloží štulp do prázdného pole. Pokud rám obsahuje více prázdných polí,
-        /// zobrazí dialog pro výběr pole. Po vložení štulpu je tato oblast zneplatněna.
+        /// Vloží štulp do tohoto pole. 
+        /// Po vložení štulpu je tato oblast zneplatněna.
         /// </summary>
-        /// <param name="nrArt">Artikl štulpu.</param>
+        /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Zda-li je štulp levý.</param>
         /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
         /// <param name="color">ID barvy.</param>
@@ -76,8 +76,6 @@ namespace Ctor.Models
             CheckInvalidation();
 
             if (dimX <= 0 || 1 <= dimX) throw new ArgumentOutOfRangeException();
-            if (string.IsNullOrEmpty(nrArt)) throw new ArgumentNullException(nameof(nrArt));
-            if (color <= 0) throw new ArgumentOutOfRangeException(nameof(color));
 
             var origRectangle = _area.Rectangle;
 
@@ -107,6 +105,119 @@ namespace Ctor.Models
                 top.Undo(Strings.CannotInsertFalseMullion);
                 top.Invalidate();
                 throw new ModelException(Strings.CannotInsertFalseMullion);
+            }
+        }
+
+        #endregion
+
+        #region Insert mullion
+
+        /// <summary>
+        /// Vloží horizontální sloupek v barvě rámu do tohoto pole na střed.
+        /// Po vložení sloupku je tato oblast zneplatněna.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu sloupku.</param>
+        public void InsertHorizontalMullion(string nrArt)
+        {
+            this.InsertHorizontalMullion(nrArt, 0.5f);
+        }
+
+        /// <summary>
+        /// Vloží horizontální sloupek v barvě rámu do tohoto pole.
+        /// Po vložení sloupku je tato oblast zneplatněna.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu sloupku.</param>
+        /// <param name="dimY">Relativní souřadnice v ose Y vzhledem k výšce pole.</param>
+        public void InsertHorizontalMullion(string nrArt, float dimY)
+        {
+            this.InsertHorizontalMullion(nrArt, dimY, _parent.Data.Color);
+        }
+
+        /// <summary>
+        /// Vloží horizontální sloupek do tohoto pole.
+        /// Po vložení sloupku je tato oblast zneplatněna.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu sloupku.</param>
+        /// <param name="dimY">Relativní souřadnice v ose Y vzhledem k výšce pole.</param>
+        /// <param name="color">ID barvy.</param>
+        public void InsertHorizontalMullion(string nrArt, float dimY, int color)
+        {
+            this.InsertMullionCore(nrArt, dimY, color, EDir.dLeft);
+        }
+
+        /// <summary>
+        /// Vloží vertikální sloupek v barvě rámu do tohoto pole na střed.
+        /// Po vložení sloupku je tato oblast zneplatněna.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu sloupku.</param>
+        public void InsertVerticalMullion(string nrArt)
+        {
+            this.InsertVerticalMullion(nrArt, 0.5f);
+        }
+
+        /// <summary>
+        /// Vloží vertikální sloupek v barvě rámu do tohoto pole.
+        /// Po vložení sloupku je tato oblast zneplatněna.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu sloupku.</param>
+        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        public void InsertVerticalMullion(string nrArt, float dimX)
+        {
+            this.InsertVerticalMullion(nrArt, dimX, _parent.Data.Color);
+        }
+
+        /// <summary>
+        /// Vloží vertikální sloupek do tohoto pole.
+        /// Po vložení sloupku je tato oblast zneplatněna.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu sloupku.</param>
+        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        /// <param name="color">ID barvy.</param>
+        public void InsertVerticalMullion(string nrArt, float dimX, int color)
+        {
+            this.InsertMullionCore(nrArt, dimX, color, EDir.dTop);
+        }
+
+        private void InsertMullionCore(string nrArt, float dim, int color, EDir direction)
+        {
+            CheckInvalidation();
+
+            if (dim <= 0 || 1 <= dim) throw new ArgumentOutOfRangeException();
+
+            var parameters = Parameters.ForMullion(nrArt, color);
+            var insertionPoint = new System.Drawing.PointF();
+            float dimX = 0.5f, dimY = 0.5f;
+            switch (direction)
+            {
+                case EDir.dTop:
+                    dimX = dim;
+                    break;
+
+                case EDir.dLeft:
+                    dimY = dim;
+                    break;
+
+                default:
+                    throw new ModelException(string.Format(Strings.InvalidMullionOrientation, direction));
+            }
+            insertionPoint.X = _area.Rectangle.X + (_area.Rectangle.Width * dimX);
+            insertionPoint.Y = _area.Rectangle.Y + (_area.Rectangle.Height * dimY);
+
+            _area.AddBar(EProfileType.tSlupek, direction, insertionPoint, parameters);
+
+            var top = _area.TopObject;
+            if (top.Update(true))
+            {
+                top.CheckPoint();
+                top.Invalidate();
+
+                this.Invalidate();
+            }
+            else
+            {
+                top.Undo(Strings.CannotInsertMullion);
+                top.Invalidate();
+                throw new ModelException(Strings.CannotInsertMullion);
             }
         }
 

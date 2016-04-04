@@ -1,5 +1,4 @@
-﻿using System;
-using Ctor.Resources;
+﻿using Ctor.Resources;
 using WHOkna;
 
 namespace Ctor.Models
@@ -7,15 +6,14 @@ namespace Ctor.Models
     /// <summary>
     /// Základní objekt plochy.
     /// </summary>
-    public abstract class Area
+    public abstract class Area : Part
     {
         private bool _isInvalid;
         protected readonly IArea _area;
 
         internal Area(IArea area)
+            : base(area)
         {
-            if (area == null) throw new ArgumentNullException(nameof(area));
-
             _area = area;
         }
 
@@ -58,24 +56,72 @@ namespace Ctor.Models
         /// <summary>
         /// Vrací šířku oblasti.
         /// </summary>
-        public float Width
+        public override float Width
         {
             get
             {
                 CheckInvalidation();
-                return _area.Rectangle.Width;
+                return base.Width;
             }
         }
 
         /// <summary>
         /// Vrací výšku oblasti.
         /// </summary>
-        public float Height
+        public override float Height
         {
             get
             {
                 CheckInvalidation();
-                return _area.Rectangle.Height;
+                return base.Height;
+            }
+        }
+
+        /// <summary>
+        /// Vrací souřadnici levé hrany.
+        /// </summary>
+        public override float Left
+        {
+            get
+            {
+                CheckInvalidation();
+                return base.Left;
+            }
+        }
+
+        /// <summary>
+        /// Vrací souřadnici pravé hrany.
+        /// </summary>
+        public override float Right
+        {
+            get
+            {
+                CheckInvalidation();
+                return base.Right;
+            }
+        }
+
+        /// <summary>
+        /// Vrací souřadinici horní hrany.
+        /// </summary>
+        public override float Top
+        {
+            get
+            {
+                CheckInvalidation();
+                return base.Top;
+            }
+        }
+
+        /// <summary>
+        /// Vrací souřadnici spodní hrany.
+        /// </summary>
+        public override float Bottom
+        {
+            get
+            {
+                CheckInvalidation();
+                return base.Bottom;
             }
         }
     }

@@ -195,4 +195,10 @@
   <data name="CannotInsertFalseMullion" xml:space="preserve">
     <value>Cannot insert false mullion.</value>
   </data>
+  <data name="InvalidMullionOrientation" xml:space="preserve">
+    <value>Mullion orientation '{0}' is not supported.</value>
+  </data>
+  <data name="CannotInsertMullion" xml:space="preserve">
+    <value>Cannot insert mullion.</value>
+  </data>
 </root>

@@ -36,5 +36,16 @@ namespace Ctor.Models
             parameters.Add("Side", isLeftSide);
             return parameters;
         }
+
+        internal static Dictionary<string, object> ForMullion(string nrArt, int color)
+        {
+            if (string.IsNullOrEmpty(nrArt)) throw new ArgumentNullException(nameof(nrArt));
+            if (color <= 0) throw new ArgumentOutOfRangeException(nameof(color));
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("Article", nrArt);
+            parameters.Add("Color", color);
+            return parameters;
+        }
     }
 }

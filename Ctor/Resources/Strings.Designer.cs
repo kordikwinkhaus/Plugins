@@ -106,6 +106,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot insert mullion..
+        /// </summary>
+        public static string CannotInsertMullion {
+            get {
+                return ResourceManager.GetString("CannotInsertMullion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot insert sash..
         /// </summary>
         public static string CannotInsertSash {
@@ -129,6 +138,15 @@ namespace Ctor.Resources {
         public static string InvalidArea {
             get {
                 return ResourceManager.GetString("InvalidArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mullion orientation &apos;{0}&apos; is not supported..
+        /// </summary>
+        public static string InvalidMullionOrientation {
+            get {
+                return ResourceManager.GetString("InvalidMullionOrientation", resourceCulture);
             }
         }
         

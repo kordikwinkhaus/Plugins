@@ -9,14 +9,14 @@ namespace Ctor.Models
     /// <summary>
     /// Objekt rámu.
     /// </summary>
-    public class Frame
+    public class Frame : Part
     {
         private readonly IFrame _frame;
         private readonly Position _parent;
 
         internal Frame(IFrame frame, Position parent)
+            : base(frame)
         {
-            if (frame == null) throw new ArgumentNullException(nameof(frame));
             if (parent == null) throw new ArgumentNullException(nameof(parent));
 
             _frame = frame;
@@ -175,33 +175,35 @@ namespace Ctor.Models
         #region FalseMullion(s)
 
         /// <summary>
-        /// Vloží štulp do prázdného pole na střed. Pokud rám obsahuje více prázdných polí,
-        /// zobrazí dialog pro výběr pole.
+        /// Vloží štulp v barvě rámu do prázdného pole na střed. 
+        /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
         /// </summary>
-        /// <param name="nrArt">Artikl štulpu.</param>
+        /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Zda-li je štulp levý.</param>
         public void InsertFalseMullion(string nrArt, bool isLeftSide)
         {
-            this.InsertFalseMullion(nrArt, isLeftSide, 0.5f);
+            var area = GetEmptyArea();
+            area.InsertFalseMullion(nrArt, isLeftSide);
         }
 
         /// <summary>
-        /// Vloží štulp do prázdného pole. Pokud rám obsahuje více prázdných polí,
-        /// zobrazí dialog pro výběr pole.
+        /// Vloží štulp v barvě rámu do prázdného pole. 
+        /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
         /// </summary>
-        /// <param name="nrArt">Artikl štulpu.</param>
+        /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Zda-li je štulp levý.</param>
         /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
         public void InsertFalseMullion(string nrArt, bool isLeftSide, float dimX)
         {
-            this.InsertFalseMullion(nrArt, isLeftSide, dimX, _frame.Color);
+            var area = GetEmptyArea();
+            area.InsertFalseMullion(nrArt, isLeftSide, dimX);
         }
 
         /// <summary>
-        /// Vloží štulp do prázdného pole. Pokud rám obsahuje více prázdných polí,
-        /// zobrazí dialog pro výběr pole.
+        /// Vloží štulp do prázdného pole. 
+        /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
         /// </summary>
-        /// <param name="nrArt">Artikl štulpu.</param>
+        /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Zda-li je štulp levý.</param>
         /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
         /// <param name="color">ID barvy.</param>
@@ -222,6 +224,82 @@ namespace Ctor.Models
             }
 
             return null;
+        }
+
+        #endregion
+
+        #region InsertMullion
+
+        /// <summary>
+        /// Vloží horizontální sloupek v barvě rámu do prázdného pole na střed.
+        /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu sloupku.</param>
+        public void InsertHorizontalMullion(string nrArt)
+        {
+            var area = GetEmptyArea();
+            area.InsertHorizontalMullion(nrArt);
+        }
+
+        /// <summary>
+        /// Vloží horizontální sloupek v barvě rámu do prázdného pole.
+        /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu sloupku.</param>
+        /// <param name="dimY">Relativní souřadnice v ose Y vzhledem k výšce pole.</param>
+        public void InsertHorizontalMullion(string nrArt, float dimY)
+        {
+            var area = GetEmptyArea();
+            area.InsertHorizontalMullion(nrArt, dimY);
+        }
+
+        /// <summary>
+        /// Vloží horizontální sloupek do prázdného pole.
+        /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu sloupku.</param>
+        /// <param name="dimY">Relativní souřadnice v ose Y vzhledem k výšce pole.</param>
+        /// <param name="color">ID barvy.</param>
+        public void InsertHorizontalMullion(string nrArt, float dimY, int color)
+        {
+            var area = GetEmptyArea();
+            area.InsertHorizontalMullion(nrArt, dimY, color);
+        }
+
+        /// <summary>
+        /// Vloží vertikální sloupek v barvě rámu do prázdného pole na střed.
+        /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu sloupku.</param>
+        public void InsertVerticalMullion(string nrArt)
+        {
+            var area = GetEmptyArea();
+            area.InsertVerticalMullion(nrArt);
+        }
+
+        /// <summary>
+        /// Vloží vertikální sloupek v barvě rámu do prázdného pole.
+        /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu sloupku.</param>
+        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        public void InsertVerticalMullion(string nrArt, float dimX)
+        {
+            var area = GetEmptyArea();
+            area.InsertVerticalMullion(nrArt, dimX);
+        }
+
+        /// <summary>
+        /// Vloží vertikální sloupek do prázdného pole.
+        /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu sloupku.</param>
+        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        /// <param name="color">ID barvy.</param>
+        public void InsertVerticalMullion(string nrArt, float dimX, int color)
+        {
+            var area = GetEmptyArea();
+            area.InsertVerticalMullion(nrArt, dimX, color);
         }
 
         #endregion

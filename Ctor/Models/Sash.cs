@@ -31,6 +31,14 @@ namespace Ctor.Models
         }
 
         /// <summary>
+        /// Vrací ID křídla (pořadová čísla od jedné).
+        /// </summary>
+        public int ID
+        {
+            get { return _sash.GetNumber(EProfileType.tSkrz); }
+        }
+
+        /// <summary>
         /// Vloží zadaný paket do prázdných polí křídla.
         /// </summary>
         /// <param name="nrArt">Číslo výrobku paketu.</param>
