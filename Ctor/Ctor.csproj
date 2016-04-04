@@ -83,6 +83,7 @@
     <Compile Include="Models\Msg.cs" />
     <Compile Include="Models\ModelException.cs" />
     <Compile Include="Models\Parameters.cs" />
+    <Compile Include="Models\Part.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\PositionArea.cs" />
     <Compile Include="Models\PythonScriptEngine.cs" />
