@@ -170,5 +170,13 @@ namespace Ctor.Models
 
             return result;
         }
+
+        /// <summary>
+        /// Zobrazí standardní dialog WH Oken pro výběr kování.
+        /// </summary>
+        public void ShowFittingsDialog()
+        {
+            _sash.OnCommand(Commands.ShowFittingsDialog);
+        }
     }
 }
