@@ -76,7 +76,7 @@ namespace Ctor.Models
         {
             get
             {
-                string nrArt = this.All.SingleOrDefault();
+                string nrArt = this.All.FirstOrDefault();
                 if (string.IsNullOrEmpty(nrArt)) throw new ModelException(Strings.CannotFindMullionNrArt);
                 return nrArt;
             }

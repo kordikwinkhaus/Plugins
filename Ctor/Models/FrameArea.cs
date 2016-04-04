@@ -192,6 +192,7 @@ namespace Ctor.Models
 
             var parameters = Parameters.ForMullion(nrArt, color);
             var insertionPoint = new System.Drawing.PointF();
+            var origRectangle = _area.Rectangle;
             float dimX = 0.5f, dimY = 0.5f;
             switch (direction)
             {
@@ -230,7 +231,9 @@ namespace Ctor.Models
                     }
                 }
 
-                // TODO: find areas
+                // TODO: dořešit typy
+                result.Area1 = _parent.GetArea((origRectangle.X + insertionPoint.X) / 2.0f, (origRectangle.Y + insertionPoint.Y) / 2.0f) as TArea;
+                result.Area2 = _parent.GetArea((origRectangle.Right + insertionPoint.X) / 2.0f, (origRectangle.Bottom + insertionPoint.Y) / 2.0f) as TArea;
 
                 return result;
             }

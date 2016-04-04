@@ -210,11 +210,8 @@ namespace Ctor.Views
     mullionNrArt = type.Mullions.Vertical.Frame.Default
 
     frame = area.InsertFrame(typeID, colorID)
-    x = frame.Right - 200;
-    y = (frame.Top + frame.Bottom) / 2.0
-    frame.InsertVerticalMullion(mullionNrArt, 0.3333)
-    area = frame.GetArea(x, y)
-    area.InsertFalseMullion(type.DefaultFalseMullion, False)
+    mr = frame.InsertVerticalMullion(mullionNrArt, 0.3333)
+    fmr = mr.Area2.InsertFalseMullion(type.DefaultFalseMullion, False)
     frame.InsertSashes()
     frame.InsertGlasspackets(glasspacket)
     if ctx.InsertFittings:
@@ -241,11 +238,8 @@ namespace Ctor.Views
     mullionNrArt = type.Mullions.Vertical.Frame.Default
 
     frame = area.InsertFrame(typeID, colorID)
-    x = frame.Left + 200;
-    y = (frame.Top + frame.Bottom) / 2.0
     mr = frame.InsertVerticalMullion(mullionNrArt, 0.6666)
-    area = frame.GetArea(x, y)
-    fmr = area.InsertFalseMullion(type.DefaultFalseMullion, True)
+    fmr = mr.Area1.InsertFalseMullion(type.DefaultFalseMullion, True)
     frame.InsertSashes()
     frame.InsertGlasspackets(glasspacket)
     if ctx.InsertFittings:
