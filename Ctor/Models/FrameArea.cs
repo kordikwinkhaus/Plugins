@@ -84,7 +84,7 @@ namespace Ctor.Models
             insertionPoint.X = _area.Rectangle.X + (_area.Rectangle.Width * dimX);
             insertionPoint.Y = _area.Rectangle.Y + (_area.Rectangle.Height * 0.5f);
 
-            _area.AddBar(EProfileType.tPrzymyk, EDir.dLeft, insertionPoint, parameters);
+            IPart[] newParts = _area.AddBar(EProfileType.tPrzymyk, EDir.dLeft, insertionPoint, parameters);
 
             var top = _area.TopObject;
             if (top.Update(true))
@@ -93,16 +93,14 @@ namespace Ctor.Models
                 top.Invalidate();
 
                 this.Invalidate();
-
+                var recNew = _area.Rectangle;
                 var result = new FalseMullionInsertionResult();
-                var area1 = _parent.GetArea((origRectangle.Left + insertionPoint.X) / 2, insertionPoint.Y);
-                var area2 = _parent.GetArea((origRectangle.Right + insertionPoint.X) / 2, insertionPoint.Y);
+                var area1 = new FrameArea((IArea)newParts[1], _parent);
+                var area2 = new FrameArea(_area, _parent);
 
                 result.LeftSash = area1.InsertSash();
                 result.RightSash = area2.InsertSash();
-
-                IFalseMullion falseMullion = _parent.FindFalseMullion(result.LeftSash.Data);
-                result.FalseMullion = new FalseMullion(falseMullion);
+                result.FalseMullion = new FalseMullion((IFalseMullion)newParts[0]);
 
                 return result;
             }
