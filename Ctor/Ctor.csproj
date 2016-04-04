@@ -78,6 +78,7 @@
     <Compile Include="Models\FittingsGroup.cs" />
     <Compile Include="Models\Frame.cs" />
     <Compile Include="Models\FrameArea.cs" />
+    <Compile Include="Models\Glasspacket.cs" />
     <Compile Include="Models\IAreaExtensions.cs" />
     <Compile Include="Models\IContext.cs" />
     <Compile Include="Models\IDatabase.cs" />

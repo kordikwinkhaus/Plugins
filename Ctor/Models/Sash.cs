@@ -8,21 +8,21 @@ namespace Ctor.Models
     /// <summary>
     /// Objekt křídla.
     /// </summary>
-    public class Sash
+    public class Sash : Part
     {
         private readonly ISash _sash;
         private readonly Frame _parent;
 
         internal Sash(ISash sash, Frame parent)
+            : base(sash)
         {
-            if (sash == null) throw new ArgumentNullException(nameof(sash));
             if (parent == null) throw new ArgumentNullException(nameof(parent));
 
             _sash = sash;
             _parent = parent;
         }
 
-        public ISash Data
+        internal ISash Data
         {
             get { return _sash; }
         }
@@ -58,6 +58,16 @@ namespace Ctor.Models
             {
                 area.AddChild(EProfileType.tSzyba, parameters);
             }
+        }
+
+        public IList<Glasspacket> GetGlasspackets()
+        {
+            List<Glasspacket> result = new List<Glasspacket>();
+            foreach (IGlazing glazing in _sash.FindParts(EProfileType.tSzyba, false))
+            {
+                result.Add(new Glasspacket(glazing, this));
+            }
+            return result;
         }
 
         /// <summary>
