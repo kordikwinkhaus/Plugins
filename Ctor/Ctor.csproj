@@ -85,6 +85,7 @@
     <Compile Include="Models\Msg.cs" />
     <Compile Include="Models\ModelException.cs" />
     <Compile Include="Models\Mullion.cs" />
+    <Compile Include="Models\MullionFindArgs.cs" />
     <Compile Include="Models\MullionInsertionResult.cs" />
     <Compile Include="Models\Parameters.cs" />
     <Compile Include="Models\Part.cs" />

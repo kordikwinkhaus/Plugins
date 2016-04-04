@@ -204,4 +204,7 @@
   <data name="CannotChangeInsertionPoint" xml:space="preserve">
     <value>Cannot change insertion point.</value>
   </data>
+  <data name="CannotFindMullionNrArt" xml:space="preserve">
+    <value>Cannot find mullion's article number for given parameters.</value>
+  </data>
 </root>

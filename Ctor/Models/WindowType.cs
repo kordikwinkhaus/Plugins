@@ -85,6 +85,14 @@ namespace Ctor.Models
         }
 
         /// <summary>
+        /// Vrací objekt pro zadání parametrů sloupku(ů).
+        /// </summary>
+        public MullionFindArgs Mullions
+        {
+            get { return new MullionFindArgs(_dict); }
+        }
+
+        /// <summary>
         /// Vrací hodnotu předaného pole.
         /// </summary>
         /// <param name="fieldname">Název pole (tabulka dbo.typyp). Umožňuje načíst i doplňková pole.</param>

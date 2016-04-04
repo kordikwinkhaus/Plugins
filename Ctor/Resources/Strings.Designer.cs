@@ -97,6 +97,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot find mullion&apos;s article number for given parameters..
+        /// </summary>
+        public static string CannotFindMullionNrArt {
+            get {
+                return ResourceManager.GetString("CannotFindMullionNrArt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot insert false mullion..
         /// </summary>
         public static string CannotInsertFalseMullion {

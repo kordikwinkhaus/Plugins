@@ -93,9 +93,11 @@ namespace Ctor.Views
     typeID = ctx.WindowsType
     colorID = ctx.WindowsColor
     glasspacket = ctx.Glasspacket
+    type = db.GetWindowType(typeID)
+    mullionNrArt = type.Mullions." + dir + @".Frame.Default
 
     frame = area.InsertFrame(typeID, colorID)
-    frame.Insert" + dir + @"Mullion('14842')
+    frame.Insert" + dir + @"Mullion(mullionNrArt)
     frame.InsertGlasspackets(glasspacket)";
         }
 
@@ -205,11 +207,12 @@ namespace Ctor.Views
     glasspacket = ctx.Glasspacket
     type = db.GetWindowType(typeID)
     fittingsGroup = ctx.FittingsGroup
+    mullionNrArt = type.Mullions.Vertical.Frame.Default
 
     frame = area.InsertFrame(typeID, colorID)
     x = frame.Right - 200;
     y = (frame.Top + frame.Bottom) / 2.0
-    frame.InsertVerticalMullion('14842', 0.3333)
+    frame.InsertVerticalMullion(mullionNrArt, 0.3333)
     area = frame.GetArea(x, y)
     area.InsertFalseMullion(type.DefaultFalseMullion, False)
     frame.InsertSashes()
@@ -235,13 +238,14 @@ namespace Ctor.Views
     glasspacket = ctx.Glasspacket
     type = db.GetWindowType(typeID)
     fittingsGroup = ctx.FittingsGroup
+    mullionNrArt = type.Mullions.Vertical.Frame.Default
 
     frame = area.InsertFrame(typeID, colorID)
     x = frame.Left + 200;
     y = (frame.Top + frame.Bottom) / 2.0
-    mir = frame.InsertVerticalMullion('14842', 0.6666)
+    mr = frame.InsertVerticalMullion(mullionNrArt, 0.6666)
     area = frame.GetArea(x, y)
-    fir = area.InsertFalseMullion(type.DefaultFalseMullion, True)
+    fmr = area.InsertFalseMullion(type.DefaultFalseMullion, True)
     frame.InsertSashes()
     frame.InsertGlasspackets(glasspacket)
     if ctx.InsertFittings:
@@ -252,8 +256,8 @@ namespace Ctor.Views
                 sash.InsertFittings(fittingsTypeID, True)
             else:
                 sash.InsertFittings(fittingsTypeID)
-    fir.FalseMullion.InsertionPointX -= 100;
-    mir.Mullion.InsertionPointX += 100;
+    fmr.FalseMullion.InsertionPointX -= 100;
+    mr.Mullion.InsertionPointX += 100;
 ";
         }
     }
