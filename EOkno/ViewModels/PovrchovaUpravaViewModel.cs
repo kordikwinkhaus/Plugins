@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using Okna.Plugins.ViewModels;
 
 namespace EOkno.ViewModels
 {
+    [DebuggerDisplay("{Nazev} ({Kod})")]
     public class PovrchovaUpravaViewModel : ViewModelBase
     {
         private const string s_PovrchUprava = "p";
@@ -136,6 +138,7 @@ namespace EOkno.ViewModels
                         {
                             InitOdstiny(element);
                         }
+                        _povrchUprava = element;
                         return true;
                     }
                 }

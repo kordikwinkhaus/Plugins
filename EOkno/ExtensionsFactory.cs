@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using EOkno.ViewModels;
 using EOkno.Views;
 using Okna.Plugins;
+using Okna.Plugins.Interception;
 using UserExtensions;
 
 namespace UserExt
@@ -19,12 +20,22 @@ namespace UserExt
                 case EPropPage.pDokument:
                     var vmDoc = new DocumentViewModel();
                     Nacist(vmDoc);
-                    return new DocumentView { DataContext = vmDoc };
+                    var docView = new DocumentView { DataContext = vmDoc };
+#if (DEBUG)
+                    return new InterceptionView(docView, true);
+#else
+                    return docView;
+#endif
 
                 case EPropPage.pDziura:
                     var vmPos = new PositionViewModel();
                     Nacist(vmPos);
-                    return new PositionView { DataContext = vmPos };
+                    var posView = new PositionView { DataContext = vmPos };
+#if (DEBUG)
+                    return new InterceptionView3(posView);
+#else
+                    return posView;
+#endif
             }
 
             return null;

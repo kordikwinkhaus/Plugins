@@ -56,6 +56,7 @@ namespace EOkno.ViewModels
                 {
                     this.VybranaPU.VnejsiOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == docVM.VybranaPU.VnejsiOdstin?.Kod);
                     this.VybranaPU.VnitrniOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == docVM.VybranaPU.VnitrniOdstin?.Kod);
+                    this.VybranaPU.ZapsatOdstiny();
                 }
             }
             else

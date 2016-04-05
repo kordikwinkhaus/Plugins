@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace EOkno.ViewModels
 {
+    [DebuggerDisplay("{Nazev} ({Kod})")]
     public class OdstinViewModel
     {
         internal OdstinViewModel(string kod, string nazev)
