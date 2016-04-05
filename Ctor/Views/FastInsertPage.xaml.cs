@@ -242,6 +242,7 @@ namespace Ctor.Views
     fmr = mr.Area1.InsertFalseMullion(type.DefaultFalseMullion, True)
     frame.InsertSashes()
     frame.InsertGlasspackets(glasspacket)
+    glp = []
     if ctx.InsertFittings:
         for sash in frame.GetSashes():
             args = sash.GetFittingsFindArgs()
@@ -250,8 +251,41 @@ namespace Ctor.Views
                 sash.InsertFittings(fittingsTypeID, True)
             else:
                 sash.InsertFittings(fittingsTypeID)
-    fmr.FalseMullion.InsertionPointX -= 100;
-    mr.Mullion.InsertionPointX += 100;
+            for gl in sash.GetGlasspackets():
+                glp.append(gl)
+
+    suma = 0
+    for gl in glp:
+        suma += gl.Width
+
+    sirka = suma / 3.0
+
+    msg.Info(str(sirka))
+
+    rozdil1 = frame[1].GetGlasspackets()[0].Width - sirka
+    rozdil2 = frame[3].GetGlasspackets()[0].Width - sirka
+
+    fmr.FalseMullion.InsertionPointX -= rozdil1;
+    mr.Mullion.InsertionPointX += rozdil2;
+
+    glp = []
+    for sash in frame.GetSashes():
+        for gl in sash.GetGlasspackets():
+            glp.append(gl)
+
+    suma = 0
+    for gl in glp:
+        suma += gl.Width
+
+    sirka = suma / 3.0
+
+    msg.Info(str(sirka))
+
+    rozdil1 = frame[1].GetGlasspackets()[0].Width - sirka
+    rozdil2 = frame[3].GetGlasspackets()[0].Width - sirka
+
+    fmr.FalseMullion.InsertionPointX -= rozdil1;
+    mr.Mullion.InsertionPointX += rozdil2;
 ";
         }
     }

@@ -208,7 +208,7 @@ namespace Ctor.Models
             insertionPoint.X = _area.Rectangle.X + (_area.Rectangle.Width * dimX);
             insertionPoint.Y = _area.Rectangle.Y + (_area.Rectangle.Height * dimY);
 
-            _area.AddBar(EProfileType.tSlupek, direction, insertionPoint, parameters);
+            IPart[] newParts = _area.AddBar(EProfileType.tSlupek, direction, insertionPoint, parameters);
 
             var top = _area.TopObject;
             if (top.Update(true))
@@ -219,19 +219,11 @@ namespace Ctor.Models
                 this.Invalidate();
 
                 var result = new MullionInsertionResult<TArea>();
-
-                foreach (IBar bar in _parent.Data.FindParts(EProfileType.tSlupek, true))
-                {
-                    if (bar.Rectangle.Contains(insertionPoint))
-                    {
-                        result.Mullion = new Mullion(bar);
-                        break;
-                    }
-                }
+                result.Mullion = new Mullion((IBar)newParts[0]);
 
                 // TODO: dořešit typy
-                result.Area1 = _parent.GetArea((origRectangle.X + insertionPoint.X) / 2.0f, (origRectangle.Y + insertionPoint.Y) / 2.0f) as TArea;
-                result.Area2 = _parent.GetArea((origRectangle.Right + insertionPoint.X) / 2.0f, (origRectangle.Bottom + insertionPoint.Y) / 2.0f) as TArea;
+                result.Area1 = new FrameArea((IArea)newParts[1], _parent) as TArea;
+                result.Area2 = new FrameArea(_area, _parent) as TArea;
 
                 return result;
             }
