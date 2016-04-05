@@ -8,6 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DataContextChanged="UserControl_DataContextChanged"
+             TextOptions.TextFormattingMode="Display"
+             SnapsToDevicePixels="True"
              >
   <UserControl.Resources>
     <v:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter"/>

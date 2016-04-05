@@ -61,6 +61,7 @@
             <CheckBox Content="{Binding Nazev}"
                       IsChecked="{Binding Vybrano}"
                       MinWidth="200"
+                      Margin="3,4"
                       />
           </DataTemplate>
         </ItemsControl.Resources>
