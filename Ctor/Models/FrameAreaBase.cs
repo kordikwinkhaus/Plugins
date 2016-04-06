@@ -84,15 +84,14 @@ namespace Ctor.Models
             return this.InsertMullionCore<FrameArea>(nrArt, dimX, color, EDir.dTop);
         }
 
-        protected MullionInsertionResult<TArea> InsertMullionCore<TArea>(string nrArt, float dim, int color, EDir direction) where TArea : Area
+        private MullionInsertionResult<TArea> InsertMullionCore<TArea>(string nrArt, float dim, int color, EDir direction) where TArea : Area
         {
             CheckInvalidation();
 
-            if (dim <= 0) throw new ArgumentOutOfRangeException();
+            if (dim <= 0) throw new ArgumentOutOfRangeException(nameof(dim));
 
             var parameters = Parameters.ForMullion(nrArt, color);
             var insertionPoint = new PointF();
-            var origRectangle = _area.Rectangle;
             switch (direction)
             {
                 case EDir.dTop:
@@ -128,7 +127,7 @@ namespace Ctor.Models
             IPart[] newParts = _area.AddBar(EProfileType.tSlupek, direction, insertionPoint, parameters);
 
             var top = _area.TopObject;
-            if (top.Update(true))
+            if (top.Update(true) && newParts != null)
             {
                 top.CheckPoint();
                 top.Invalidate();
@@ -136,7 +135,7 @@ namespace Ctor.Models
                 this.Invalidate();
 
                 var result = new MullionInsertionResult<TArea>();
-                result.Mullion = new Mullion((IBar)newParts[0]);
+                result.Mullion = new Bar((IBar)newParts[0]);
 
                 result.Area1 = CreateArea<TArea>((IArea)newParts[1]);
                 result.Area2 = CreateArea<TArea>(_area);

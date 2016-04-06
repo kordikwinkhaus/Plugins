@@ -5,7 +5,7 @@ namespace Ctor.Models
     /// <summary>
     /// Objekt štulpu.
     /// </summary>
-    public class FalseMullion : Mullion
+    public class FalseMullion : Bar
     {
         private readonly IFalseMullion _falseMullion;
 

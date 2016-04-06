@@ -80,8 +80,6 @@ namespace Ctor.Models
 
             if (dimX <= 0) throw new ArgumentOutOfRangeException();
 
-            var origRectangle = _area.Rectangle;
-
             var parameters = Parameters.ForFalseMullion(nrArt, color, isLeftSide);
             var insertionPoint = new PointF();
             if (dimX < 1)

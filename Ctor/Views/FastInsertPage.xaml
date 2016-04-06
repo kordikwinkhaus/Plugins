@@ -77,6 +77,8 @@
         <Button Click="_3kp_Click">3kp</Button>
         <Button Click="fkslv_Click">f+k(slv)</Button>
         <Button Click="fksls_Click">f+k(sls)</Button>
+        <Button Click="_2xohr_Click">2xOHR</Button>
+        <Button Click="_3xRoz_Click">3xROZ</Button>
       </WrapPanel>
 
       <Button Command="{Binding RunCommand}"

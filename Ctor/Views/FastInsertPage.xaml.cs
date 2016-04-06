@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Xml.Linq;
 using Ctor.ViewModels;
 using UserExtensions;
@@ -345,6 +344,28 @@ if pos.IsConstruction:
         args.TiltOnly = True
         fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
         sash.InsertFittings(fittingsTypeID)";
+        }
+
+        private void _2xohr_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            txtCode.Text = @"if pos.IsConstruction:
+    area = pos.GetEmptyArea()
+    r = area.InsertVerticalCoupling('Ohraničník', 0)
+    r.Area2.InsertHorizontalCoupling('Ohraničník', 0, 0.666)";
+        }
+
+        private void _3xRoz_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            txtCode.Text = @"if pos.IsConstruction:
+    colorID = ctx.WindowsColor
+    prof = '14631'
+    area = pos.GetEmptyArea()
+    r1 = area.InsertHorizontalCoupling(prof, colorID)
+    r1.Coupling.SlideToTop()
+    r2 = r1.Area2.InsertVerticalCoupling(prof, colorID)
+    r2.Coupling.SlideToLeft()
+    r3 = r2.Area2.InsertVerticalCoupling(prof, colorID)
+    r3.Coupling.SlideToRight()";
         }
     }
 }

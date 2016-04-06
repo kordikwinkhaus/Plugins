@@ -22,6 +22,6 @@
         /// <summary>
         /// Vložený sloupek.
         /// </summary>
-        public Mullion Mullion { get; internal set; }
+        public Bar Mullion { get; internal set; }
     }
 }

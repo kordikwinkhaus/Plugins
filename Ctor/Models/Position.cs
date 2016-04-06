@@ -106,20 +106,25 @@ namespace Ctor.Models
             CheckTopObject();
 
             ITopObject top = _position.Data;
-            foreach (uint guid in top.FindParts(EProfileType.tOsciez, false).Select(f => f.GUID))
+            int count = 0;
+
+            do
             {
-                var part = _position.Document.FromGUID(guid);
-                if (part != null)
+                foreach (uint guid in top.FindParts(EProfileType.tOsciez, false).Select(f => f.GUID))
+                {
+                    var part = _position.Document.FromGUID(guid);
+                    if (part != null)
+                    {
+                        part.OnCommand(Commands.Delete);
+                    }
+                }
+
+                foreach (IPart part in top.FindParts(EProfileType.tPLacz, true)
+                               .Concat(top.FindParts(EProfileType.tNullPLacz, true)))
                 {
                     part.OnCommand(Commands.Delete);
                 }
-            }
-
-            foreach (IPart part in top.FindParts(EProfileType.tPLacz, true)
-                           .Concat(top.FindParts(EProfileType.tNullPLacz, true)))
-            {
-                part.OnCommand(Commands.Delete);
-            }
+            } while (top.Bars.Count() != 0 && count++ < 10);
 
             top.Invalidate();
         }
@@ -133,7 +138,7 @@ namespace Ctor.Models
 
             IFrameBase frame = _position.Data.GetFrame(EProfileType.tDziura);
             frame.MirrorTransform();
-            frame.Update(false);
+            frame.Update(true);
         }
 
         /// <summary>
@@ -162,7 +167,9 @@ namespace Ctor.Models
         {
             CheckTopObject();
 
-            var areas = _position.Data.Areas.Where(a => a.Child == null).ToList();
+            var areas = _position.Data.Areas
+                .Where(a => a.Child == null && a.Rectangle.Height != 0 && a.Rectangle.Width != 0)
+                .ToList();
             if (areas.Count == 1)
             {
                 return new PositionArea(areas[0], this);
@@ -264,5 +271,61 @@ namespace Ctor.Models
         {
             if (_position.Data == null) throw new ModelException(Strings.NoTopObject);
         }
+
+        #region Coupling profile
+
+        /// <summary>
+        /// Vloží horizontální spojovací profil do prázdného pole.
+        /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu spojovacího profilu.</param>
+        /// <param name="color">ID barvy.</param>
+        public CouplingInsertionResult InsertHorizontalCoupling(string nrArt, int color)
+        {
+            var area = GetEmptyArea();
+            return area.InsertHorizontalCoupling(nrArt, color);
+        }
+
+        /// <summary>
+        /// Vloží horizontální spojovací profil do prázdného pole.
+        /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu spojovacího profilu.</param>
+        /// <param name="color">ID barvy.</param>
+        /// <param name="dimY">Souřadnice spojovacího profilu v ose Y. Pokud je menší než jedna, bere se relativně vzhledem k výšce pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
+        public CouplingInsertionResult InsertHorizontalCoupling(string nrArt, int color, float dimY)
+        {
+            var area = GetEmptyArea();
+            return area.InsertHorizontalCoupling(nrArt, color, dimY);
+        }
+
+        /// <summary>
+        /// Vloží horizontální spojovací profil do prázdného pole.
+        /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu spojovacího profilu.</param>
+        /// <param name="color">ID barvy.</param>
+        public CouplingInsertionResult InsertVerticalCoupling(string nrArt, int color)
+        {
+            var area = GetEmptyArea();
+            return area.InsertVerticalCoupling(nrArt, color);
+        }
+
+        /// <summary>
+        /// Vloží horizontální spojovací profil do prázdného pole.
+        /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
+        /// </summary>
+        /// <param name="nrArt">Číslo artiklu spojovacího profilu.</param>
+        /// <param name="color">ID barvy.</param>
+        /// <param name="dimX">Souřadnice spojovacího profilu v ose X. Pokud je menší než jedna, bere se relativně vzhledem k šířce pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
+        public CouplingInsertionResult InsertVerticalCoupling(string nrArt, int color, float dimX)
+        {
+            var area = GetEmptyArea();
+            return area.InsertVerticalCoupling(nrArt, color, dimX);
+        }
+
+        #endregion
     }
 }

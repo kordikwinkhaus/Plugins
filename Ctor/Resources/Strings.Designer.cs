@@ -61,6 +61,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot align item..
+        /// </summary>
+        public static string CannotAlignItem {
+            get {
+                return ResourceManager.GetString("CannotAlignItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot change insertion point..
         /// </summary>
         public static string CannotChangeInsertionPoint {
@@ -102,6 +111,15 @@ namespace Ctor.Resources {
         public static string CannotFindMullionNrArt {
             get {
                 return ResourceManager.GetString("CannotFindMullionNrArt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot insert coupling profile..
+        /// </summary>
+        public static string CannotInsertCouplingProfile {
+            get {
+                return ResourceManager.GetString("CannotInsertCouplingProfile", resourceCulture);
             }
         }
         
@@ -156,6 +174,15 @@ namespace Ctor.Resources {
         public static string InvalidArea {
             get {
                 return ResourceManager.GetString("InvalidArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coupling profile orientation &apos;{0}&apos; is not supported..
+        /// </summary>
+        public static string InvalidCouplingProfileOrientation {
+            get {
+                return ResourceManager.GetString("InvalidCouplingProfileOrientation", resourceCulture);
             }
         }
         

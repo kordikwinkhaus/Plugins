@@ -210,4 +210,13 @@
   <data name="NoEmptyAreaInSash" xml:space="preserve">
     <value>Sash does not contain empty area.</value>
   </data>
+  <data name="InvalidCouplingProfileOrientation" xml:space="preserve">
+    <value>Coupling profile orientation '{0}' is not supported.</value>
+  </data>
+  <data name="CannotInsertCouplingProfile" xml:space="preserve">
+    <value>Cannot insert coupling profile.</value>
+  </data>
+  <data name="CannotAlignItem" xml:space="preserve">
+    <value>Cannot align item.</value>
+  </data>
 </root>

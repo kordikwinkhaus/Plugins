@@ -47,5 +47,16 @@ namespace Ctor.Models
             parameters.Add("Color", color);
             return parameters;
         }
+
+        internal static Dictionary<string, object> ForCouplingProfile(string nrArt, int color)
+        {
+            if (string.IsNullOrEmpty(nrArt)) throw new ArgumentNullException(nameof(nrArt));
+            // color může být nula u ohraničníku
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("Article", nrArt);
+            parameters.Add("Color", color);
+            return parameters;
+        }
     }
 }
