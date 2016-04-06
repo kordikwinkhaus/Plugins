@@ -195,7 +195,11 @@ namespace Ctor.Views
 
         private void _3kl_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            txtCode.Text = @"if pos.IsConstruction:
+            txtCode.Text = @"import clr
+clr.AddReference('Okna.Data')
+from Okna.Data import DatabaseCommand
+
+if pos.IsConstruction:
     area = pos.GetEmptyArea()
     if area.Width < 1200:
         msg.Fail('Oblast pro okno je příliš úzká.')
@@ -208,6 +212,14 @@ namespace Ctor.Views
     type = db.GetWindowType(typeID)
     fittingsGroup = ctx.FittingsGroup
     mullionNrArt = type.Mullions.Vertical.Frame.Default
+    cmd = DatabaseCommand()
+    cmd.CommandText = """"""SELECT (SELECT(w1*2)-w3 FROM dbo.osciezp WHERE nr_art=@ram) AS Ram,
+(SELECT w1-w2 FROM dbo.przymyki WHERE nr_art=@stulp) AS Stulp,
+(SELECT w1-w3 FROM dbo.slupki WHERE nr_art=@sloupek) AS Sloupek""""""
+    cmd.AddParameter('@ram', type.GetField('osciez1'))
+    cmd.AddParameter('@sloupek', mullionNrArt)
+    cmd.AddParameter('@stulp', type.DefaultFalseMullion)
+    korekce = db.ExecuteQuery(cmd)[0]
 
     frame = area.InsertFrame(typeID, colorID)
     mr = frame.InsertVerticalMullion(mullionNrArt, 0.3333)
@@ -218,12 +230,20 @@ namespace Ctor.Views
         for sash in frame.GetSashes():
             args = sash.GetFittingsFindArgs()
             fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
-            sash.InsertFittings(fittingsTypeID)";
+            sash.InsertFittings(fittingsTypeID)
+
+    kridlo = (frame.Width - 2 * (korekce.Ram + korekce.Stulp + korekce.Sloupek)) / 3.0
+    mr.Mullion.InsertionPointX = frame.Left +  korekce.Ram + kridlo + korekce.Sloupek
+    fmr.FalseMullion.InsertionPointX = frame.Right - korekce.Ram - kridlo - korekce.Stulp";
         }
 
         private void _3kp_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            txtCode.Text = @"if pos.IsConstruction:
+            txtCode.Text = @"import clr
+clr.AddReference('Okna.Data')
+from Okna.Data import DatabaseCommand
+
+if pos.IsConstruction:
     area = pos.GetEmptyArea()
     if area.Width < 1200:
         msg.Fail('Oblast pro okno je příliš úzká.')
@@ -236,13 +256,20 @@ namespace Ctor.Views
     type = db.GetWindowType(typeID)
     fittingsGroup = ctx.FittingsGroup
     mullionNrArt = type.Mullions.Vertical.Frame.Default
+    cmd = DatabaseCommand()
+    cmd.CommandText = """"""SELECT (SELECT(w1*2)-w3 FROM dbo.osciezp WHERE nr_art=@ram) AS Ram,
+(SELECT w1-w2 FROM dbo.przymyki WHERE nr_art=@stulp) AS Stulp,
+(SELECT w1-w3 FROM dbo.slupki WHERE nr_art=@sloupek) AS Sloupek""""""
+    cmd.AddParameter('@ram', type.GetField('osciez1'))
+    cmd.AddParameter('@sloupek', mullionNrArt)
+    cmd.AddParameter('@stulp', type.DefaultFalseMullion)
+    korekce = db.ExecuteQuery(cmd)[0]
 
     frame = area.InsertFrame(typeID, colorID)
     mr = frame.InsertVerticalMullion(mullionNrArt, 0.6666)
     fmr = mr.Area1.InsertFalseMullion(type.DefaultFalseMullion, True)
     frame.InsertSashes()
     frame.InsertGlasspackets(glasspacket)
-    glp = []
     if ctx.InsertFittings:
         for sash in frame.GetSashes():
             args = sash.GetFittingsFindArgs()
@@ -251,41 +278,10 @@ namespace Ctor.Views
                 sash.InsertFittings(fittingsTypeID, True)
             else:
                 sash.InsertFittings(fittingsTypeID)
-            for gl in sash.GetGlasspackets():
-                glp.append(gl)
 
-    suma = 0
-    for gl in glp:
-        suma += gl.Width
-
-    sirka = suma / 3.0
-
-    msg.Info(str(sirka))
-
-    rozdil1 = frame[1].GetGlasspackets()[0].Width - sirka
-    rozdil2 = frame[3].GetGlasspackets()[0].Width - sirka
-
-    fmr.FalseMullion.InsertionPointX -= rozdil1;
-    mr.Mullion.InsertionPointX += rozdil2;
-
-    glp = []
-    for sash in frame.GetSashes():
-        for gl in sash.GetGlasspackets():
-            glp.append(gl)
-
-    suma = 0
-    for gl in glp:
-        suma += gl.Width
-
-    sirka = suma / 3.0
-
-    msg.Info(str(sirka))
-
-    rozdil1 = frame[1].GetGlasspackets()[0].Width - sirka
-    rozdil2 = frame[3].GetGlasspackets()[0].Width - sirka
-
-    fmr.FalseMullion.InsertionPointX -= rozdil1;
-    mr.Mullion.InsertionPointX += rozdil2;
+    kridlo = (frame.Width - 2 * (korekce.Ram + korekce.Stulp + korekce.Sloupek)) / 3.0
+    mr.Mullion.InsertionPointX = frame.Right - korekce.Ram - kridlo - korekce.Sloupek
+    fmr.FalseMullion.InsertionPointX = frame.Left + korekce.Ram + kridlo + korekce.Stulp
 ";
         }
     }
