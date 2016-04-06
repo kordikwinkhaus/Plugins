@@ -207,4 +207,7 @@
   <data name="CannotFindMullionNrArt" xml:space="preserve">
     <value>Cannot find mullion's article number for given parameters.</value>
   </data>
+  <data name="NoEmptyAreaInSash" xml:space="preserve">
+    <value>Sash does not contain empty area.</value>
+  </data>
 </root>

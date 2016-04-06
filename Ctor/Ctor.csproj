@@ -78,6 +78,7 @@
     <Compile Include="Models\FittingsGroup.cs" />
     <Compile Include="Models\Frame.cs" />
     <Compile Include="Models\FrameArea.cs" />
+    <Compile Include="Models\FrameAreaBase.cs" />
     <Compile Include="Models\Glasspacket.cs" />
     <Compile Include="Models\IAreaExtensions.cs" />
     <Compile Include="Models\IContext.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Models\PythonScriptEngine.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\Sash.cs" />
+    <Compile Include="Models\SashArea.cs" />
     <Compile Include="Models\WindowType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

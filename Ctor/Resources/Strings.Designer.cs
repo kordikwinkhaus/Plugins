@@ -187,6 +187,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sash does not contain empty area..
+        /// </summary>
+        public static string NoEmptyAreaInSash {
+            get {
+                return ResourceManager.GetString("NoEmptyAreaInSash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No fittings group with ID = {0}..
         /// </summary>
         public static string NoFittingsGroupWithID {

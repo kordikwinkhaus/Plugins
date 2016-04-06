@@ -285,5 +285,66 @@ if pos.IsConstruction:
             else:
                 sash.InsertFittings(fittingsTypeID)";
         }
+
+        private void fkslv_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            txtCode.Text = @"if pos.IsConstruction:
+    area = pos.GetEmptyArea()
+    if area.Width < 1000:
+        msg.Fail('Oblast pro okno je příliš úzká.')
+    if area.Height < 600:
+        msg.Fail('Oblast pro okno je příliš nízká.')
+
+    typeID = ctx.WindowsType
+    colorID = ctx.WindowsColor
+    glasspacket = ctx.Glasspacket
+    type = db.GetWindowType(typeID)
+    fittingsGroup = ctx.FittingsGroup
+    mullionFrameVerNrArt = type.Mullions.Vertical.Frame.Default
+    mullionFrameHorNrArt = type.Mullions.Horizontal.Frame.Default
+    mullionSashNrArt = type.Mullions.Horizontal.Sash.Default
+
+    frame = area.InsertFrame(typeID, colorID)
+    m1 = frame.InsertVerticalMullion(mullionFrameVerNrArt)
+    sash = m1.Area2.InsertSash()
+    m2 = m1.Area1.InsertHorizontalMullion(mullionFrameHorNrArt)
+    sash.InsertHorizontalMullion(mullionSashNrArt, m2.Mullion.InsertionPointY)
+    frame.InsertGlasspackets(glasspacket)
+    if ctx.InsertFittings:
+        args = sash.GetFittingsFindArgs()
+        fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
+        sash.InsertFittings(fittingsTypeID, True)";
+        }
+
+        private void fksls_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            txtCode.Text = @"if pos.IsConstruction:
+    area = pos.GetEmptyArea()
+    if area.Width < 600:
+        msg.Fail('Oblast pro okno je příliš úzká.')
+    if area.Height < 1000:
+        msg.Fail('Oblast pro okno je příliš nízká.')
+
+    typeID = ctx.WindowsType
+    colorID = ctx.WindowsColor
+    glasspacket = ctx.Glasspacket
+    type = db.GetWindowType(typeID)
+    fittingsGroup = ctx.FittingsGroup
+    mullionFrameVerNrArt = type.Mullions.Vertical.Frame.Default
+    mullionFrameHorNrArt = type.Mullions.Horizontal.Frame.Default
+    mullionSashNrArt = type.Mullions.Vertical.Sash.Default
+
+    frame = area.InsertFrame(typeID, colorID)
+    m1 = frame.InsertHorizontalMullion(mullionFrameVerNrArt)
+    sash = m1.Area2.InsertSash()
+    m2 = m1.Area1.InsertVerticalMullion(mullionFrameHorNrArt)
+    sash.InsertVerticalMullion(mullionSashNrArt, m2.Mullion.InsertionPointX)
+    frame.InsertGlasspackets(glasspacket)
+    if ctx.InsertFittings:
+        args = sash.GetFittingsFindArgs()
+        args.TiltOnly = True
+        fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
+        sash.InsertFittings(fittingsTypeID)";
+        }
     }
 }
