@@ -78,7 +78,7 @@ namespace Ctor.Models
             return new FittingsGroup(groups[0], this);
         }
 
-        public bool IsVirtual(string nr_art, string table)
+        public bool IsVirtualProfile(string nr_art, string table)
         {
             List<string> virtualsAtTable;
             if (!_virtualProfiles.TryGetValue(table, out virtualsAtTable))

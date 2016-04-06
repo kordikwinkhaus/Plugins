@@ -138,7 +138,7 @@ namespace Ctor.Models
             {
                 if (!string.IsNullOrWhiteSpace(nr_art) && !_profiles.Contains(nr_art))
                 {
-                    if (!_database.IsVirtual(nr_art, "dbo.osciezp"))
+                    if (!_database.IsVirtualProfile(nr_art, "dbo.osciezp"))
                     {
                         _profiles.Add(nr_art);
                     }
@@ -149,7 +149,7 @@ namespace Ctor.Models
             {
                 if (!string.IsNullOrWhiteSpace(nr_art) && !_profiles.Contains(nr_art))
                 {
-                    if (!_database.IsVirtual(nr_art, "dbo.skrzyd"))
+                    if (!_database.IsVirtualProfile(nr_art, "dbo.skrzyd"))
                     {
                         _profiles.Add(nr_art);
                     }

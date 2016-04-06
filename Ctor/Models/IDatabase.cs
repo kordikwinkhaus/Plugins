@@ -26,7 +26,7 @@ namespace Ctor.Models
         /// </summary>
         /// <param name="nrArt">Číslo artiklu profilu.</param>
         /// <param name="table">Název tabulky, která obsahuje daný profil.</param>
-        bool IsVirtual(string nrArt, string table);
+        bool IsVirtualProfile(string nrArt, string table);
 
         /// <summary>
         /// Vrací společné barvy profilu pro zadaná čísla artiklů.
