@@ -213,28 +213,29 @@ if pos.IsConstruction:
     fittingsGroup = ctx.FittingsGroup
     mullionNrArt = type.Mullions.Vertical.Frame.Default
     cmd = DatabaseCommand()
-    cmd.CommandText = """"""SELECT (SELECT(w1*2)-w3 FROM dbo.osciezp WHERE nr_art=@ram) AS Ram,
+    cmd.CommandText = '''SELECT (SELECT(w1*2)-w3 FROM dbo.osciezp WHERE nr_art=@ram) AS Ram,
 (SELECT w1-w2 FROM dbo.przymyki WHERE nr_art=@stulp) AS Stulp,
-(SELECT w1-w3 FROM dbo.slupki WHERE nr_art=@sloupek) AS Sloupek""""""
+(SELECT w1-w3 FROM dbo.slupki WHERE nr_art=@sloupek) AS Sloupek'''
     cmd.AddParameter('@ram', type.GetField('osciez1'))
     cmd.AddParameter('@sloupek', mullionNrArt)
     cmd.AddParameter('@stulp', type.DefaultFalseMullion)
     korekce = db.ExecuteQuery(cmd)[0]
 
     frame = area.InsertFrame(typeID, colorID)
-    mr = frame.InsertVerticalMullion(mullionNrArt, 0.3333)
-    fmr = mr.Area2.InsertFalseMullion(type.DefaultFalseMullion, False)
+    dims = frame.GetCorrectedDimensions()
+    kridlo = (dims.Width - 2 * (korekce.Ram + korekce.Stulp + korekce.Sloupek)) / 3.0
+    mullionX = dims.Left +  korekce.Ram + kridlo + korekce.Sloupek
+    falseMullionX = dims.Right - korekce.Ram - kridlo - korekce.Stulp
+
+    mr = frame.InsertVerticalMullion(mullionNrArt, mullionX)
+    mr.Area2.InsertFalseMullion(type.DefaultFalseMullion, False, falseMullionX)
     frame.InsertSashes()
     frame.InsertGlasspackets(glasspacket)
     if ctx.InsertFittings:
         for sash in frame.GetSashes():
             args = sash.GetFittingsFindArgs()
             fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
-            sash.InsertFittings(fittingsTypeID)
-
-    kridlo = (frame.Width - 2 * (korekce.Ram + korekce.Stulp + korekce.Sloupek)) / 3.0
-    mr.Mullion.InsertionPointX = frame.Left +  korekce.Ram + kridlo + korekce.Sloupek
-    fmr.FalseMullion.InsertionPointX = frame.Right - korekce.Ram - kridlo - korekce.Stulp";
+            sash.InsertFittings(fittingsTypeID)";
         }
 
         private void _3kp_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -257,17 +258,22 @@ if pos.IsConstruction:
     fittingsGroup = ctx.FittingsGroup
     mullionNrArt = type.Mullions.Vertical.Frame.Default
     cmd = DatabaseCommand()
-    cmd.CommandText = """"""SELECT (SELECT(w1*2)-w3 FROM dbo.osciezp WHERE nr_art=@ram) AS Ram,
+    cmd.CommandText = '''SELECT (SELECT(w1*2)-w3 FROM dbo.osciezp WHERE nr_art=@ram) AS Ram,
 (SELECT w1-w2 FROM dbo.przymyki WHERE nr_art=@stulp) AS Stulp,
-(SELECT w1-w3 FROM dbo.slupki WHERE nr_art=@sloupek) AS Sloupek""""""
+(SELECT w1-w3 FROM dbo.slupki WHERE nr_art=@sloupek) AS Sloupek'''
     cmd.AddParameter('@ram', type.GetField('osciez1'))
     cmd.AddParameter('@sloupek', mullionNrArt)
     cmd.AddParameter('@stulp', type.DefaultFalseMullion)
     korekce = db.ExecuteQuery(cmd)[0]
 
     frame = area.InsertFrame(typeID, colorID)
-    mr = frame.InsertVerticalMullion(mullionNrArt, 0.6666)
-    fmr = mr.Area1.InsertFalseMullion(type.DefaultFalseMullion, True)
+    dims = frame.GetCorrectedDimensions()
+    kridlo = (dims.Width - 2 * (korekce.Ram + korekce.Stulp + korekce.Sloupek)) / 3.0
+    mullionX = dims.Right - korekce.Ram - kridlo - korekce.Sloupek
+    falseMullionX = dims.Left + korekce.Ram + kridlo + korekce.Stulp
+
+    mr = frame.InsertVerticalMullion(mullionNrArt, mullionX)
+    mr.Area1.InsertFalseMullion(type.DefaultFalseMullion, True, falseMullionX)
     frame.InsertSashes()
     frame.InsertGlasspackets(glasspacket)
     if ctx.InsertFittings:
@@ -277,12 +283,7 @@ if pos.IsConstruction:
             if sash.ID == 3:
                 sash.InsertFittings(fittingsTypeID, True)
             else:
-                sash.InsertFittings(fittingsTypeID)
-
-    kridlo = (frame.Width - 2 * (korekce.Ram + korekce.Stulp + korekce.Sloupek)) / 3.0
-    mr.Mullion.InsertionPointX = frame.Right - korekce.Ram - kridlo - korekce.Sloupek
-    fmr.FalseMullion.InsertionPointX = frame.Left + korekce.Ram + kridlo + korekce.Stulp
-";
+                sash.InsertFittings(fittingsTypeID)";
         }
     }
 }

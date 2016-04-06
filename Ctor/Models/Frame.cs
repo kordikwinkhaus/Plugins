@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Ctor.Resources;
 using WHOkna;
@@ -192,7 +193,8 @@ namespace Ctor.Models
         /// </summary>
         /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Strana montáže štulpu.</param>
-        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        /// <param name="dimX">Souřadnice štulpu v ose X. Pokud je menší než jedna, bere se relativně vzhledem k šíři pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
         public FalseMullionInsertionResult InsertFalseMullion(string nrArt, bool isLeftSide, float dimX)
         {
             var area = GetEmptyArea();
@@ -205,7 +207,8 @@ namespace Ctor.Models
         /// </summary>
         /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Strana montáže štulpu.</param>
-        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        /// <param name="dimX">Souřadnice štulpu v ose X. Pokud je menší než jedna, bere se relativně vzhledem k šíři pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
         /// <param name="color">ID barvy.</param>
         public FalseMullionInsertionResult InsertFalseMullion(string nrArt, bool isLeftSide, float dimX, int color)
         {
@@ -246,7 +249,8 @@ namespace Ctor.Models
         /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
-        /// <param name="dimY">Relativní souřadnice v ose Y vzhledem k výšce pole.</param>
+        /// <param name="dimY">Souřadnice sloupku v ose Y. Pokud je menší než jedna, bere se relativně vzhledem k výšce pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
         public MullionInsertionResult<FrameArea> InsertHorizontalMullion(string nrArt, float dimY)
         {
             var area = GetEmptyArea();
@@ -258,7 +262,8 @@ namespace Ctor.Models
         /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
-        /// <param name="dimY">Relativní souřadnice v ose Y vzhledem k výšce pole.</param>
+        /// <param name="dimY">Souřadnice sloupku v ose Y. Pokud je menší než jedna, bere se relativně vzhledem k výšce pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
         /// <param name="color">ID barvy.</param>
         public MullionInsertionResult<FrameArea> InsertHorizontalMullion(string nrArt, float dimY, int color)
         {
@@ -282,7 +287,8 @@ namespace Ctor.Models
         /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
-        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        /// <param name="dimX">Souřadnice sloupku v ose X. Pokud je menší než jedna, bere se relativně vzhledem k šíři pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
         public MullionInsertionResult<FrameArea> InsertVerticalMullion(string nrArt, float dimX)
         {
             var area = GetEmptyArea();
@@ -294,7 +300,8 @@ namespace Ctor.Models
         /// Pokud rám obsahuje více prázdných polí, zobrazí dialog pro výběr pole.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
-        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        /// <param name="dimX">Souřadnice sloupku v ose X. Pokud je menší než jedna, bere se relativně vzhledem k šíři pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
         /// <param name="color">ID barvy.</param>
         public MullionInsertionResult<FrameArea> InsertVerticalMullion(string nrArt, float dimX, int color)
         {
@@ -303,5 +310,37 @@ namespace Ctor.Models
         }
 
         #endregion
+
+        /// <summary>
+        /// Vrací plochu rámu. Pokud je rám obklopen spojovacími profily,
+        /// zkusí opravit zaokrouhlené rozměry.
+        /// </summary>
+        public RectangleF GetCorrectedDimensions()
+        {
+            var original = _frame.Rectangle;
+            float left = 0, right = 0, bottom = 0, top = 0; // corrections
+
+            foreach (IBar bar in _frame.TopObject.Bars.Where(b => b.Type != EProfileType.tNullPLacz))
+            {
+                if (bar.Rectangle.Right == original.Left && bar.Dir == EDir.dTop)
+                {
+                    left = bar.Rectangle.Right - (bar.Offset.X + bar.Rectangle.Width / 2);
+                }
+                else if (bar.Rectangle.Left == original.Right && bar.Dir == EDir.dTop)
+                {
+                    right = bar.Rectangle.Left - (bar.Offset.X - bar.Rectangle.Width / 2);
+                }
+                else if (bar.Rectangle.Top == original.Bottom && bar.Dir == EDir.dLeft)
+                {
+                    bottom = bar.Rectangle.Top - (bar.Offset.Y - bar.Rectangle.Height / 2);
+                }
+                else if (bar.Rectangle.Bottom == original.Top && bar.Dir == EDir.dLeft)
+                {
+                    top = bar.Rectangle.Bottom - (bar.Offset.Y + bar.Rectangle.Height / 2);
+                }
+            }
+
+            return new RectangleF(original.X - left, original.Y - top, original.Width + left - right, original.Height + top - bottom);
+        }
     }
 }

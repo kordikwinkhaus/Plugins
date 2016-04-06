@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Ctor.Resources;
 using WHOkna;
 
@@ -57,7 +58,8 @@ namespace Ctor.Models
         /// </summary>
         /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Strana montáže štulpu.</param>
-        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        /// <param name="dimX">Souřadnice štulpu v ose X. Pokud je menší než jedna, bere se relativně vzhledem k šíři pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
         public FalseMullionInsertionResult InsertFalseMullion(string nrArt, bool isLeftSide, float dimX)
         {
             return this.InsertFalseMullion(nrArt, isLeftSide, dimX, _parent.Data.Color);
@@ -69,19 +71,28 @@ namespace Ctor.Models
         /// </summary>
         /// <param name="nrArt">Číslo artiklu štulpu.</param>
         /// <param name="isLeftSide">Strana montáže štulpu.</param>
-        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        /// <param name="dimX">Souřadnice štulpu v ose X. Pokud je menší než jedna, bere se relativně vzhledem k šíři pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
         /// <param name="color">ID barvy.</param>
         public FalseMullionInsertionResult InsertFalseMullion(string nrArt, bool isLeftSide, float dimX, int color)
         {
             CheckInvalidation();
 
-            if (dimX <= 0 || 1 <= dimX) throw new ArgumentOutOfRangeException();
+            if (dimX <= 0) throw new ArgumentOutOfRangeException();
 
             var origRectangle = _area.Rectangle;
 
             var parameters = Parameters.ForFalseMullion(nrArt, color, isLeftSide);
-            var insertionPoint = new System.Drawing.PointF();
-            insertionPoint.X = _area.Rectangle.X + (_area.Rectangle.Width * dimX);
+            var insertionPoint = new PointF();
+            if (dimX < 1)
+            {
+                var dims = _parent.GetCorrectedDimensions();
+                insertionPoint.X = dims.X + (dims.Width * dimX);
+            }
+            else
+            {
+                insertionPoint.X = dimX;
+            }
             insertionPoint.Y = _area.Rectangle.Y + (_area.Rectangle.Height * 0.5f);
 
             IPart[] newParts = _area.AddBar(EProfileType.tPrzymyk, EDir.dLeft, insertionPoint, parameters);
@@ -131,7 +142,8 @@ namespace Ctor.Models
         /// Po vložení sloupku je tato oblast zneplatněna.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
-        /// <param name="dimY">Relativní souřadnice v ose Y vzhledem k výšce pole.</param>
+        /// <param name="dimY">Souřadnice sloupku v ose Y. Pokud je menší než jedna, bere se relativně vzhledem k výšce pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
         public MullionInsertionResult<FrameArea> InsertHorizontalMullion(string nrArt, float dimY)
         {
             return this.InsertHorizontalMullion(nrArt, dimY, _parent.Data.Color);
@@ -142,7 +154,8 @@ namespace Ctor.Models
         /// Po vložení sloupku je tato oblast zneplatněna.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
-        /// <param name="dimY">Relativní souřadnice v ose Y vzhledem k výšce pole.</param>
+        /// <param name="dimY">Souřadnice sloupku v ose Y. Pokud je menší než jedna, bere se relativně vzhledem k výšce pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
         /// <param name="color">ID barvy.</param>
         public MullionInsertionResult<FrameArea> InsertHorizontalMullion(string nrArt, float dimY, int color)
         {
@@ -164,7 +177,8 @@ namespace Ctor.Models
         /// Po vložení sloupku je tato oblast zneplatněna.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
-        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        /// <param name="dimX">Souřadnice sloupku v ose X. Pokud je menší než jedna, bere se relativně vzhledem k šíři pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
         public MullionInsertionResult<FrameArea> InsertVerticalMullion(string nrArt, float dimX)
         {
             return this.InsertVerticalMullion(nrArt, dimX, _parent.Data.Color);
@@ -175,7 +189,8 @@ namespace Ctor.Models
         /// Po vložení sloupku je tato oblast zneplatněna.
         /// </summary>
         /// <param name="nrArt">Číslo artiklu sloupku.</param>
-        /// <param name="dimX">Relativní souřadnice v ose X vzhledem k šíři pole.</param>
+        /// <param name="dimX">Souřadnice sloupku v ose X. Pokud je menší než jedna, bere se relativně vzhledem k šíři pole.
+        /// Pokud je větší než jedna, bere se jako absolutní souřadnice vůči pozici.</param>
         /// <param name="color">ID barvy.</param>
         public MullionInsertionResult<FrameArea> InsertVerticalMullion(string nrArt, float dimX, int color)
         {
@@ -186,27 +201,42 @@ namespace Ctor.Models
         {
             CheckInvalidation();
 
-            if (dim <= 0 || 1 <= dim) throw new ArgumentOutOfRangeException();
+            if (dim <= 0) throw new ArgumentOutOfRangeException();
 
             var parameters = Parameters.ForMullion(nrArt, color);
-            var insertionPoint = new System.Drawing.PointF();
+            var insertionPoint = new PointF();
             var origRectangle = _area.Rectangle;
-            float dimX = 0.5f, dimY = 0.5f;
             switch (direction)
             {
                 case EDir.dTop:
-                    dimX = dim;
+                    if (dim < 1)
+                    {
+                        var dims = _parent.GetCorrectedDimensions();
+                        insertionPoint.X = dims.X + (dims.Width * dim);
+                    }
+                    else
+                    {
+                        insertionPoint.X = dim;
+                    }
+                    insertionPoint.Y = _area.Rectangle.Y + (_area.Rectangle.Height * 0.5f);
                     break;
 
                 case EDir.dLeft:
-                    dimY = dim;
+                    if (dim < 1)
+                    {
+                        var dims = _parent.GetCorrectedDimensions();
+                        insertionPoint.Y = dims.Y + (dims.Height * dim);
+                    }
+                    else
+                    {
+                        insertionPoint.Y = dim;
+                    }
+                    insertionPoint.X = _area.Rectangle.X + (_area.Rectangle.Width * 0.5f);
                     break;
 
                 default:
                     throw new ModelException(string.Format(Strings.InvalidMullionOrientation, direction));
             }
-            insertionPoint.X = _area.Rectangle.X + (_area.Rectangle.Width * dimX);
-            insertionPoint.Y = _area.Rectangle.Y + (_area.Rectangle.Height * dimY);
 
             IPart[] newParts = _area.AddBar(EProfileType.tSlupek, direction, insertionPoint, parameters);
 
