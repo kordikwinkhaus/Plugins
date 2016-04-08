@@ -367,5 +367,15 @@ if pos.IsConstruction:
     r3 = r2.Area2.InsertVerticalCoupling(prof, colorID)
     r3.Coupling.SlideToRight()";
         }
+
+        private void edit_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var dlg = new CodeEditorDialog();
+            dlg.Editor.Text = txtCode.Text;
+            if (dlg.ShowDialog() == true)
+            {
+                txtCode.Text = dlg.Editor.Text;
+            }
+        }
     }
 }

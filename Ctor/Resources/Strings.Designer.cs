@@ -61,6 +61,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot align item..
         /// </summary>
         public static string CannotAlignItem {
@@ -156,6 +165,15 @@ namespace Ctor.Resources {
         public static string CannotInsertSash {
             get {
                 return ResourceManager.GetString("CannotInsertSash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debug.
+        /// </summary>
+        public static string Debug {
+            get {
+                return ResourceManager.GetString("Debug", resourceCulture);
             }
         }
         
@@ -277,6 +295,42 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run.
+        /// </summary>
+        public static string Run {
+            get {
+                return ResourceManager.GetString("Run", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run to breakpoint.
+        /// </summary>
+        public static string RunToBreakpoint {
+            get {
+                return ResourceManager.GetString("RunToBreakpoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run to end.
+        /// </summary>
+        public static string RunToEnd {
+            get {
+                return ResourceManager.GetString("RunToEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select fittings group.
         /// </summary>
         public static string SelectFittingsGroup {
@@ -345,6 +399,33 @@ namespace Ctor.Resources {
         public static string SelectWindowTypeFirst {
             get {
                 return ResourceManager.GetString("SelectWindowTypeFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step into.
+        /// </summary>
+        public static string StepInto {
+            get {
+                return ResourceManager.GetString("StepInto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step out.
+        /// </summary>
+        public static string StepOut {
+            get {
+                return ResourceManager.GetString("StepOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step over.
+        /// </summary>
+        public static string StepOver {
+            get {
+                return ResourceManager.GetString("StepOver", resourceCulture);
             }
         }
         

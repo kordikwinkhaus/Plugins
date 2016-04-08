@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.1.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvalonEdit.5.0.2\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="IronPython, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\IronPython 2.7\Platforms\Net40\IronPython.dll</HintPath>
@@ -120,9 +124,22 @@
     <Compile Include="ViewModels\Context.cs" />
     <Compile Include="ViewModels\ContextViewModel.cs" />
     <Compile Include="ViewModels\FastInsertViewModel.cs" />
+    <Compile Include="Views\BreakPointMargin.cs" />
+    <Compile Include="Views\CodeEditorDialog.xaml.cs">
+      <DependentUpon>CodeEditorDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FastInsertPage.xaml.cs">
       <DependentUpon>FastInsertPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FoldingTimer.cs" />
+    <Compile Include="Views\HighlightLineBackgroundRenderer.cs" />
+    <Compile Include="Views\ILineHighlightParser.cs" />
+    <Compile Include="Views\IScriptEditor.cs" />
+    <Compile Include="Views\LineTracker.cs" />
+    <Compile Include="Views\PythonEditor.cs" />
+    <Compile Include="Views\PythonFoldingStrategy.cs" />
+    <Compile Include="Views\PythonIndentationStrategy.cs" />
+    <Compile Include="Views\PythonLineHighlightParser.cs" />
     <Compile Include="Views\SelectItemControl.xaml.cs">
       <DependentUpon>SelectItemControl.xaml</DependentUpon>
     </Compile>
@@ -134,13 +151,19 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <EmbeddedResource Include="PythonHighlight.xshd" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\CodeEditorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FastInsertPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -149,6 +172,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\debug.png" />
+    <Resource Include="Resources\Icons\run-to-breakpoint.png" />
+    <Resource Include="Resources\Icons\run-to-end.png" />
+    <Resource Include="Resources\Icons\run.png" />
+    <Resource Include="Resources\Icons\step-into.png" />
+    <Resource Include="Resources\Icons\step-out.png" />
+    <Resource Include="Resources\Icons\step-over.png" />
   </ItemGroup>
   <Import Project="..\SharedCode\SharedCode.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

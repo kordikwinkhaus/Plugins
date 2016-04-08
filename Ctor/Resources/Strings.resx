@@ -219,4 +219,31 @@
   <data name="CannotAlignItem" xml:space="preserve">
     <value>Cannot align item.</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Debug" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="Run" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="RunToBreakpoint" xml:space="preserve">
+    <value>Run to breakpoint</value>
+  </data>
+  <data name="RunToEnd" xml:space="preserve">
+    <value>Run to end</value>
+  </data>
+  <data name="StepInto" xml:space="preserve">
+    <value>Step into</value>
+  </data>
+  <data name="StepOut" xml:space="preserve">
+    <value>Step out</value>
+  </data>
+  <data name="StepOver" xml:space="preserve">
+    <value>Step over</value>
+  </data>
 </root>

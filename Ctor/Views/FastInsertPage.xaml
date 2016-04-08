@@ -81,9 +81,12 @@
         <Button Click="_3xRoz_Click">3xROZ</Button>
       </WrapPanel>
 
-      <Button Command="{Binding RunCommand}"
-              CommandParameter="{Binding Text, ElementName=txtCode}"
-              >RUN</Button>
+      <DockPanel>
+        <Button DockPanel.Dock="Right" Click="edit_Click">edit</Button>
+        <Button Command="{Binding RunCommand}"
+                CommandParameter="{Binding Text, ElementName=txtCode}"
+                >RUN</Button>
+      </DockPanel>
     </StackPanel>
 
     <TextBox x:Name="txtCode" 
