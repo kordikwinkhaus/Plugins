@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Windows;
+using Ctor.Models.Scripting;
+using Ctor.ViewModels;
 
 namespace Ctor.Views
 {
-    public partial class CodeEditorDialog : Window
+    public partial class CodeEditorDialog : Window, ICodeEditorView
     {
         public CodeEditorDialog()
         {
@@ -18,7 +20,7 @@ namespace Ctor.Views
             lblColNo.Content = caret.Column.ToString();
         }
 
-        public PythonEditor Editor
+        public IScriptEditor Editor
         {
             get { return codeEditor; }
         }

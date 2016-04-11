@@ -8,6 +8,12 @@ namespace Ctor.Models
     /// </summary>
     public class Msg
     {
+        private static readonly Msg s_instance = new Msg();
+        internal static Msg Instance
+        {
+            get { return s_instance; }
+        }
+
         private const string CAPTION = "Ctor plugin";
 
         internal Msg()

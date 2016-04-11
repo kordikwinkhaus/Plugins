@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Xml.Linq;
 using Ctor.ViewModels;
 using UserExtensions;
@@ -368,14 +370,38 @@ if pos.IsConstruction:
     r3.Coupling.SlideToRight()";
         }
 
+        TaskScheduler _ts;
+        string _text;
         private void edit_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            _ts = TaskScheduler.FromCurrentSynchronizationContext();
+            _text = txtCode.Text;
+
+            Thread t = new Thread(RunDebuger);
+            t.SetApartmentState(ApartmentState.STA);
+            t.IsBackground = true;
+            t.Start();
+
+            var id = System.Threading.Thread.CurrentThread.ManagedThreadId;
+
+
+//            Task.Factory.StartNew(() => RunDebuger(ts));
+
+            //if (dlg.ShowDialog() == true)
+            //{
+            //    txtCode.Text = dlg.Editor.Text;
+            //}
+        }
+
+        private void RunDebuger()
+        {
             var dlg = new CodeEditorDialog();
-            dlg.Editor.Text = txtCode.Text;
-            if (dlg.ShowDialog() == true)
-            {
-                txtCode.Text = dlg.Editor.Text;
-            }
+            dlg.DataContext = new CodeEditorViewModel(dlg.Editor, _viewModel, _ts);
+            dlg.Editor.Text = _text;
+            dlg.ShowInTaskbar = true;
+            var id = System.Threading.Thread.CurrentThread.ManagedThreadId;
+            dlg.Show();
+            System.Windows.Threading.Dispatcher.Run();
         }
     }
 }

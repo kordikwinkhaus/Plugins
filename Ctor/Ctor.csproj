@@ -98,10 +98,13 @@
     <Compile Include="Models\Part.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\PositionArea.cs" />
-    <Compile Include="Models\PythonScriptEngine.cs" />
+    <Compile Include="Models\Scripting\DebugStrategy.cs" />
+    <Compile Include="Models\Scripting\IScriptScopeExtender.cs" />
+    <Compile Include="Models\Scripting\PythonScriptEngine.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\Sash.cs" />
     <Compile Include="Models\SashArea.cs" />
+    <Compile Include="Models\Scripting\PythonScriptRunner.cs" />
     <Compile Include="Models\WindowType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -121,9 +124,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\CodeEditorViewModel.cs" />
     <Compile Include="ViewModels\Context.cs" />
+    <Compile Include="ViewModels\ContextScriptScopeExtender.cs" />
     <Compile Include="ViewModels\ContextViewModel.cs" />
     <Compile Include="ViewModels\FastInsertViewModel.cs" />
+    <Compile Include="ViewModels\ICodeEditorView.cs" />
     <Compile Include="Views\BreakPointMargin.cs" />
     <Compile Include="Views\CodeEditorDialog.xaml.cs">
       <DependentUpon>CodeEditorDialog.xaml</DependentUpon>
@@ -134,7 +140,7 @@
     <Compile Include="Views\FoldingTimer.cs" />
     <Compile Include="Views\HighlightLineBackgroundRenderer.cs" />
     <Compile Include="Views\ILineHighlightParser.cs" />
-    <Compile Include="Views\IScriptEditor.cs" />
+    <Compile Include="Models\Scripting\IScriptEditor.cs" />
     <Compile Include="Views\LineTracker.cs" />
     <Compile Include="Views\PythonEditor.cs" />
     <Compile Include="Views\PythonFoldingStrategy.cs" />
@@ -181,6 +187,9 @@
     <Resource Include="Resources\Icons\step-into.png" />
     <Resource Include="Resources\Icons\step-out.png" />
     <Resource Include="Resources\Icons\step-over.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\compile.png" />
   </ItemGroup>
   <Import Project="..\SharedCode\SharedCode.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

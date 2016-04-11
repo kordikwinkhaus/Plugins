@@ -246,4 +246,28 @@
   <data name="StepOver" xml:space="preserve">
     <value>Step over</value>
   </data>
+  <data name="Compile" xml:space="preserve">
+    <value>Compile</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="Running" xml:space="preserve">
+    <value>Running</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="TracebackCall" xml:space="preserve">
+    <value>Call {0}</value>
+  </data>
+  <data name="TracebackLine" xml:space="preserve">
+    <value>Line {0}</value>
+  </data>
+  <data name="TracebackReturn" xml:space="preserve">
+    <value>Return from {0}</value>
+  </data>
+  <data name="LineColumnInfo" xml:space="preserve">
+    <value>Line {0}, column {1}</value>
+  </data>
 </root>

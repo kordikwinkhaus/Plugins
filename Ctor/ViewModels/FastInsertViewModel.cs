@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using Ctor.Models;
+using Ctor.Models.Scripting;
 using Microsoft.Scripting;
 using Okna.Data;
 using Okna.Documents;
@@ -13,7 +14,8 @@ namespace Ctor.ViewModels
         private readonly string _connection;
         private readonly string _lang;
         private readonly ISqlConnectionWrapper _conn;
-        private readonly PythonScriptEngine _engine;
+        private PythonScriptEngine _engine;
+        private ContextScriptScopeExtender _scopeExtender;
 
         public FastInsertViewModel(string connection, string lang)
         {
@@ -22,9 +24,7 @@ namespace Ctor.ViewModels
 
             _conn = new SqlConnectionWrapper(Okna.Data.Utils.ModifyConnString(connection));
             _conn.TrySetLang();
-
-            _engine = new PythonScriptEngine();
-
+            
             this.RunCommand = new RelayCommand(Run);
             this.Context = new ContextViewModel(this);
         }
@@ -96,19 +96,13 @@ namespace Ctor.ViewModels
         private void Run(object param)
         {
             string code = (string)param;
-
-            _engine.InitVariablesScope();
-            _engine.Variables.SetVariable("pos", new Position(this.Document.ActivePos));
-            _engine.Variables.SetVariable("ctx", new Context(this.Context));
-            var msg = new Msg();
-            _engine.Variables.SetVariable("msg", msg);
-            _engine.Variables.SetVariable("db", this.Database);
+            var engine = GetScriptEngine();
 
             try
             {
-                if (!_engine.Execute(code))
+                if (!engine.Execute(code))
                 {
-                    msg.Error(_engine.ErrorMessage);
+                    Msg.Instance.Error(engine.ErrorMessage);
                 }
             }
             catch (CompilationException ex)
@@ -117,13 +111,27 @@ namespace Ctor.ViewModels
                 var syntaxError = inner as SyntaxErrorException;
                 if (syntaxError != null)
                 {
-                    msg.Error("Syntax error at line " + syntaxError.Line + ", column " + syntaxError.Column);
+                    Msg.Instance.Error("Syntax error at line " + syntaxError.Line + ", column " + syntaxError.Column);
                 }
                 else
                 {
-                    msg.Error(inner.Message);
+                    Msg.Instance.Error(inner.Message);
                 }
             }
+        }
+
+        internal PythonScriptEngine GetScriptEngine()
+        {
+            if (_engine == null)
+            {
+                _engine = new PythonScriptEngine();
+                _scopeExtender = new ContextScriptScopeExtender(this);
+            }
+
+            _engine.InitVariablesScope();
+            _scopeExtender.ExtendScope(_engine.Variables);
+
+            return _engine;
         }
 
         #endregion

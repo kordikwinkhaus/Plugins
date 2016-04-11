@@ -8,6 +8,7 @@
         Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
         SnapsToDevicePixels="True"
         TextOptions.TextFormattingMode="Display"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="Python editor" 
         Height="700" Width="800" MinWidth="450" MinHeight="350">
@@ -16,43 +17,84 @@
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
 
     <ToolBar>
+      <ToolBar.Resources>
+        <Style TargetType="{x:Type Image}">
+          <Setter Property="Height" Value="16"/>
+          <Setter Property="Width" Value="16"/>
+        </Style>
+      </ToolBar.Resources>
+      
       <Button>
         <StackPanel Orientation="Horizontal">
-          <Image Source="/Ctor;component/Resources/Icons/run.png" Height="16" Width="16"/>
+          <Image Source="/Ctor;component/Resources/Icons/compile.png" Margin="0,0,4,0"/>
+          <TextBlock Text="{x:Static res:Strings.Compile}"/>
+        </StackPanel>
+      </Button>
+      <Button Command="{Binding RunScriptCommand}">
+        <StackPanel Orientation="Horizontal">
+          <Image Source="/Ctor;component/Resources/Icons/run.png"/>
           <TextBlock Text="{x:Static res:Strings.Run}"/>
         </StackPanel>
       </Button>
-      <Button>
+      <Button Command="{Binding DebugScriptCommand}">
         <StackPanel Orientation="Horizontal">
-          <Image Source="/Ctor;component/Resources/Icons/debug.png" Height="16" Width="16"/>
+          <Image Source="/Ctor;component/Resources/Icons/debug.png" Margin="0,0,2,0"/>
           <TextBlock Text="{x:Static res:Strings.Debug}"/>
         </StackPanel>
       </Button>
       <Separator/>
-      <Button ToolTip="{x:Static res:Strings.StepInto}">
-        <Image Source="/Ctor;component/Resources/Icons/step-into.png" Height="16" Width="16"/>
+      <Button ToolTip="{x:Static res:Strings.StepInto}"
+              Command="{Binding StepIntoCommand}"
+              >
+        <Image Source="/Ctor;component/Resources/Icons/step-into.png"/>
       </Button>
-      <Button ToolTip="{x:Static res:Strings.StepOver}">
-        <Image Source="/Ctor;component/Resources/Icons/step-over.png" Height="16" Width="16"/>
+      <Button ToolTip="{x:Static res:Strings.StepOver}"
+              Command="{Binding StepOutCommand}"
+              >
+        <Image Source="/Ctor;component/Resources/Icons/step-over.png"/>
       </Button>
-      <Button ToolTip="{x:Static res:Strings.StepOut}">
-        <Image Source="/Ctor;component/Resources/Icons/step-out.png" Height="16" Width="16"/>
+      <Button ToolTip="{x:Static res:Strings.StepOut}"
+              Command="{Binding StepOverCommand}"
+              >
+        <Image Source="/Ctor;component/Resources/Icons/step-out.png"/>
       </Button>
       <Separator/>
-      <Button ToolTip="{x:Static res:Strings.RunToEnd}">
-        <Image Source="/Ctor;component/Resources/Icons/run-to-end.png" Height="16" Width="16"/>
+      <Button ToolTip="{x:Static res:Strings.RunToEnd}"
+              Command="{Binding RunToEndCommand}"
+              >
+        <Image Source="/Ctor;component/Resources/Icons/run-to-end.png"/>
       </Button>
-      <Button ToolTip="{x:Static res:Strings.RunToBreakpoint}">
-        <Image Source="/Ctor;component/Resources/Icons/run-to-breakpoint.png" Height="16" Width="16"/>
+      <Button ToolTip="{x:Static res:Strings.RunToBreakpoint}"
+              Command="{Binding RunToBreakPointCommand}"
+              >
+        <Image Source="/Ctor;component/Resources/Icons/run-to-breakpoint.png"/>
       </Button>
     </ToolBar>
     
     <v:PythonEditor x:Name="codeEditor" Grid.Row="1"/>
 
-    <DockPanel Grid.Row="2">
+    <Grid Grid.Row="2" Height="200">
+      <TabControl TabStripPlacement="Bottom">
+        <TabItem Header="Output">
+          <TextBox/>
+        </TabItem>
+        <TabItem Header="Locals">
+          <DataGrid>
+            <DataGrid.Columns>
+              
+            </DataGrid.Columns>
+          </DataGrid>          
+        </TabItem>
+        <TabItem Header="Interactive">
+        </TabItem>
+      </TabControl>
+    </Grid>
+
+    <DockPanel Grid.Row="3">
       <StackPanel DockPanel.Dock="Right" 
                   Orientation="Horizontal" 
                   HorizontalAlignment="Right"

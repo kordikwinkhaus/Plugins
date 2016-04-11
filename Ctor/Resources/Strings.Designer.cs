@@ -169,6 +169,24 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compile.
+        /// </summary>
+        public static string Compile {
+            get {
+                return ResourceManager.GetString("Compile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Completed.
+        /// </summary>
+        public static string Completed {
+            get {
+                return ResourceManager.GetString("Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Debug.
         /// </summary>
         public static string Debug {
@@ -210,6 +228,15 @@ namespace Ctor.Resources {
         public static string InvalidMullionOrientation {
             get {
                 return ResourceManager.GetString("InvalidMullionOrientation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line {0}, column {1}.
+        /// </summary>
+        public static string LineColumnInfo {
+            get {
+                return ResourceManager.GetString("LineColumnInfo", resourceCulture);
             }
         }
         
@@ -304,11 +331,29 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ready.
+        /// </summary>
+        public static string Ready {
+            get {
+                return ResourceManager.GetString("Ready", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Run.
         /// </summary>
         public static string Run {
             get {
                 return ResourceManager.GetString("Run", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Running.
+        /// </summary>
+        public static string Running {
+            get {
+                return ResourceManager.GetString("Running", resourceCulture);
             }
         }
         
@@ -426,6 +471,33 @@ namespace Ctor.Resources {
         public static string StepOver {
             get {
                 return ResourceManager.GetString("StepOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Call {0}.
+        /// </summary>
+        public static string TracebackCall {
+            get {
+                return ResourceManager.GetString("TracebackCall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line {0}.
+        /// </summary>
+        public static string TracebackLine {
+            get {
+                return ResourceManager.GetString("TracebackLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return from {0}.
+        /// </summary>
+        public static string TracebackReturn {
+            get {
+                return ResourceManager.GetString("TracebackReturn", resourceCulture);
             }
         }
         

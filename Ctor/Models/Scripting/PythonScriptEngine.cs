@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using IronPython.Hosting;
+using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 
-namespace Ctor.Models
+namespace Ctor.Models.Scripting
 {
     internal class PythonScriptEngine
     {
@@ -34,13 +36,13 @@ namespace Ctor.Models
         internal void SetOutput(Stream output)
         {
             _engine.Runtime.IO.SetOutput(output, Encoding.UTF8);
-            _engine.Runtime.IO.SetOutput(output, Encoding.UTF8);
+            _engine.Runtime.IO.SetErrorOutput(output, Encoding.UTF8);
         }
 
-        //internal void SetTrace(TracebackDelegate traceback)
-        //{
-        //    _engine.SetTrace(traceback);
-        //}
+        internal void SetTrace(TracebackDelegate traceback)
+        {
+            _engine.SetTrace(traceback);
+        }
 
         internal bool Execute(string source)
         {
@@ -60,7 +62,7 @@ namespace Ctor.Models
                 code.Execute(_scope);
                 return true;
             }
-            catch (IronPython.Runtime.Exceptions.SystemExitException)
+            catch (SystemExitException)
             {
                 return true;
             }

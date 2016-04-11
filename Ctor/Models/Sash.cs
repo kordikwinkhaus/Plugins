@@ -114,6 +114,7 @@ namespace Ctor.Models
                 if (_sash.Update(true))
                 {
                     _sash.TopObject.CheckPoint();
+                    _sash.TopObject.Invalidate();
                 }
                 else
                 {
