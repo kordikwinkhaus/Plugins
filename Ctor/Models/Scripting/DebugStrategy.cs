@@ -127,17 +127,17 @@ namespace Ctor.Models.Scripting
 
         internal override int Call(TraceBackFrame frame, FunctionCode code)
         {
-            throw new InvalidOperationException();
+            return CONTINUE;
         }
 
         internal override int Line(TraceBackFrame frame, FunctionCode code)
         {
-            throw new InvalidOperationException();
+            return CONTINUE;
         }
 
         internal override int Return(TraceBackFrame frame, FunctionCode code)
         {
-            throw new InvalidOperationException();
+            return CONTINUE;
         }
     }
 

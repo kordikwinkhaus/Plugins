@@ -270,4 +270,7 @@
   <data name="LineColumnInfo" xml:space="preserve">
     <value>Line {0}, column {1}</value>
   </data>
+  <data name="TracebackException" xml:space="preserve">
+    <value>Exception on line {0}</value>
+  </data>
 </root>

@@ -484,6 +484,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exception on line {0}.
+        /// </summary>
+        public static string TracebackException {
+            get {
+                return ResourceManager.GetString("TracebackException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line {0}.
         /// </summary>
         public static string TracebackLine {

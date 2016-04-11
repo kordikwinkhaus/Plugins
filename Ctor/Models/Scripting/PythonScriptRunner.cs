@@ -178,7 +178,6 @@ namespace Ctor.Models.Scripting
 
             _editor.HighlightLine(null, Brushes.Yellow);
             _debugStrategy = RunToEndStrategy.Instance;
-            _traceback = null;
 
             ExecuteStep();
         }
@@ -224,16 +223,13 @@ namespace Ctor.Models.Scripting
 
         private TracebackDelegate OnTracebackReceived(TraceBackFrame frame, string result, object payload)
         {
-            if (_debugStrategy.BreakTrace)
+            if (_debugStrategy.BreakTrace || string.Compare(result, "exception", StringComparison.InvariantCulture) == 0)
             {
                 _dispatcher.BeginInvoke(_tracebackAction, frame, result, payload);
                 _dbgContinue.WaitOne();
-                return _traceback;
             }
-            else
-            {
-                return null;
-            }
+
+            return _traceback;
         }
 
         private void OnTraceback(TraceBackFrame frame, string result, object payload)
@@ -280,8 +276,7 @@ namespace Ctor.Models.Scripting
                     break;
 
                 case "exception":
-                    // TODO
-                    throw new NotImplementedException();
+                    TracebackException();
                     break;
 
                 default:
@@ -305,6 +300,15 @@ namespace Ctor.Models.Scripting
         {
             this.DebugInfo = string.Format(Strings.TracebackLine, _curFrame.f_lineno);
             _editor.HighlightLine((int)_curFrame.f_lineno, Brushes.Yellow);
+        }
+
+        private void TracebackException()
+        {
+            _traceback = this.OnTracebackReceived;
+            _debugStrategy = StepIntoStrategy.Instance;
+
+            this.DebugInfo = string.Format(Strings.TracebackException, _curFrame.f_lineno);
+            _editor.HighlightLine((int)_curFrame.f_lineno, Brushes.Salmon);
         }
 
         #endregion
