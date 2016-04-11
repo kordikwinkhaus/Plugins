@@ -105,7 +105,7 @@ namespace Ctor.Views
                     break;
 
                 case HighlightType.Exception:
-                    _lineHighlighter.BackgroundBrush = Brushes.Salmon;
+                    _lineHighlighter.BackgroundBrush = Brushes.OrangeRed;
                     break;
 
                 default:

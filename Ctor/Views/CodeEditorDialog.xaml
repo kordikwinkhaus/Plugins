@@ -48,27 +48,32 @@
       </Button>
       <Separator/>
       <Button ToolTip="{x:Static res:Strings.StepInto}"
+              ToolTipService.ShowOnDisabled="True"
               Command="{Binding StepIntoCommand}"
               >
         <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/step-into.png"/>
       </Button>
       <Button ToolTip="{x:Static res:Strings.StepOver}"
+              ToolTipService.ShowOnDisabled="True"
               Command="{Binding StepOutCommand}"
               >
         <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/step-over.png"/>
       </Button>
       <Button ToolTip="{x:Static res:Strings.StepOut}"
+              ToolTipService.ShowOnDisabled="True"
               Command="{Binding StepOverCommand}"
               >
         <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/step-out.png"/>
       </Button>
       <Separator/>
       <Button ToolTip="{x:Static res:Strings.RunToEnd}"
+              ToolTipService.ShowOnDisabled="True"
               Command="{Binding RunToEndCommand}"
               >
         <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/run-to-end.png"/>
       </Button>
       <Button ToolTip="{x:Static res:Strings.RunToBreakpoint}"
+              ToolTipService.ShowOnDisabled="True"
               Command="{Binding RunToBreakPointCommand}"
               >
         <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/run-to-breakpoint.png"/>
