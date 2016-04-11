@@ -22,7 +22,7 @@
 
     <ToolBar>
       <ToolBar.Resources>
-        <Style TargetType="{x:Type Image}">
+        <Style TargetType="{x:Type v:AutoGreyImage}">
           <Setter Property="Height" Value="16"/>
           <Setter Property="Width" Value="16"/>
         </Style>
@@ -30,19 +30,19 @@
       
       <Button>
         <StackPanel Orientation="Horizontal">
-          <Image Source="/Ctor;component/Resources/Icons/compile.png" Margin="0,0,4,0"/>
+          <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/compile.png" Margin="0,0,4,0"/>
           <TextBlock Text="{x:Static res:Strings.Compile}"/>
         </StackPanel>
       </Button>
       <Button Command="{Binding RunScriptCommand}">
         <StackPanel Orientation="Horizontal">
-          <Image Source="/Ctor;component/Resources/Icons/run.png"/>
+          <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/run.png"/>
           <TextBlock Text="{x:Static res:Strings.Run}"/>
         </StackPanel>
       </Button>
       <Button Command="{Binding DebugScriptCommand}">
         <StackPanel Orientation="Horizontal">
-          <Image Source="/Ctor;component/Resources/Icons/debug.png" Margin="0,0,2,0"/>
+          <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/debug.png" Margin="0,0,2,0"/>
           <TextBlock Text="{x:Static res:Strings.Debug}"/>
         </StackPanel>
       </Button>
@@ -50,28 +50,28 @@
       <Button ToolTip="{x:Static res:Strings.StepInto}"
               Command="{Binding StepIntoCommand}"
               >
-        <Image Source="/Ctor;component/Resources/Icons/step-into.png"/>
+        <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/step-into.png"/>
       </Button>
       <Button ToolTip="{x:Static res:Strings.StepOver}"
               Command="{Binding StepOutCommand}"
               >
-        <Image Source="/Ctor;component/Resources/Icons/step-over.png"/>
+        <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/step-over.png"/>
       </Button>
       <Button ToolTip="{x:Static res:Strings.StepOut}"
               Command="{Binding StepOverCommand}"
               >
-        <Image Source="/Ctor;component/Resources/Icons/step-out.png"/>
+        <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/step-out.png"/>
       </Button>
       <Separator/>
       <Button ToolTip="{x:Static res:Strings.RunToEnd}"
               Command="{Binding RunToEndCommand}"
               >
-        <Image Source="/Ctor;component/Resources/Icons/run-to-end.png"/>
+        <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/run-to-end.png"/>
       </Button>
       <Button ToolTip="{x:Static res:Strings.RunToBreakpoint}"
               Command="{Binding RunToBreakPointCommand}"
               >
-        <Image Source="/Ctor;component/Resources/Icons/run-to-breakpoint.png"/>
+        <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/run-to-breakpoint.png"/>
       </Button>
     </ToolBar>
     

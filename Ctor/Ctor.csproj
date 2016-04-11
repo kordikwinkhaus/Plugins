@@ -130,6 +130,7 @@
     <Compile Include="ViewModels\ContextViewModel.cs" />
     <Compile Include="ViewModels\FastInsertViewModel.cs" />
     <Compile Include="ViewModels\ICodeEditorView.cs" />
+    <Compile Include="Views\AutoGreyImage.cs" />
     <Compile Include="Views\BreakPointMargin.cs" />
     <Compile Include="Views\CodeEditorDialog.xaml.cs">
       <DependentUpon>CodeEditorDialog.xaml</DependentUpon>
