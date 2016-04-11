@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -84,10 +85,32 @@ namespace Ctor.Views
             this.Background = (enabled) ? Brushes.White : Brushes.WhiteSmoke;
         }
 
-        public void HighlightLine(int? line, SolidColorBrush background)
+        public void HighlightLine(int? line, HighlightType highlight)
         {
             _lineHighlighter.LineNumber = line;
-            _lineHighlighter.BackgroundBrush = background;
+
+            switch (highlight)
+            {
+                case HighlightType.None:
+                    _lineHighlighter.BackgroundBrush = Brushes.Transparent;
+                    break;
+
+                case HighlightType.Line:
+                case HighlightType.Call:
+                    _lineHighlighter.BackgroundBrush = Brushes.Yellow;
+                    break;
+
+                case HighlightType.Return:
+                    _lineHighlighter.BackgroundBrush = Brushes.LightGreen;
+                    break;
+
+                case HighlightType.Exception:
+                    _lineHighlighter.BackgroundBrush = Brushes.Salmon;
+                    break;
+
+                default:
+                    throw new Exception("Unknown enum value.");
+            }
 
             if (line.HasValue)
             {

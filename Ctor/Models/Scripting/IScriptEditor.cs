@@ -6,7 +6,7 @@ namespace Ctor.Models.Scripting
     {
         void BeginScriptExecMode();
         void EndScriptExecMode();
-        void HighlightLine(int? line, SolidColorBrush background);// TODO: výčet místo brushe
+        void HighlightLine(int? line, HighlightType highlight);
         bool IsBreakPointOnLine(int line);
         string Text { get; set; }
     }

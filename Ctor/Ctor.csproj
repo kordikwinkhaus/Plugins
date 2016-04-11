@@ -99,6 +99,7 @@
     <Compile Include="Models\Position.cs" />
     <Compile Include="Models\PositionArea.cs" />
     <Compile Include="Models\Scripting\DebugStrategy.cs" />
+    <Compile Include="Models\Scripting\HighlightType.cs" />
     <Compile Include="Models\Scripting\IScriptScopeExtender.cs" />
     <Compile Include="Models\Scripting\PythonScriptEngine.cs" />
     <Compile Include="Models\Database.cs" />

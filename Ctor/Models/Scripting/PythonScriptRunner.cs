@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Threading;
 using Ctor.Resources;
 using IronPython.Runtime;
@@ -176,7 +175,7 @@ namespace Ctor.Models.Scripting
         {
             if (_scriptFinished) return;
 
-            _editor.HighlightLine(null, Brushes.Yellow);
+            _editor.HighlightLine(null, HighlightType.None);
             _debugStrategy = RunToEndStrategy.Instance;
 
             ExecuteStep();
@@ -287,19 +286,19 @@ namespace Ctor.Models.Scripting
         private void TracebackCall()
         {
             this.DebugInfo = string.Format(Strings.TracebackCall, _curCode.co_name);
-            _editor.HighlightLine((int)_curFrame.f_lineno, Brushes.Yellow);
+            _editor.HighlightLine((int)_curFrame.f_lineno, HighlightType.Call);
         }
 
         private void TracebackReturn()
         {
             this.DebugInfo = string.Format(Strings.TracebackReturn, _curCode.co_name);
-            _editor.HighlightLine(_curCode.co_firstlineno, Brushes.LightGreen);
+            _editor.HighlightLine(_curCode.co_firstlineno, HighlightType.Return);
         }
 
         private void TracebackLine()
         {
             this.DebugInfo = string.Format(Strings.TracebackLine, _curFrame.f_lineno);
-            _editor.HighlightLine((int)_curFrame.f_lineno, Brushes.Yellow);
+            _editor.HighlightLine((int)_curFrame.f_lineno, HighlightType.Line);
         }
 
         private void TracebackException()
@@ -308,7 +307,7 @@ namespace Ctor.Models.Scripting
             _debugStrategy = StepIntoStrategy.Instance;
 
             this.DebugInfo = string.Format(Strings.TracebackException, _curFrame.f_lineno);
-            _editor.HighlightLine((int)_curFrame.f_lineno, Brushes.Salmon);
+            _editor.HighlightLine((int)_curFrame.f_lineno, HighlightType.Exception);
         }
 
         #endregion
