@@ -13,24 +13,48 @@ namespace Ctor.ViewModels
     public class CodeEditorViewModel : ViewModelBase
     {
         private readonly PythonScriptRunner _runner;
+        private readonly TextOutputStream _output;
 
         internal CodeEditorViewModel(IScriptEditor scriptEditor, FastInsertViewModel parent, TaskScheduler scheduler)
         {
-            _runScriptCommand = new RelayCommand(RunScript, CanRunScript);
-            _debugScriptCommand = new RelayCommand(DebugScript, CanDebugScript);
-            _stepIntoCommand = new RelayCommand(StepInto, CanDebugStep);
-            _stepOutCommand = new RelayCommand(StepOut, CanDebugStep);
-            _stepOverCommand = new RelayCommand(StepOver, CanDebugStep);
-            _runToEndCommand = new RelayCommand(RunToEnd, CanDebugStep);
-            _runToBreakPointCommand = new RelayCommand(RunToBreakPoint, CanDebugStep);
+            this.CompileCommand = new RelayCommand(Compile, CanCompile);
+            this.RunScriptCommand = new RelayCommand(RunScript, CanRunScript);
+            this.DebugScriptCommand = new RelayCommand(DebugScript, CanDebugScript);
+            this.StepIntoCommand = new RelayCommand(StepInto, CanDebugStep);
+            this.StepOutCommand = new RelayCommand(StepOut, CanDebugStep);
+            this.StepOverCommand = new RelayCommand(StepOver, CanDebugStep);
+            this.RunToEndCommand = new RelayCommand(RunToEnd, CanDebugStep);
+            this.RunToBreakPointCommand = new RelayCommand(RunToBreakPoint, CanDebugStep);
+            this.StopDebugCommand = new RelayCommand(StopDebug, CanStopDebug);
+            this.ClearOutputCommand = new RelayCommand(ClearOutput);
 
             this.DebugInfo = Strings.Ready;
 
-            var _output = new MemoryStream();
+            _output = new TextOutputStream();
+            _output.TextChanged += output_TextChanged;
 
-            _runner = new PythonScriptRunner(scriptEditor, new StreamWriter(_output), parent.GetScriptEngine(), scheduler);
+            _runner = new PythonScriptRunner(scriptEditor, _output, parent.GetScriptEngine(), scheduler);
             _runner.ScriptFinished += new EventHandler(ScriptFinished);
             _runner.DebugInfoChanged += new EventHandler(DebugInfoChanged);
+        }
+
+        private void output_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.OutputText = e.Text;
+        }
+
+        private string _outputText;
+        public string OutputText
+        {
+            get { return _outputText; }
+            set
+            {
+                if (_outputText != value)
+                {
+                    _outputText = value;
+                    OnPropertyChanged(nameof(OutputText));
+                }
+            }
         }
 
         private string _debugInfo;
@@ -53,50 +77,39 @@ namespace Ctor.ViewModels
         private bool _canDebugScript = true;
         private bool _canDebugStep = false;
 
-        private ICommand _runScriptCommand;
-        public ICommand RunScriptCommand
+        public ICommand CompileCommand { get; private set; }
+        public ICommand RunScriptCommand { get; private set; }
+        public ICommand DebugScriptCommand { get; private set; }
+        public ICommand StepIntoCommand { get; private set; }
+        public ICommand StepOutCommand { get; private set; }
+        public ICommand StepOverCommand { get; private set; }
+        public ICommand RunToEndCommand { get; private set; }
+        public ICommand RunToBreakPointCommand { get; private set; }
+        public ICommand StopDebugCommand { get; private set; }
+        public ICommand ClearOutputCommand { get; private set; }
+
+        private void Compile(object param)
         {
-            get { return _runScriptCommand; }
+            if (this.CanCompile(param))
+            {
+                StopTimer();
+
+                _runner.Compile();
+                this.DebugInfo = Strings.SuccessfullyCompiled;
+
+                SetReadyTimer();
+            }
         }
 
-        private ICommand _debugScriptCommand;
-        public ICommand DebugScriptCommand
+        private bool CanCompile(object param)
         {
-            get { return _debugScriptCommand; }
-        }
-
-        private ICommand _stepIntoCommand;
-        public ICommand StepIntoCommand
-        {
-            get { return _stepIntoCommand; }
-        }
-
-        private ICommand _stepOutCommand;
-        public ICommand StepOutCommand
-        {
-            get { return _stepOutCommand; }
-        }
-
-        private ICommand _stepOverCommand;
-        public ICommand StepOverCommand
-        {
-            get { return _stepOverCommand; }
-        }
-
-        private ICommand _runToEndCommand;
-        public ICommand RunToEndCommand
-        {
-            get { return _runToEndCommand; }
-        }
-
-        private ICommand _runToBreakPointCommand;
-        public ICommand RunToBreakPointCommand
-        {
-            get { return _runToBreakPointCommand; }
+            return _canRunScript;
         }
 
         private void RunScript(object param)
         {
+            StopTimer();
+
             _runner.Run();
             _canDebugScript = false;
         }
@@ -108,6 +121,8 @@ namespace Ctor.ViewModels
 
         private void DebugScript(object param)
         {
+            StopTimer();
+
             _canRunScript = false;
             _canDebugScript = false;
             _canDebugStep = true;
@@ -200,6 +215,24 @@ namespace Ctor.ViewModels
         private void DebugInfoChanged(object sender, EventArgs e)
         {
             this.DebugInfo = _runner.DebugInfo;
+        }
+
+        private bool CanStopDebug(object param)
+        {
+            return false;
+        }
+
+        private void StopDebug(object param)
+        {
+            if (this.CanStopDebug(param))
+            {
+
+            }
+        }
+
+        private void ClearOutput(object param)
+        {
+            _output.Clear();
         }
 
         #endregion

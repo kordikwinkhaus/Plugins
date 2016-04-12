@@ -34,5 +34,10 @@ namespace Ctor.Views
         {
             this.DialogResult = true;
         }
+
+        private void txtOutput_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            txtOutput.ScrollToEnd();
+        }
     }
 }

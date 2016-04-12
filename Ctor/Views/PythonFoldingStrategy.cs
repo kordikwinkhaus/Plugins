@@ -5,7 +5,7 @@ using ICSharpCode.AvalonEdit.Folding;
 
 namespace Ctor.Views
 {
-    internal class PythonFoldingStrategy //: AbstractFoldingStrategy
+    internal class PythonFoldingStrategy
     {
         class BlockDef
         {

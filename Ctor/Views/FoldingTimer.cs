@@ -38,7 +38,6 @@ namespace Ctor.Views
             _scriptTimer.Interval = TimeSpan.FromSeconds(2);
             _scriptTimer.Tick += (sender, e) =>
             {
-                //_strategy.UpdateFoldings(_manager, _editor.Document);
                 _manager.UpdateFoldings(_strategy.CreateNewFoldings(_editor.Document), -1);
                 StopScriptTimer();
             };

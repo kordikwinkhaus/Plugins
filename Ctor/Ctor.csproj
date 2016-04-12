@@ -106,6 +106,7 @@
     <Compile Include="Models\Sash.cs" />
     <Compile Include="Models\SashArea.cs" />
     <Compile Include="Models\Scripting\PythonScriptRunner.cs" />
+    <Compile Include="Models\Scripting\TextOutputStream.cs" />
     <Compile Include="Models\WindowType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -192,6 +193,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\compile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\clear.png" />
   </ItemGroup>
   <Import Project="..\SharedCode\SharedCode.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

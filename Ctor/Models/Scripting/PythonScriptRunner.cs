@@ -15,12 +15,12 @@ namespace Ctor.Models.Scripting
     internal class PythonScriptRunner
     {
         private readonly IScriptEditor _editor;
-        private readonly StreamWriter _output;
+        private readonly TextOutputStream _output;
         private readonly PythonScriptEngine _engine;
         private readonly Dictionary<int, Action> _funcs;
         private readonly TaskScheduler _oknaUIScheduler;
 
-        internal PythonScriptRunner(IScriptEditor editor, StreamWriter output, 
+        internal PythonScriptRunner(IScriptEditor editor, TextOutputStream output, 
             PythonScriptEngine scriptEngine, TaskScheduler oknaUIScheduler)
         {
             _editor = editor;
@@ -37,6 +37,11 @@ namespace Ctor.Models.Scripting
                 { DebugStrategy.TB_LINE, TracebackLine }
             };
             _dispatcher = ((FrameworkElement)editor).Dispatcher;
+        }
+
+        internal void Compile()
+        {
+            
         }
 
         internal void Run()
@@ -63,7 +68,6 @@ namespace Ctor.Models.Scripting
 
         private void RunCore(TracebackDelegate traceback)
         {
-            //_dispatcher = Application.Current.Dispatcher;
             string script = _editor.Text;
 
             Task task = Task.Factory
@@ -97,11 +101,8 @@ namespace Ctor.Models.Scripting
 
         private void RunCore(string script, TracebackDelegate traceback)
         {
-            _engine.SetOutput(_output.BaseStream);
-            //if (traceback != null)
-            //{
-                _engine.SetTrace(traceback);
-            //}
+            _engine.SetOutput(_output);
+            _engine.SetTrace(traceback);
 
             try
             {
@@ -145,8 +146,6 @@ namespace Ctor.Models.Scripting
 
             this.DebugInfo = Strings.Completed;
             _editor.EndScriptExecMode();
-            //_dispatcher.Invoke(new Action(() => _editor.EndScriptExecMode()));
-            //_dispatcher = null;
         }
 
         #region Methods for debuging
@@ -233,6 +232,10 @@ namespace Ctor.Models.Scripting
 
         private void OnTraceback(TraceBackFrame frame, string result, object payload)
         {
+            // For call and line, payload is null.
+            // For return, payload is the value being returned from the function. 
+            // For exception, the payload is information about the exception and where it was thrown.
+
             var code = frame.f_code;
             /*
             var locals = frame.f_locals as PythonDictionary;

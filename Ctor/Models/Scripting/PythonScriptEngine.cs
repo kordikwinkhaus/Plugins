@@ -44,18 +44,22 @@ namespace Ctor.Models.Scripting
             _engine.SetTrace(traceback);
         }
 
-        internal bool Execute(string source)
+        internal CompiledCode Compile(string source)
         {
             ScriptSource script = _engine.CreateScriptSourceFromString(source, SourceCodeKind.Statements);
-            CompiledCode code = null;
             try
             {
-                code = script.Compile();
+                return script.Compile();
             }
             catch (Exception ex)
             {
                 throw new CompilationException(ex);
             }
+        }
+
+        internal bool Execute(string source)
+        {
+            CompiledCode code = Compile(source);
 
             try
             {

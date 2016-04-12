@@ -21,7 +21,7 @@ namespace Ctor.Views
         public PythonEditor()
         {
             FontFamily = new FontFamily("Consolas");
-            FontSize = 14;
+            FontSize = 13.5;
             ShowLineNumbers = true;
             Options.IndentationSize = 4;
             Options.ConvertTabsToSpaces = true;

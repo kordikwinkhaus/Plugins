@@ -11,7 +11,8 @@
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="Python editor" 
-        Height="700" Width="800" MinWidth="450" MinHeight="350">
+        Height="700" Width="800" 
+        MinWidth="450" MinHeight="350">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -28,7 +29,7 @@
         </Style>
       </ToolBar.Resources>
       
-      <Button>
+      <Button Command="{Binding CompileCommand}">
         <StackPanel Orientation="Horizontal">
           <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/compile.png" Margin="0,0,4,0"/>
           <TextBlock Text="{x:Static res:Strings.Compile}"/>
@@ -78,6 +79,22 @@
               >
         <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/run-to-breakpoint.png"/>
       </Button>
+      <!--
+      <Button ToolTip="{x:Static res:Strings.StopDebuging}"
+              ToolTipService.ShowOnDisabled="True"
+              Command="{Binding StopDebugCommand}"
+              >
+        <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/stop.png"/>
+      </Button>
+      -->
+      <Separator/>
+
+      <Button Command="{Binding ClearOutputCommand}">
+        <StackPanel Orientation="Horizontal">
+          <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/clear.png" Margin="0,0,4,0"/>
+          <TextBlock Text="{x:Static res:Strings.ClearOutput}"/>
+        </StackPanel>
+      </Button>
     </ToolBar>
     
     <v:PythonEditor x:Name="codeEditor" Grid.Row="1"/>
@@ -85,7 +102,13 @@
     <Grid Grid.Row="2" Height="200">
       <TabControl TabStripPlacement="Bottom">
         <TabItem Header="Output">
-          <TextBox/>
+          <TextBox x:Name="txtOutput" 
+                   Text="{Binding OutputText}" 
+                   FontFamily="Consolas"
+                   FontSize="13"
+                   VerticalScrollBarVisibility="Visible"
+                   TextChanged="txtOutput_TextChanged"
+                   />
         </TabItem>
         <TabItem Header="Locals">
           <DataGrid>
@@ -93,8 +116,6 @@
               
             </DataGrid.Columns>
           </DataGrid>          
-        </TabItem>
-        <TabItem Header="Interactive">
         </TabItem>
       </TabControl>
     </Grid>

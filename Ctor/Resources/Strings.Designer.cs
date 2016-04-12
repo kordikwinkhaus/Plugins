@@ -169,6 +169,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear output.
+        /// </summary>
+        public static string ClearOutput {
+            get {
+                return ResourceManager.GetString("ClearOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compile.
         /// </summary>
         public static string Compile {
@@ -471,6 +480,24 @@ namespace Ctor.Resources {
         public static string StepOver {
             get {
                 return ResourceManager.GetString("StepOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop debugging.
+        /// </summary>
+        public static string StopDebuging {
+            get {
+                return ResourceManager.GetString("StopDebuging", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully compiled.
+        /// </summary>
+        public static string SuccessfullyCompiled {
+            get {
+                return ResourceManager.GetString("SuccessfullyCompiled", resourceCulture);
             }
         }
         

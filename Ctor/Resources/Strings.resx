@@ -273,4 +273,13 @@
   <data name="TracebackException" xml:space="preserve">
     <value>Exception on line {0}</value>
   </data>
+  <data name="StopDebuging" xml:space="preserve">
+    <value>Stop debugging</value>
+  </data>
+  <data name="SuccessfullyCompiled" xml:space="preserve">
+    <value>Successfully compiled</value>
+  </data>
+  <data name="ClearOutput" xml:space="preserve">
+    <value>Clear output</value>
+  </data>
 </root>

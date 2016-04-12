@@ -23,8 +23,6 @@ namespace Ctor.Views
 
         public void ChangeComplete(DocumentChangeEventArgs e)
         {
-            // nový kód v AvalonEdit verze 5
-            //throw new NotImplementedException();
         }
 
         public void LineInserted(DocumentLine insertionPos, DocumentLine newLine)

@@ -1,6 +1,4 @@
-﻿using System.Windows.Media;
-
-namespace Ctor.Models.Scripting
+﻿namespace Ctor.Models.Scripting
 {
     public interface IScriptEditor
     {
