@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 
 namespace PluginTester
 {
@@ -14,6 +15,12 @@ namespace PluginTester
             dynamic logger = this.DataContext;
             string text = logger.Data?.ToString() ?? string.Empty;
             txtUserData.Text = text;
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
         }
     }
 }
