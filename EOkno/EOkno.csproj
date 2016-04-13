@@ -75,6 +75,7 @@
     <Compile Include="Views\DocumentView.xaml.cs">
       <DependentUpon>DocumentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DropDownButton.cs" />
     <Compile Include="Views\NegateBoolToVisibilityConverter.cs" />
     <Compile Include="Views\PositionView.xaml.cs">
       <DependentUpon>PositionView.xaml</DependentUpon>

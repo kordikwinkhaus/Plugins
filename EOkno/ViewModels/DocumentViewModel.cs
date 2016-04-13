@@ -1,13 +1,65 @@
-﻿using System.Collections.Generic;
+﻿using Okna.Plugins.ViewModels;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Windows.Input;
 using System.Xml.Linq;
-using Okna.Plugins.ViewModels;
 
 namespace EOkno.ViewModels
 {
     public class DocumentViewModel : ViewModelBase
     {
+        private const string s_sleva = "s";
         private XElement _data;
+
+        public DocumentViewModel()
+        {
+            this.SelectAllCommand = new RelayCommand(SelectAll);
+            this.DeselectAllCommand = new RelayCommand(DeselectAll);
+        }
+
+        public ICommand SelectAllCommand { get; private set; }
+
+        private void SelectAll(object param)
+        {
+            this.Komponenty.ForEach(k => k.Vybrano = true);
+        }
+
+        public ICommand DeselectAllCommand { get; private set; }
+
+        private void DeselectAll(object param)
+        {
+            this.Komponenty.ForEach(k => k.Vybrano = false);
+        }
+
+        private decimal _sleva;
+        public decimal Sleva
+        {
+            get { return _sleva; }
+            set
+            {
+                if (_sleva != value)
+                {
+                    _sleva = value;
+                    OnPropertyChanged(nameof(Sleva));
+                    if (_data != null)
+                    {
+                        UlozitSlevuDoXml();
+                    }
+                }
+            }
+        }
+
+        private void UlozitSlevuDoXml()
+        {
+            var slevaAttr = _data.Attribute(s_sleva);
+            if (slevaAttr == null)
+            {
+                slevaAttr = new XAttribute(s_sleva, string.Empty);
+                _data.Add(slevaAttr);
+            }
+            slevaAttr.Value = _sleva.ToString(CultureInfo.InvariantCulture);
+        }
 
         public List<KomponentaViewModel> Komponenty { get; private set; } = new List<KomponentaViewModel>();
 
@@ -62,6 +114,7 @@ namespace EOkno.ViewModels
         /// </summary>
         private void ResetToDefault()
         {
+            this.Sleva = 0;
             this.PovrchoveUpravy.ForEach(p => p.ResetToDefault(_data));
             this.VybranaPU = this.PovrchoveUpravy.First();
 
@@ -82,6 +135,16 @@ namespace EOkno.ViewModels
             }
 
             this.Komponenty.ForEach(k => k.Init(_data));
+
+            XAttribute slevaAttr = _data.Attribute(s_sleva);
+            if (slevaAttr != null)
+            {
+                decimal sleva;
+                if (decimal.TryParse(slevaAttr.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out sleva))
+                {
+                    this.Sleva = sleva;
+                }
+            }
         }
     }
 }

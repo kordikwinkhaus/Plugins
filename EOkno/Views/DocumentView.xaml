@@ -4,11 +4,102 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:v="clr-namespace:EOkno.Views"
+             xmlns:vm="clr-namespace:EOkno.ViewModels"
              Background="{StaticResource {x:Static SystemColors.ControlLightLightBrushKey}}"
              mc:Ignorable="d" 
              DataContextChanged="UserControl_DataContextChanged"
              TextOptions.TextFormattingMode="Display"
              SnapsToDevicePixels="True"
-             d:DesignHeight="300" d:DesignWidth="300">
-  <v:ColorsAndComponentsView/>
+             xml:lang="cs"
+             d:DesignHeight="300" d:DesignWidth="500">
+  <UserControl.Resources>
+    <Style TargetType="{x:Type RadioButton}">
+      <Setter Property="Margin" Value="5,5,10,5"/>
+    </Style>
+    <Style TargetType="{x:Type CheckBox}">
+      <Setter Property="Margin" Value="3"/>
+      <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+    <Style TargetType="{x:Type GroupBox}">
+      <Setter Property="Margin" Value="3"/>
+    </Style>
+  </UserControl.Resources>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+
+    <GroupBox Header="Povrchová úprava">
+      <StackPanel Margin="4">
+        <Label>Typ povrchové úpravy</Label>
+        <ComboBox ItemsSource="{Binding PovrchoveUpravy}"
+                  SelectedItem="{Binding VybranaPU}"
+                  DisplayMemberPath="Nazev"
+                  />
+
+        <StackPanel DataContext="{Binding VybranaPU}"
+                    IsEnabled="{Binding MaOdstiny}">
+          <Label>Odstín exterier</Label>
+          <ComboBox ItemsSource="{Binding Odstiny}"
+                    SelectedItem="{Binding VnejsiOdstin}"
+                    DisplayMemberPath="Nazev"
+                    />
+
+          <Label>Odstín interier</Label>
+          <ComboBox ItemsSource="{Binding Odstiny}"
+                    SelectedItem="{Binding VnitrniOdstin}"
+                    DisplayMemberPath="Nazev"
+                    />
+        </StackPanel>
+      </StackPanel>
+    </GroupBox>
+
+    <GroupBox Header="Kalkulace"
+              Grid.Column="1"
+              MinWidth="150"
+              >
+      <StackPanel Margin="4">
+        <Label>Sleva (%)</Label>
+        <TextBox Text="{Binding Sleva, StringFormat={}{0:0.##}}"/>
+      </StackPanel>
+    </GroupBox>
+
+    <GroupBox Grid.Row="1"
+              Grid.ColumnSpan="2"
+              >
+      <GroupBox.Header>
+        <v:DropDownButton>Komponenty
+          <v:DropDownButton.DropDown>
+            <ContextMenu>
+              <MenuItem Header="Zatrhnout vše" Command="{Binding SelectAllCommand}" />
+              <MenuItem Header="Zrušit všechna zatržení" Command="{Binding DeselectAllCommand}" />
+            </ContextMenu>
+          </v:DropDownButton.DropDown>
+        </v:DropDownButton>
+      </GroupBox.Header>
+      <ItemsControl ItemsSource="{Binding Komponenty}"
+                    Margin="0,6,0,0"
+                    >
+        <ItemsControl.Resources>
+          <DataTemplate DataType="{x:Type vm:KomponentaViewModel}">
+            <CheckBox Content="{Binding Nazev}"
+                      IsChecked="{Binding Vybrano}"
+                      Margin="3,4,70,4"
+                      />
+          </DataTemplate>
+        </ItemsControl.Resources>
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel Orientation="Vertical"/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+      </ItemsControl>
+    </GroupBox>
+  </Grid>
 </UserControl>
