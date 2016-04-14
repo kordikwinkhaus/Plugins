@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace EOkno.Models
 {
     internal class ColorsAndComponents
     {
-        private readonly XElement _data;
+        protected readonly XElement _data;
         private readonly Komponenty _material;
         private readonly Komponenty _prace;
         private XElement _povrchUprava;
@@ -18,6 +19,17 @@ namespace EOkno.Models
             _prace = new Komponenty(Xml.Komponenta, Xml.Prace, data);
 
             InitPovrchovaUprava();
+        }
+
+        internal event EventHandler DataChanged;
+
+        protected void RaiseDataChangedEvent()
+        {
+            var handler = DataChanged;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
         }
 
         #region Povrchová úprava
@@ -66,8 +78,18 @@ namespace EOkno.Models
 
                     _povrchovaUpravaKod = value;
                     _povrchUprava.SetAttributeValue(Xml.UpravaKod, value);
+
+                    RaiseDataChangedEvent();
                 }
             }
+        }
+
+        private void VymazatOdstiny()
+        {
+            _povrchUprava.SetAttributeValue(Xml.OdstinExterier, null);
+            _povrchUprava.SetAttributeValue(Xml.OdstinInterier, null);
+            _povrchUprava.SetAttributeValue(Xml.OdstinNazevExterier, null);
+            _povrchUprava.SetAttributeValue(Xml.OdstinNazevInterier, null);
         }
 
         internal string OdstinExterierKod { get; private set; }
@@ -80,6 +102,8 @@ namespace EOkno.Models
 
             _povrchUprava.SetAttributeValue(Xml.OdstinExterier, kod);
             _povrchUprava.SetAttributeValue(Xml.OdstinNazevExterier, nazev);
+
+            RaiseDataChangedEvent();
         }
 
         internal void SetOdstinInterier(string kod, string nazev)
@@ -88,17 +112,8 @@ namespace EOkno.Models
 
             _povrchUprava.SetAttributeValue(Xml.OdstinInterier, kod);
             _povrchUprava.SetAttributeValue(Xml.OdstinNazevInterier, nazev);
-        }
 
-        /// <summary>
-        /// Používá se pro povrchové úpravy, které nemají odstíny.
-        /// </summary>
-        internal void VymazatOdstiny()
-        {
-            _povrchUprava.SetAttributeValue(Xml.OdstinExterier, null);
-            _povrchUprava.SetAttributeValue(Xml.OdstinInterier, null);
-            _povrchUprava.SetAttributeValue(Xml.OdstinNazevExterier, null);
-            _povrchUprava.SetAttributeValue(Xml.OdstinNazevInterier, null);
+            RaiseDataChangedEvent();
         }
 
         #endregion
@@ -113,6 +128,7 @@ namespace EOkno.Models
         internal void ZmenitVyberKomponenty(string kod, bool vybrano)
         {
             _material.ZmenitVyber(kod, vybrano);
+            RaiseDataChangedEvent();
         }
 
         internal bool VybranaPrace(string kod)
@@ -123,6 +139,7 @@ namespace EOkno.Models
         internal void ZmenitVyberPrace(string kod, bool vybrano)
         {
             _prace.ZmenitVyber(kod, vybrano);
+            RaiseDataChangedEvent();
         }
 
         #endregion

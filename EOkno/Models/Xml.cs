@@ -17,5 +17,13 @@
         internal const string Komponenta = "k";
         internal const string Prace = "p";
         internal const string Material = "m";
+
+        // podle nastavení dokumentu
+        internal const string Inherit = "doc";
+        internal const string True = "1";
+        internal const string False = "0";
+
+        // dokument
+        internal const string Sleva = "s";
     }
 }
