@@ -52,52 +52,52 @@ namespace EOkno.ViewModels
 
         private void CopyFromDocument(bool copyColors, bool copyComponents)
         {
-            DocumentViewModel docVM = null;
+            //DocumentViewModel docVM = null;
 
-            try
-            {
-                docVM = new DocumentViewModel();
-                XElement data = this.OknaDocument.ExtendedProperties;
-                XElement eokno = data.Element(DocumentView.s_MainElement);
-                if (eokno == null) return;
-                UserExt.ExtensionsFactory.Nacist(docVM);
-                docVM.SetMainElement(eokno, false);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            //try
+            //{
+            //    docVM = new DocumentViewModel();
+            //    XElement data = this.OknaDocument.ExtendedProperties;
+            //    XElement eokno = data.Element(DocumentView.s_MainElement);
+            //    if (eokno == null) return;
+            //    UserExt.ExtensionsFactory.Nacist(docVM);
+            //    docVM.SetMainElement(eokno, false);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
 
-            if (copyColors)
-            {
-                if (docVM.VybranaPU != null)
-                {
-                    this.VybranaPU = this.PovrchoveUpravy.SingleOrDefault(p => p.Kod == docVM.VybranaPU.Kod);
-                    if (this.VybranaPU != null)
-                    {
-                        this.VybranaPU.VnejsiOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == docVM.VybranaPU.VnejsiOdstin?.Kod);
-                        this.VybranaPU.VnitrniOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == docVM.VybranaPU.VnitrniOdstin?.Kod);
-                        if (!this.InheritFromDocument)
-                        {
-                            this.VybranaPU.ZapsatOdstiny();
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("V dokumentu není vybraná povrchová úprava. Vyberte povrchovou úpravu ručně.", "EOkno", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                    this.VybranaPU = this.PovrchoveUpravy[0];
-                }
-            }
+            //if (copyColors)
+            //{
+            //    if (docVM.VybranaPU != null)
+            //    {
+            //        this.VybranaPU = this.PovrchoveUpravy.SingleOrDefault(p => p.Kod == docVM.VybranaPU.Kod);
+            //        if (this.VybranaPU != null)
+            //        {
+            //            this.VybranaPU.VnejsiOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == docVM.VybranaPU.VnejsiOdstin?.Kod);
+            //            this.VybranaPU.VnitrniOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == docVM.VybranaPU.VnitrniOdstin?.Kod);
+            //            if (!this.InheritFromDocument)
+            //            {
+            //                this.VybranaPU.ZapsatOdstiny();
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("V dokumentu není vybraná povrchová úprava. Vyberte povrchovou úpravu ručně.", "EOkno", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            //        this.VybranaPU = this.PovrchoveUpravy[0];
+            //    }
+            //}
 
-            if (copyComponents)
-            {
-                for (int i = 0; i < this.Komponenty.Count; i++)
-                {
-                    this.Komponenty[i].Vybrano = docVM.Komponenty[i].Vybrano;
-                }
-            }
+            //if (copyComponents)
+            //{
+            //    for (int i = 0; i < this.Komponenty.Count; i++)
+            //    {
+            //        this.Komponenty[i].Vybrano = docVM.Komponenty[i].Vybrano;
+            //    }
+            //}
         }
 
         private bool _inheritFromDocument;
@@ -112,43 +112,43 @@ namespace EOkno.ViewModels
                     OnPropertyChanged(nameof(InheritFromDocument));
                     OnPropertyChanged(nameof(NotInheritFromDocument));
 
-                    if (_data != null)
-                    {
-                        var attr = _data.Attribute(s_Inherit);
-                        if (attr != null)
-                        {
-                            string properValue = (_inheritFromDocument) ? s_True : s_False;
-                            if (attr.Value == properValue)
-                            {
-                                return;
-                            }
-                        }
+                    //if (_data != null)
+                    //{
+                    //    var attr = _data.Attribute(s_Inherit);
+                    //    if (attr != null)
+                    //    {
+                    //        string properValue = (_inheritFromDocument) ? s_True : s_False;
+                    //        if (attr.Value == properValue)
+                    //        {
+                    //            return;
+                    //        }
+                    //    }
 
-                        _data.SetAttributeValue(s_Inherit, (_inheritFromDocument) ? s_True : s_False);
-                        if (_inheritFromDocument)
-                        {
-                            // odstranit všechen obsah
-                            _removedContent = _data.Elements().ToList();
-                            _data.RemoveNodes();
-                            CopyFromDocument(copyColors: true, copyComponents: true);
-                        }
-                        else
-                        {
-                            // nechat zaregistrovat obsah
-                            if (_removedContent != null && _removedContent.Count != 0)
-                            {
-                                // konfigurace podle uloženého nastavení
-                                _data.Add(_removedContent);
-                                base.SetMainElement(_data, false);
-                            }
-                            else
-                            {
-                                // zkopírovat z dokumentu
-                                base.SetMainElement(_data, _created); // toto inicializuje XML data
-                                CopyFromDocument(copyColors: true, copyComponents: true);
-                            }
-                        }
-                    }
+                    //    _data.SetAttributeValue(s_Inherit, (_inheritFromDocument) ? s_True : s_False);
+                    //    if (_inheritFromDocument)
+                    //    {
+                    //        // odstranit všechen obsah
+                    //        _removedContent = _data.Elements().ToList();
+                    //        _data.RemoveNodes();
+                    //        CopyFromDocument(copyColors: true, copyComponents: true);
+                    //    }
+                    //    else
+                    //    {
+                    //        // nechat zaregistrovat obsah
+                    //        if (_removedContent != null && _removedContent.Count != 0)
+                    //        {
+                    //            // konfigurace podle uloženého nastavení
+                    //            _data.Add(_removedContent);
+                    //            base.SetMainElement(_data, false);
+                    //        }
+                    //        else
+                    //        {
+                    //            // zkopírovat z dokumentu
+                    //            base.SetMainElement(_data, _created); // toto inicializuje XML data
+                    //            CopyFromDocument(copyColors: true, copyComponents: true);
+                    //        }
+                    //    }
+                    //}
                 }
             }
         }
@@ -158,39 +158,39 @@ namespace EOkno.ViewModels
             get { return !InheritFromDocument; }
         }
 
-        internal override void SetMainElement(XElement data, bool created)
+        internal void SetMainElement(XElement data, bool created)
         {
-            if (_data == data)
-            {
-                System.Diagnostics.Debug.Print(DateTime.Now + ": PositionViewModel.SetMainElement > STOP");
-                return;
-            }
-            else
-            {
-                System.Diagnostics.Debug.Print(DateTime.Now + ": PositionViewModel.SetMainElement > continue");
-            }
+            //if (_data == data)
+            //{
+            //    System.Diagnostics.Debug.Print(DateTime.Now + ": PositionViewModel.SetMainElement > STOP");
+            //    return;
+            //}
+            //else
+            //{
+            //    System.Diagnostics.Debug.Print(DateTime.Now + ": PositionViewModel.SetMainElement > continue");
+            //}
 
-            _data = data;
-            _created = created;
-            _removedContent = null;
+            //_data = data;
+            //_created = created;
+            //_removedContent = null;
 
-            if (created)
-            {
-                this.InheritFromDocument = true;
-                CopyFromDocument(copyColors: true, copyComponents: true);
-            }
-            else
-            {
-                this.InheritFromDocument = data.GetAttrValue(s_Inherit, s_True) == s_True;
-                if (this.InheritFromDocument)
-                {
-                    CopyFromDocument(copyColors: true, copyComponents: true);
-                }
-                else
-                {
-                    base.SetMainElement(data, created);
-                }
-            }
+            //if (created)
+            //{
+            //    this.InheritFromDocument = true;
+            //    CopyFromDocument(copyColors: true, copyComponents: true);
+            //}
+            //else
+            //{
+            //    this.InheritFromDocument = data.GetAttrValue(s_Inherit, s_True) == s_True;
+            //    if (this.InheritFromDocument)
+            //    {
+            //        CopyFromDocument(copyColors: true, copyComponents: true);
+            //    }
+            //    else
+            //    {
+            //        base.SetMainElement(data, created);
+            //    }
+            //}
         }
 
         internal void DocumentUpdated(DocumentViewModel document)

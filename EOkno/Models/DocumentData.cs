@@ -26,11 +26,8 @@ namespace EOkno.Models
             get { return _sleva; }
             set
             {
-                if (_sleva != value)
-                {
-                    _sleva = value;
-                    _data.SetAttributeValue(Xml.Sleva, _sleva.ToString(CultureInfo.InvariantCulture));
-                }
+                _sleva = value;
+                _data.SetAttributeValue(Xml.Sleva, _sleva.ToString(CultureInfo.InvariantCulture));
             }
         }
     }

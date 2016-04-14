@@ -29,11 +29,11 @@ namespace EOkno.Tests.Models
             Assert.AreEqual("olej", target.PovrchovaUpravaKod);
             Assert.AreEqual("PinO", target.OdstinExterierKod);
             Assert.AreEqual("OliO", target.OdstinInterierKod);
-            Assert.IsTrue(target.JeVybranaKomponenta("1"));
-            Assert.IsTrue(target.VybranaPrace("2"));
+            Assert.IsTrue(target.JeVybranMaterial("1"));
+            Assert.IsTrue(target.JeVybranaPrace("2"));
 
-            Assert.IsFalse(target.JeVybranaKomponenta("91"));
-            Assert.IsFalse(target.VybranaPrace("92"));
+            Assert.IsFalse(target.JeVybranMaterial("91"));
+            Assert.IsFalse(target.JeVybranaPrace("92"));
         }
 
         [TestMethod]
@@ -61,15 +61,15 @@ namespace EOkno.Tests.Models
             var target = GetTarget();
             string komponenta = "33";
 
-            Assert.IsFalse(target.JeVybranaKomponenta(komponenta));
+            Assert.IsFalse(target.JeVybranMaterial(komponenta));
 
-            target.ZmenitVyberKomponenty(komponenta, true);
+            target.ZmenitVyberMaterialu(komponenta, true);
 
-            Assert.IsTrue(target.JeVybranaKomponenta(komponenta));
+            Assert.IsTrue(target.JeVybranMaterial(komponenta));
 
-            target.ZmenitVyberKomponenty(komponenta, false);
+            target.ZmenitVyberMaterialu(komponenta, false);
 
-            Assert.IsFalse(target.JeVybranaKomponenta(komponenta));
+            Assert.IsFalse(target.JeVybranMaterial(komponenta));
         }
 
         [TestMethod]
@@ -78,18 +78,18 @@ namespace EOkno.Tests.Models
             var target = GetTarget();
             string komponenta = "33";
 
-            target.ZmenitVyberKomponenty(komponenta, true);
+            target.ZmenitVyberMaterialu(komponenta, true);
 
             string xml = _currentDoc.ToString();
             var target2 = GetTarget(xml);
 
-            Assert.IsTrue(target2.JeVybranaKomponenta(komponenta));
-            target2.ZmenitVyberKomponenty(komponenta, false);
+            Assert.IsTrue(target2.JeVybranMaterial(komponenta));
+            target2.ZmenitVyberMaterialu(komponenta, false);
 
             string xml2 = _currentDoc.ToString();
             var target3 = GetTarget(xml2);
 
-            Assert.IsFalse(target3.JeVybranaKomponenta(komponenta));
+            Assert.IsFalse(target3.JeVybranMaterial(komponenta));
         }
 
         [TestMethod]
@@ -98,15 +98,15 @@ namespace EOkno.Tests.Models
             var target = GetTarget();
             string prace = "7";
 
-            Assert.IsFalse(target.VybranaPrace(prace));
+            Assert.IsFalse(target.JeVybranaPrace(prace));
 
             target.ZmenitVyberPrace(prace, true);
 
-            Assert.IsTrue(target.VybranaPrace(prace));
+            Assert.IsTrue(target.JeVybranaPrace(prace));
 
             target.ZmenitVyberPrace(prace, false);
 
-            Assert.IsFalse(target.VybranaPrace(prace));
+            Assert.IsFalse(target.JeVybranaPrace(prace));
         }
     }
 }

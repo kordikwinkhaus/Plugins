@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Xml.Linq;
+using EOkno.Models;
 using Okna.Plugins.ViewModels;
 
 namespace EOkno.ViewModels
@@ -10,15 +10,7 @@ namespace EOkno.ViewModels
     [DebuggerDisplay("{Nazev} ({Kod})")]
     public class PovrchovaUpravaViewModel : ViewModelBase
     {
-        private const string s_PovrchUprava = "p";
-        private const string s_UpravaKod = "k";
-        private const string s_OdstinExterier = "e";
-        private const string s_OdstinInterier = "i";
-        private const string s_OdstinNazevExterier = "en";
-        private const string s_OdstinNazevInterier = "in";
-
-        private XElement _data;
-        private XElement _povrchUprava;
+        private ColorsAndComponents _model;
 
         internal PovrchovaUpravaViewModel(string kod, string nazev)
         {
@@ -56,13 +48,12 @@ namespace EOkno.ViewModels
 
         private void SetVnitrniOdstin()
         {
-            if (_povrchUprava != null)
+            if (_model != null)
             {
                 string kod = _vnitrniOdstin?.Kod;
                 string nazev = _vnitrniOdstin?.Nazev;
 
-                _povrchUprava.SetAttributeValue(s_OdstinInterier, kod);
-                _povrchUprava.SetAttributeValue(s_OdstinNazevInterier, nazev);
+                _model.SetOdstinInterier(kod, nazev);
             }
         }
 
@@ -83,83 +74,41 @@ namespace EOkno.ViewModels
 
         private void SetVnejsiOdstin()
         {
-            if (_povrchUprava != null)
+            if (_model != null)
             {
                 string kod = _vnejsiOdstin?.Kod;
                 string nazev = _vnejsiOdstin?.Nazev;
 
-                _povrchUprava.SetAttributeValue(s_OdstinExterier, kod);
-                _povrchUprava.SetAttributeValue(s_OdstinNazevExterier, nazev);
+                _model.SetOdstinExterier(kod, nazev);
             }
         }
 
-        /// <summary>
-        /// Odstraní veškeré reference na XElementy, aby nedošlo k nechtěné úpravě
-        /// XML z předchozího zobrazení.
-        /// </summary>
         internal void Clear()
         {
-            _data = null;
-            _povrchUprava = null;
-
             this.VnejsiOdstin = null;
             this.VnitrniOdstin = null;
         }
 
-        /// <summary>
-        /// Nastaví výchozí volby a zaregistruje si hlavní element pluginu.
-        /// </summary>
-        /// <param name="data">Hlavní element pluginu.</param>
-        internal void ResetToDefault(XElement data)
+        internal bool Init(ColorsAndComponents model)
         {
-            this.VnejsiOdstin = null;
-            this.VnitrniOdstin = null;
+            _model = model;
 
-            _data = data;
-        }
-
-        /// <summary>
-        /// Nastaví volby podle uloženého XML.
-        /// </summary>
-        /// <param name="data">Hlavní element pluginu.</param>
-        internal bool Init(XElement data)
-        {
-            _data = data;
-
-            var element = data.Element(s_PovrchUprava);
-            if (element != null)
+            if (_model.PovrchovaUpravaKod == this.Kod)
             {
-                var attr = element.Attribute(s_UpravaKod);
-                if (attr != null)
+                if (this.MaOdstiny)
                 {
-                    if (attr.Value == this.Kod)
-                    {
-                        if (this.MaOdstiny)
-                        {
-                            InitOdstiny(element);
-                        }
-                        _povrchUprava = element;
-                        return true;
-                    }
+                    InitOdstiny();
                 }
+                return true;
             }
 
             return false;
         }
 
-        private void InitOdstiny(XElement elem)
+        private void InitOdstiny()
         {
-            var attrExt = elem.Attribute(s_OdstinExterier);
-            if (attrExt != null)
-            {
-                this.VnejsiOdstin = this.Odstiny.FirstOrDefault(o => o.Kod == attrExt.Value);
-            }
-
-            var attrInt = elem.Attribute(s_OdstinInterier);
-            if (attrInt != null)
-            {
-                this.VnitrniOdstin = this.Odstiny.FirstOrDefault(o => o.Kod == attrInt.Value);
-            }
+            this.VnejsiOdstin = this.Odstiny.FirstOrDefault(o => o.Kod == _model.OdstinExterierKod);
+            this.VnitrniOdstin = this.Odstiny.FirstOrDefault(o => o.Kod == _model.OdstinInterierKod);
         }
 
         /// <summary>
@@ -168,19 +117,8 @@ namespace EOkno.ViewModels
         /// </summary>
         internal void ZapsatOdstiny()
         {
-            if (_data != null)
-            {
-                _povrchUprava = _data.Element(s_PovrchUprava);
-                if (_povrchUprava == null)
-                {
-                    _povrchUprava = new XElement(s_PovrchUprava);
-                    _data.Add(_povrchUprava);
-                }
-                _povrchUprava.SetAttributeValue(s_UpravaKod, this.Kod);
-
-                SetVnejsiOdstin();
-                SetVnitrniOdstin();
-            }
+            SetVnejsiOdstin();
+            SetVnitrniOdstin();
         }
     }
 }

@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using System.Xml.Linq;
+using EOkno.Models;
 using Okna.Plugins.ViewModels;
 
 namespace EOkno.ViewModels
 {
     public abstract class ColorsAndComponentsViewModel : ViewModelBase
     {
-        internal XElement _data;
+        private ColorsAndComponents _model;
 
         internal ColorsAndComponentsViewModel()
         {
@@ -44,68 +44,43 @@ namespace EOkno.ViewModels
                 {
                     _vybranaPU = value;
                     OnPropertyChanged(nameof(VybranaPU));
-                    if (_data != null)
-                    {
-                        _vybranaPU.ZapsatOdstiny();
-                    }
+
+                    _model.PovrchovaUpravaKod = _vybranaPU.Kod;
+                    _vybranaPU.ZapsatOdstiny();
                 }
             }
         }
 
-        internal virtual void SetMainElement(XElement data, bool created)
+        internal void SetModel(ColorsAndComponents model)
         {
-            _data = data;
+            _model = model;
 
-            Clear();
-
-            if (created)
-            {
-                ResetToDefault();
-            }
-            else
-            {
-                Init();
-            }
-        }
-        /// <summary>
-        /// Odstraní veškeré reference na XElementy, aby nedošlo k nechtěné úpravě
-        /// XML z předchozího zobrazení.
-        /// </summary>
-        protected virtual void Clear()
-        {
-            this.PovrchoveUpravy.ForEach(p => p.Clear());
-            this.Komponenty.ForEach(k => k.Clear());
-        }
-
-        /// <summary>
-        /// Nastaví výchozí volby.
-        /// </summary>
-        protected virtual void ResetToDefault()
-        {
-            this.PovrchoveUpravy.ForEach(p => p.ResetToDefault(_data));
-            this.VybranaPU = this.PovrchoveUpravy.First();
-
-            this.Komponenty.ForEach(k => k.ResetToDefault(_data));
+            Init();
         }
 
         internal virtual void NotifyChange()
         {
         }
 
-        /// <summary>
-        /// Nastaví volby podle uloženého XML.
-        /// </summary>
-        protected virtual void Init()
+        private void Init()
         {
             foreach (var povrchUprava in this.PovrchoveUpravy)
             {
-                if (povrchUprava.Init(_data))
+                if (povrchUprava.Init(_model))
                 {
                     this.VybranaPU = povrchUprava;
                 }
             }
 
-            this.Komponenty.ForEach(k => k.Init(_data));
+            this.Komponenty.ForEach(k => k.Init(_model));
+        }
+
+        internal void SetDefaults()
+        {
+            this.VybranaPU = this.PovrchoveUpravy.FirstOrDefault();
+            this.VybranaPU?.Clear();
+
+            this.Komponenty.ForEach(k => k.Vybrano = true);
         }
     }
 }

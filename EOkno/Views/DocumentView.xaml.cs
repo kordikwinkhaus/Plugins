@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Linq;
+using EOkno.Models;
 using EOkno.ViewModels;
 using UserExtensions;
 
@@ -10,8 +11,6 @@ namespace EOkno.Views
 {
     public partial class DocumentView : UserControl, IUserForm, INotifyPropertyChanged
     {
-        internal const string s_MainElement = "EOkno";
-
         private DocumentViewModel _viewmodel;
 
         public DocumentView()
@@ -40,13 +39,18 @@ namespace EOkno.Views
             if (data == null) return false;
 
             bool created = false;
-            if (data.Element(s_MainElement) == null)
+            if (data.Element(Xml.EOkno) == null)
             {
-                data.SetElementValue(s_MainElement, string.Empty);
+                data.SetElementValue(Xml.EOkno, string.Empty);
                 created = true;
             }
 
-            _viewmodel.SetMainElement(ObjectData = data.Element(s_MainElement), created);
+            DocumentData model = new DocumentData(ObjectData = data.Element(Xml.EOkno));
+            _viewmodel.SetModel(model);
+            if (created)
+            {
+                _viewmodel.SetDefaults();
+            }
 
             return true;
         }

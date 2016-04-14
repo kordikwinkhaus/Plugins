@@ -120,18 +120,18 @@ namespace EOkno.Models
 
         #region Práce a komponenty
 
-        internal bool JeVybranaKomponenta(string kod)
+        internal bool JeVybranMaterial(string kod)
         {
             return _material.JeVybrana(kod);
         }
 
-        internal void ZmenitVyberKomponenty(string kod, bool vybrano)
+        internal void ZmenitVyberMaterialu(string kod, bool vybrano)
         {
             _material.ZmenitVyber(kod, vybrano);
             RaiseDataChangedEvent();
         }
 
-        internal bool VybranaPrace(string kod)
+        internal bool JeVybranaPrace(string kod)
         {
             return _prace.JeVybrana(kod);
         }

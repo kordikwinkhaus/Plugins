@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ExtensionsFactory.cs" />
     <Compile Include="Models\ColorsAndComponents.cs" />
+    <Compile Include="Models\DocumentData.cs" />
     <Compile Include="Models\PositionData.cs" />
     <Compile Include="Models\Xml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
