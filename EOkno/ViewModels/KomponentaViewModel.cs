@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using EOkno.Models;
 using Okna.Plugins.ViewModels;
 
 namespace EOkno.ViewModels
 {
+    [DebuggerDisplay("{Nazev} (vybrano:{Vybrano})")]
     public class KomponentaViewModel : ViewModelBase
     {
         private readonly Func<ColorsAndComponents, bool> _jeVybrano;

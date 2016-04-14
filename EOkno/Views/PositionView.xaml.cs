@@ -1,8 +1,8 @@
-﻿using System;
-using System.ComponentModel;
 using System.Runtime.CompilerServices;
+﻿using System.ComponentModel;
 using System.Windows.Controls;
 using System.Xml.Linq;
+using EOkno.Models;
 using EOkno.ViewModels;
 using UserExtensions;
 using WHOkna;
@@ -11,9 +11,8 @@ namespace EOkno.Views
 {
     public partial class PositionView : UserControl, IUserForm3, INotifyPropertyChanged
     {
-        private const string s_MainElement = "EOkno";
-
         private PositionViewModel _viewmodel;
+        private XElement _data;
 
         public PositionView()
         {
@@ -54,15 +53,23 @@ namespace EOkno.Views
         public bool SetData(XElement data, int document, int position, int profileType)
         {
             if (data == null) return false;
+            if (_data == data) return true;
+
+            _data = data;
 
             bool created = false;
-            if (data.Element(s_MainElement) == null)
+            if (data.Element(Xml.EOkno) == null)
             {
-                data.SetElementValue(s_MainElement, string.Empty);
+                data.SetElementValue(Xml.EOkno, string.Empty);
                 created = true;
             }
 
-            _viewmodel.SetMainElement(ObjectData = data.Element(s_MainElement), created);
+            PositionData model = new PositionData(ObjectData = data.Element(Xml.EOkno));
+            _viewmodel.SetModel(model);
+            if (created)
+            {
+                _viewmodel.SetDefaults();
+            }
 
             return true;
         }

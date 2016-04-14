@@ -58,10 +58,6 @@ namespace EOkno.ViewModels
             Init();
         }
 
-        internal virtual void NotifyChange()
-        {
-        }
-
         private void Init()
         {
             foreach (var povrchUprava in this.PovrchoveUpravy)
@@ -75,12 +71,16 @@ namespace EOkno.ViewModels
             this.Komponenty.ForEach(k => k.Init(_model));
         }
 
-        internal void SetDefaults()
+        internal virtual void SetDefaults()
         {
             this.VybranaPU = this.PovrchoveUpravy.FirstOrDefault();
             this.VybranaPU?.Clear();
 
             this.Komponenty.ForEach(k => k.Vybrano = true);
+        }
+
+        internal virtual void NotifyChange()
+        {
         }
     }
 }

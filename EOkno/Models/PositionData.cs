@@ -1,5 +1,5 @@
-﻿using System.Xml.Linq;
-using Okna.Plugins;
+﻿using System;
+using System.Xml.Linq;
 
 namespace EOkno.Models
 {
@@ -9,7 +9,16 @@ namespace EOkno.Models
         public PositionData(XElement data)
             : base(data)
         {
-            _podleDokumentu = data.GetAttrValue(Xml.Inherit, Xml.True) == Xml.True;
+            var attr = data.Attribute(Xml.Inherit);
+            if (attr != null)
+            {
+                _podleDokumentu = string.Compare(Xml.True, attr.Value, StringComparison.InvariantCulture) == 0;
+            }
+            else
+            {
+                _data.SetAttributeValue(Xml.Inherit, Xml.True);
+                _podleDokumentu = true;
+            }
         }
 
         private bool _podleDokumentu;
@@ -18,12 +27,8 @@ namespace EOkno.Models
             get { return _podleDokumentu; }
             set
             {
-                if (_podleDokumentu != value)
-                {
-                    _podleDokumentu = value;
-
-                    _data.SetAttributeValue(Xml.Inherit, (value) ? Xml.True : Xml.False);
-                }
+                _podleDokumentu = value;
+                _data.SetAttributeValue(Xml.Inherit, (value) ? Xml.True : Xml.False);
             }
         }
     }

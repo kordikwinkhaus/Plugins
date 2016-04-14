@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Xml.Linq;
 
 namespace EOkno.Models
@@ -146,6 +147,7 @@ namespace EOkno.Models
 
         #region Nested classes
 
+        [DebuggerDisplay("Count = {Count}")]
         internal class Komponenty 
         {
             private readonly Dictionary<string, XElement> _komponenty;
@@ -168,6 +170,11 @@ namespace EOkno.Models
                         _komponenty.Add(attr.Value, elem);
                     }
                 }
+            }
+
+            internal int Count
+            {
+                get { return _komponenty.Count; }
             }
 
             internal bool JeVybrana(string kod)
