@@ -1,35 +1,24 @@
-﻿using Okna.Plugins.ViewModels;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Input;
+﻿using System.Globalization;
 using System.Xml.Linq;
 
 namespace EOkno.ViewModels
 {
-    public class DocumentViewModel : ViewModelBase
+    public class DocumentViewModel : ColorsAndComponentsViewModel
     {
         private const string s_sleva = "s";
-        private XElement _data;
 
-        public DocumentViewModel()
+        internal DocumentViewModel()
         {
-            this.SelectAllCommand = new RelayCommand(SelectAll);
-            this.DeselectAllCommand = new RelayCommand(DeselectAll);
         }
 
-        public ICommand SelectAllCommand { get; private set; }
+        internal MessageBroker Broker { get; set; }
 
-        private void SelectAll(object param)
+        internal override void NotifyChange()
         {
-            this.Komponenty.ForEach(k => k.Vybrano = true);
-        }
-
-        public ICommand DeselectAllCommand { get; private set; }
-
-        private void DeselectAll(object param)
-        {
-            this.Komponenty.ForEach(k => k.Vybrano = false);
+            if (this.Broker != null)
+            {
+                this.Broker.DocumentUpdated(this);
+            }
         }
 
         private decimal _sleva;
@@ -61,80 +50,16 @@ namespace EOkno.ViewModels
             slevaAttr.Value = _sleva.ToString(CultureInfo.InvariantCulture);
         }
 
-        public List<KomponentaViewModel> Komponenty { get; private set; } = new List<KomponentaViewModel>();
-
-        public List<PovrchovaUpravaViewModel> PovrchoveUpravy { get; set; } = new List<PovrchovaUpravaViewModel>();
-
-        private PovrchovaUpravaViewModel _vybranaPU;
-        public PovrchovaUpravaViewModel VybranaPU
+        protected override void ResetToDefault()
         {
-            get { return _vybranaPU; }
-            set
-            {
-                if (_vybranaPU != value)
-                {
-                    _vybranaPU = value;
-                    OnPropertyChanged(nameof(VybranaPU));
-                    if (_data != null)
-                    {
-                        _vybranaPU.ZapsatOdstiny();
-                    }
-                }
-            }
-        }
+            base.ResetToDefault();
 
-        internal virtual void SetMainElement(XElement data, bool created)
-        {
-            _data = data;
-
-            Clear();
-
-            if (created)
-            {
-                ResetToDefault();
-            }
-            else
-            {
-                Init();
-            }
-        }
-
-        /// <summary>
-        /// Odstraní veškeré reference na XElementy, aby nedošlo k nechtěné úpravě
-        /// XML z předchozího zobrazení.
-        /// </summary>
-        private void Clear()
-        {
-            this.PovrchoveUpravy.ForEach(p => p.Clear());
-            this.Komponenty.ForEach(k => k.Clear());
-        }
-
-        /// <summary>
-        /// Nastaví výchozí volby.
-        /// </summary>
-        private void ResetToDefault()
-        {
             this.Sleva = 0;
-            this.PovrchoveUpravy.ForEach(p => p.ResetToDefault(_data));
-            this.VybranaPU = this.PovrchoveUpravy.First();
-
-            this.Komponenty.ForEach(k => k.ResetToDefault(_data));
         }
 
-        /// <summary>
-        /// Nastaví volby podle uloženého XML.
-        /// </summary>
-        private void Init()
+        protected override void Init()
         {
-            foreach (var povrchUprava in this.PovrchoveUpravy)
-            {
-                if (povrchUprava.Init(_data))
-                {
-                    this.VybranaPU = povrchUprava;
-                }
-            }
-
-            this.Komponenty.ForEach(k => k.Init(_data));
+            base.Init();
 
             XAttribute slevaAttr = _data.Attribute(s_sleva);
             if (slevaAttr != null)

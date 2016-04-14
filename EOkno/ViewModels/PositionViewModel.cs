@@ -10,13 +10,12 @@ using WHOkna;
 
 namespace EOkno.ViewModels
 {
-    public class PositionViewModel : DocumentViewModel
+    public class PositionViewModel : ColorsAndComponentsViewModel
     {
         private const string s_Inherit = "doc";
         private const string s_True = "1";
         private const string s_False = "0";
 
-        private XElement _data;
         private bool _created;
         private List<XElement> _removedContent;
 
@@ -24,6 +23,8 @@ namespace EOkno.ViewModels
         {
             this.InheritFromDocument = true;
             this.CopyFromDocumentCommand = new RelayCommand(CopyFromDocument);
+            this.CopyColorsCommand = new RelayCommand(CopyColors);
+            this.CopyComponentsCommand = new RelayCommand(CopyComponents);
         }
 
         internal IOknaDocument OknaDocument { get; set; }
@@ -31,6 +32,25 @@ namespace EOkno.ViewModels
         public ICommand CopyFromDocumentCommand { get; private set; }
 
         private void CopyFromDocument(object param)
+        {
+            CopyFromDocument(copyColors: true, copyComponents: true);
+        }
+
+        public ICommand CopyColorsCommand { get; private set; }
+
+        private void CopyColors(object param)
+        {
+            CopyFromDocument(copyColors: true, copyComponents: false);
+        }
+
+        public ICommand CopyComponentsCommand { get; private set; }
+
+        private void CopyComponents(object param)
+        {
+            CopyFromDocument(copyColors: false, copyComponents: true);
+        }
+
+        private void CopyFromDocument(bool copyColors, bool copyComponents)
         {
             DocumentViewModel docVM = null;
 
@@ -49,25 +69,34 @@ namespace EOkno.ViewModels
                 return;
             }
 
-            if (docVM.VybranaPU != null)
+            if (copyColors)
             {
-                this.VybranaPU = this.PovrchoveUpravy.SingleOrDefault(p => p.Kod == docVM.VybranaPU.Kod);
-                if (this.VybranaPU != null)
+                if (docVM.VybranaPU != null)
                 {
-                    this.VybranaPU.VnejsiOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == docVM.VybranaPU.VnejsiOdstin?.Kod);
-                    this.VybranaPU.VnitrniOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == docVM.VybranaPU.VnitrniOdstin?.Kod);
-                    this.VybranaPU.ZapsatOdstiny();
+                    this.VybranaPU = this.PovrchoveUpravy.SingleOrDefault(p => p.Kod == docVM.VybranaPU.Kod);
+                    if (this.VybranaPU != null)
+                    {
+                        this.VybranaPU.VnejsiOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == docVM.VybranaPU.VnejsiOdstin?.Kod);
+                        this.VybranaPU.VnitrniOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == docVM.VybranaPU.VnitrniOdstin?.Kod);
+                        if (!this.InheritFromDocument)
+                        {
+                            this.VybranaPU.ZapsatOdstiny();
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("V dokumentu není vybraná povrchová úprava. Vyberte povrchovou úpravu ručně.", "EOkno", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    this.VybranaPU = this.PovrchoveUpravy[0];
                 }
             }
-            else
-            {
-                MessageBox.Show("V dokumentu není vybraná povrchová úprava. Vyberte povrchovou úpravu ručně.", "EOkno", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                this.VybranaPU = this.PovrchoveUpravy[0];
-            }
 
-            for (int i = 0; i < this.Komponenty.Count; i++)
+            if (copyComponents)
             {
-                this.Komponenty[i].Vybrano = docVM.Komponenty[i].Vybrano;
+                for (int i = 0; i < this.Komponenty.Count; i++)
+                {
+                    this.Komponenty[i].Vybrano = docVM.Komponenty[i].Vybrano;
+                }
             }
         }
 
@@ -81,6 +110,7 @@ namespace EOkno.ViewModels
                 {
                     _inheritFromDocument = value;
                     OnPropertyChanged(nameof(InheritFromDocument));
+                    OnPropertyChanged(nameof(NotInheritFromDocument));
 
                     if (_data != null)
                     {
@@ -100,6 +130,7 @@ namespace EOkno.ViewModels
                             // odstranit všechen obsah
                             _removedContent = _data.Elements().ToList();
                             _data.RemoveNodes();
+                            CopyFromDocument(copyColors: true, copyComponents: true);
                         }
                         else
                         {
@@ -112,8 +143,9 @@ namespace EOkno.ViewModels
                             }
                             else
                             {
-                                // výchozí stav podle volání z View
-                                base.SetMainElement(_data, _created);
+                                // zkopírovat z dokumentu
+                                base.SetMainElement(_data, _created); // toto inicializuje XML data
+                                CopyFromDocument(copyColors: true, copyComponents: true);
                             }
                         }
                     }
@@ -121,22 +153,51 @@ namespace EOkno.ViewModels
             }
         }
 
+        public bool NotInheritFromDocument
+        {
+            get { return !InheritFromDocument; }
+        }
+
         internal override void SetMainElement(XElement data, bool created)
         {
+            if (_data == data)
+            {
+                System.Diagnostics.Debug.Print(DateTime.Now + ": PositionViewModel.SetMainElement > STOP");
+                return;
+            }
+            else
+            {
+                System.Diagnostics.Debug.Print(DateTime.Now + ": PositionViewModel.SetMainElement > continue");
+            }
+
             _data = data;
             _created = created;
+            _removedContent = null;
 
             if (created)
             {
                 this.InheritFromDocument = true;
+                CopyFromDocument(copyColors: true, copyComponents: true);
             }
             else
             {
                 this.InheritFromDocument = data.GetAttrValue(s_Inherit, s_True) == s_True;
-                if (!this.InheritFromDocument)
+                if (this.InheritFromDocument)
+                {
+                    CopyFromDocument(copyColors: true, copyComponents: true);
+                }
+                else
                 {
                     base.SetMainElement(data, created);
                 }
+            }
+        }
+
+        internal void DocumentUpdated(DocumentViewModel document)
+        {
+            for (int i = 0; i < this.Komponenty.Count; i++)
+            {
+                this.Komponenty[i].VybranoDokument = document.Komponenty[i].Vybrano;
             }
         }
     }

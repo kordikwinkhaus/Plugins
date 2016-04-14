@@ -13,6 +13,8 @@ namespace UserExt
 {
     public class ExtensionsFactory : IExtensionsFactory
     {
+        private static MessageBroker s_broker = new MessageBroker();
+
         public FrameworkElement GetPropertyPage(EPropPage pg, string connection, string lang)
         {
             switch (pg)
@@ -20,6 +22,7 @@ namespace UserExt
                 case EPropPage.pDokument:
                     var vmDoc = new DocumentViewModel();
                     Nacist(vmDoc);
+                    vmDoc.Broker = s_broker;
                     var docView = new DocumentView { DataContext = vmDoc };
 #if (DEBUG)
                     return new InterceptionView(docView, true);
@@ -30,6 +33,7 @@ namespace UserExt
                 case EPropPage.pDziura:
                     var vmPos = new PositionViewModel();
                     Nacist(vmPos);
+                    s_broker.Position = vmPos;
                     var posView = new PositionView { DataContext = vmPos };
 #if (DEBUG)
                     return new InterceptionView3(posView);
@@ -41,7 +45,7 @@ namespace UserExt
             return null;
         }
 
-        internal static void Nacist(DocumentViewModel vm)
+        internal static void Nacist(ColorsAndComponentsViewModel vm)
         {
             try
             {
@@ -53,7 +57,8 @@ namespace UserExt
                                                .Elements("komponenta")
                                                .Select(k => new KomponentaViewModel(k.Value,
                                                             k.Attribute("material")?.Value,
-                                                            k.Attribute("prace")?.Value)));
+                                                            k.Attribute("prace")?.Value,
+                                                            vm)));
 
                 vm.PovrchoveUpravy.AddRange(doc.Root.Element("povrchoveUpravy")
                                                     .Elements("povrchovaUprava")

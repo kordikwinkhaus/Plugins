@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:v="clr-namespace:EOkno.Views"
+             xmlns:vm="clr-namespace:EOkno.ViewModels"
              Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
@@ -12,7 +13,7 @@
              SnapsToDevicePixels="True"
              >
   <UserControl.Resources>
-    <v:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibilityConverter"/>
+    <v:BoolToBrushConverter x:Key="BoolToBrushConverter"/>
   </UserControl.Resources>
   
   <Grid>
@@ -28,16 +29,96 @@
       Podle nastavení dokumentu
     </CheckBox>
 
-    <Button Grid.Row="1"
-            Margin="6,3"
-            Command="{Binding CopyFromDocumentCommand}"
-            Visibility="{Binding InheritFromDocument, Converter={StaticResource NegateBoolToVisibilityConverter}}"
-            >
-      Zkopírovat z nastavení dokumentu
-    </Button>
+    <Grid Grid.Row="2"
+          IsEnabled="{Binding NotInheritFromDocument}"
+          >
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
 
-    <v:ColorsAndComponentsView Grid.Row="2"
-                               Visibility="{Binding InheritFromDocument, Converter={StaticResource NegateBoolToVisibilityConverter}}"
-                               />
+      <Button Margin="6,3"
+              Command="{Binding CopyFromDocumentCommand}"
+              >
+        Zkopírovat z nastavení dokumentu
+      </Button>
+
+      <GroupBox Grid.Row="1"
+                Margin="3"
+                >
+        <GroupBox.Header>
+          <v:DropDownButton>Povrchová úprava
+            <v:DropDownButton.DropDown>
+              <ContextMenu>
+                <MenuItem Header="Zkopírovat z nastavení dokumentu" Command="{Binding CopyColorsCommand}" />
+              </ContextMenu>
+            </v:DropDownButton.DropDown>
+          </v:DropDownButton>
+        </GroupBox.Header>
+        
+        <StackPanel Margin="4">
+          <Label>Typ povrchové úpravy</Label>
+          <ComboBox ItemsSource="{Binding PovrchoveUpravy}"
+                    SelectedItem="{Binding VybranaPU}"
+                    DisplayMemberPath="Nazev"
+                    />
+
+          <StackPanel DataContext="{Binding VybranaPU}"
+                      IsEnabled="{Binding MaOdstiny}">
+            <Label>Odstín exterier</Label>
+            <ComboBox ItemsSource="{Binding Odstiny}"
+                      SelectedItem="{Binding VnejsiOdstin}"
+                      DisplayMemberPath="Nazev"
+                      />
+
+            <Label>Odstín interier</Label>
+            <ComboBox ItemsSource="{Binding Odstiny}"
+                      SelectedItem="{Binding VnitrniOdstin}"
+                      DisplayMemberPath="Nazev"
+                      />
+          </StackPanel>
+        </StackPanel>
+      </GroupBox>
+
+      <GroupBox Grid.Row="2"
+                Margin="3"
+                >
+        <GroupBox.Header>
+          <v:DropDownButton>Komponenty
+            <v:DropDownButton.DropDown>
+              <ContextMenu>
+                <MenuItem Header="Zatrhnout vše" Command="{Binding SelectAllCommand}" />
+                <MenuItem Header="Zrušit všechna zatržení" Command="{Binding DeselectAllCommand}" />
+                <MenuItem Header="Zkopírovat z nastavení dokumentu" Command="{Binding CopyComponentsCommand}" />
+              </ContextMenu>
+            </v:DropDownButton.DropDown>
+          </v:DropDownButton>
+        </GroupBox.Header>
+
+        <ItemsControl ItemsSource="{Binding Komponenty}"
+                      Margin="0,6,0,0"
+                      >
+          <ItemsControl.Resources>
+            <Style TargetType="{x:Type CheckBox}">
+              <Setter Property="Margin" Value="3,4"/>
+              <Setter Property="HorizontalAlignment" Value="Left"/>
+              <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="True">
+                  <Setter Property="Foreground" 
+                          Value="{Binding VybranoRozdil, Converter={StaticResource BoolToBrushConverter}}"/>
+                </Trigger>
+              </Style.Triggers>
+            </Style>
+            
+            <DataTemplate DataType="{x:Type vm:KomponentaViewModel}">
+              <CheckBox Content="{Binding Nazev}"
+                        IsChecked="{Binding Vybrano}"
+                        />
+            </DataTemplate>
+          </ItemsControl.Resources>
+        </ItemsControl>
+      </GroupBox>
+    </Grid>
   </Grid>
 </UserControl>

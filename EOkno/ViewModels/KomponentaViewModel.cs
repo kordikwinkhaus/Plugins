@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using Okna.Plugins;
@@ -13,19 +12,22 @@ namespace EOkno.ViewModels
         private const string s_prace = "p";
         private const string s_material = "m";
 
+        private readonly ColorsAndComponentsViewModel _parent;
         private XElement _data;
 
-        internal KomponentaViewModel(string nazev, string material, string prace)
+        internal KomponentaViewModel(string nazev, string material, string prace, ColorsAndComponentsViewModel parent)
         {
             if (string.IsNullOrEmpty(nazev)) throw new ArgumentNullException(nameof(nazev));
             if (string.IsNullOrEmpty(material) && string.IsNullOrEmpty(prace))
             {
                 throw new ArgumentException("Je třeba zadat materiál nebo práci.");
             }
+            if (parent == null) throw new ArgumentNullException(nameof(parent));
 
             this.Nazev = nazev;
             this.Material = material;
             this.Prace = prace;
+            _parent = parent;
         }
 
         public string Nazev { get; private set; }
@@ -42,6 +44,7 @@ namespace EOkno.ViewModels
                 {
                     _vybrano = value;
                     OnPropertyChanged(nameof(Vybrano));
+                    OnPropertyChanged(nameof(VybranoRozdil));
 
                     if (_data != null)
                     {
@@ -64,9 +67,32 @@ namespace EOkno.ViewModels
                             }
                         }
                     }
+
+                    _parent.NotifyChange();
                 }
             }
         }
+
+        private bool _vybranoDokument;
+        public bool VybranoDokument
+        {
+            get { return _vybranoDokument; }
+            set
+            {
+                if (_vybranoDokument != value)
+                {
+                    _vybranoDokument = value;
+                    OnPropertyChanged(nameof(VybranoDokument));
+                    OnPropertyChanged(nameof(VybranoRozdil));
+                }
+            }
+        }
+
+        public bool VybranoRozdil
+        {
+            get { return this.Vybrano != this.VybranoDokument; }
+        }
+
 
         /// <summary>
         /// Odstraní veškeré reference na XElementy, aby nedošlo k nechtěné úpravě

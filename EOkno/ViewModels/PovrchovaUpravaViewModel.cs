@@ -168,16 +168,19 @@ namespace EOkno.ViewModels
         /// </summary>
         internal void ZapsatOdstiny()
         {
-            _povrchUprava = _data.Element(s_PovrchUprava);
-            if (_povrchUprava == null)
+            if (_data != null)
             {
-                _povrchUprava = new XElement(s_PovrchUprava);
-                _data.Add(_povrchUprava);
-            }
-            _povrchUprava.SetAttributeValue(s_UpravaKod, this.Kod);
+                _povrchUprava = _data.Element(s_PovrchUprava);
+                if (_povrchUprava == null)
+                {
+                    _povrchUprava = new XElement(s_PovrchUprava);
+                    _data.Add(_povrchUprava);
+                }
+                _povrchUprava.SetAttributeValue(s_UpravaKod, this.Kod);
 
-            SetVnejsiOdstin();
-            SetVnitrniOdstin();
+                SetVnejsiOdstin();
+                SetVnitrniOdstin();
+            }
         }
     }
 }
