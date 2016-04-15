@@ -19,6 +19,7 @@ namespace EOkno.ViewModels
 
             this.Kod = kod;
             this.Nazev = nazev;
+            this.Odstiny = new List<OdstinViewModel>();
         }
 
         public string Kod { get; private set; }
@@ -29,7 +30,7 @@ namespace EOkno.ViewModels
             get { return this.Odstiny.Count != 0; }
         }
 
-        public List<OdstinViewModel> Odstiny { get;  set; }
+        public List<OdstinViewModel> Odstiny { get; set; }
 
         private OdstinViewModel _vnitrniOdstin;
         public OdstinViewModel VnitrniOdstin

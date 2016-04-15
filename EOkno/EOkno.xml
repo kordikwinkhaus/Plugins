@@ -19,7 +19,7 @@
       <odstin kod="MebO">Metal Efekt Bronz</odstin>
       <odstin kod="DgeO">Dunkelgrau Effekt</odstin>
       <odstin kod="MgeO">Mittelgrau Effekt</odstin>
-      <odstin kod="BroO">Bronze</odstin>
+      <odstin kod="BroeO">Bronze</odstin>
     </povrchovaUprava>
     <povrchovaUprava kod="lazura" nazev="lazura">
       <odstin kod="HemL">Hemlock</odstin>
