@@ -30,6 +30,11 @@ namespace EOkno.ViewModels
             this.InheritFromDocument = _model.PodleDokumentu;
         }
 
+        private void model_DataChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         internal IOknaDocument OknaDocument { get; set; }
 
         private DocumentData GetDocumentData()
@@ -40,7 +45,8 @@ namespace EOkno.ViewModels
                 XElement eokno = data.Element(Xml.EOkno);
                 if (eokno != null)
                 {
-                    return new DocumentData(eokno);
+                    var eoknoClone = new XElement(eokno);
+                    return new DocumentData(eoknoClone);
                 }
             }
             catch (Exception ex)
@@ -81,15 +87,20 @@ namespace EOkno.ViewModels
             ExtensionsFactory.Nacist(docVM);
             docVM.SetModel(docData);
 
+            CopyFromDocumentCore(copyColors, copyComponents, copyComponentFlagsOnly, docVM);
+        }
+
+        private void CopyFromDocumentCore(bool copyColors, bool copyComponents, bool copyComponentFlagsOnly, DocumentViewModel document)
+        {
             if (copyColors)
             {
-                if (docVM.VybranaPU != null)
+                if (document.VybranaPU != null)
                 {
-                    this.VybranaPU = this.PovrchoveUpravy.SingleOrDefault(p => p.Kod == docVM.VybranaPU.Kod);
+                    this.VybranaPU = this.PovrchoveUpravy.SingleOrDefault(p => p.Kod == document.VybranaPU.Kod);
                     if (this.VybranaPU != null)
                     {
-                        this.VybranaPU.VnejsiOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == docVM.VybranaPU.VnejsiOdstin?.Kod);
-                        this.VybranaPU.VnitrniOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == docVM.VybranaPU.VnitrniOdstin?.Kod);
+                        this.VybranaPU.VnejsiOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == document.VybranaPU.VnejsiOdstin?.Kod);
+                        this.VybranaPU.VnitrniOdstin = this.VybranaPU.Odstiny.SingleOrDefault(o => o.Kod == document.VybranaPU.VnitrniOdstin?.Kod);
                         if (!this.InheritFromDocument)
                         {
                             this.VybranaPU.ZapsatOdstiny();
@@ -107,14 +118,14 @@ namespace EOkno.ViewModels
             {
                 for (int i = 0; i < this.Komponenty.Count; i++)
                 {
-                    this.Komponenty[i].VybranoDokument = this.Komponenty[i].Vybrano = docVM.Komponenty[i].Vybrano;
+                    this.Komponenty[i].VybranoDokument = this.Komponenty[i].Vybrano = document.Komponenty[i].Vybrano;
                 }
             }
             else if (copyComponentFlagsOnly)
             {
                 for (int i = 0; i < this.Komponenty.Count; i++)
                 {
-                    this.Komponenty[i].VybranoDokument = docVM.Komponenty[i].Vybrano;
+                    this.Komponenty[i].VybranoDokument = document.Komponenty[i].Vybrano;
                 }
             }
         }
@@ -162,9 +173,13 @@ namespace EOkno.ViewModels
 
         internal void DocumentUpdated(DocumentViewModel document)
         {
-            for (int i = 0; i < this.Komponenty.Count; i++)
+            if (this.InheritFromDocument)
             {
-                this.Komponenty[i].VybranoDokument = document.Komponenty[i].Vybrano;
+                CopyFromDocumentCore(copyColors: true, copyComponents: true, copyComponentFlagsOnly: false, document: document);
+            }
+            else
+            {
+                CopyFromDocumentCore(copyColors: false, copyComponents: false, copyComponentFlagsOnly: true, document: document);
             }
         }
     }

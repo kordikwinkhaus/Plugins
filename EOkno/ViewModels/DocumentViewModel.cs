@@ -15,11 +15,27 @@ namespace EOkno.ViewModels
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
 
+            if (_model != null)
+            {
+                _model.DataChanged -= model_DataChanged;
+            }
+
             base.SetModel(model);
             _model = model;
+            _model.DataChanged += model_DataChanged;
 
             OnPropertyChanged(nameof(Sleva));
         }
+
+        private void model_DataChanged(object sender, EventArgs e)
+        {
+            if (this.Broker != null)
+            {
+                this.Broker.DocumentUpdated(this);
+            }
+        }
+
+        internal MessageBroker Broker { get; set; }
 
         public decimal Sleva
         {
@@ -31,18 +47,6 @@ namespace EOkno.ViewModels
                     _model.Sleva = value;
                     OnPropertyChanged(nameof(Sleva));
                 }
-            }
-        }
-
-        // TODO: broker
-
-        internal MessageBroker Broker { get; set; }
-
-        internal override void NotifyChange()
-        {
-            if (this.Broker != null)
-            {
-                this.Broker.DocumentUpdated(this);
             }
         }
     }
