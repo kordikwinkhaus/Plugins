@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Xml.Linq;
 using EOkno.Models;
+using UserExt;
 using WHOkna;
 
 namespace EOkno.ViewModels
@@ -26,8 +27,7 @@ namespace EOkno.ViewModels
             base.SetModel(model);
             _model = model;
 
-            OnPropertyChanged(nameof(InheritFromDocument));
-            OnPropertyChanged(nameof(NotInheritFromDocument));
+            this.InheritFromDocument = _model.PodleDokumentu;
         }
 
         internal IOknaDocument OknaDocument { get; set; }
@@ -72,12 +72,13 @@ namespace EOkno.ViewModels
             CopyFromDocument(copyColors: false, copyComponents: true);
         }
 
-        private void CopyFromDocument(bool copyColors, bool copyComponents)
+        private void CopyFromDocument(bool copyColors, bool copyComponents, bool copyComponentFlagsOnly = false)
         {
             var docData = GetDocumentData();
             if (docData == null) return;
 
             DocumentViewModel docVM = new DocumentViewModel();
+            ExtensionsFactory.Nacist(docVM);
             docVM.SetModel(docData);
 
             if (copyColors)
@@ -106,7 +107,14 @@ namespace EOkno.ViewModels
             {
                 for (int i = 0; i < this.Komponenty.Count; i++)
                 {
-                    this.Komponenty[i].Vybrano = docVM.Komponenty[i].Vybrano;
+                    this.Komponenty[i].VybranoDokument = this.Komponenty[i].Vybrano = docVM.Komponenty[i].Vybrano;
+                }
+            }
+            else if (copyComponentFlagsOnly)
+            {
+                for (int i = 0; i < this.Komponenty.Count; i++)
+                {
+                    this.Komponenty[i].VybranoDokument = docVM.Komponenty[i].Vybrano;
                 }
             }
         }
@@ -128,7 +136,16 @@ namespace EOkno.ViewModels
                 }
                 else
                 {
+                    bool isEmpty = _model.IsEmpty();
                     base.SetModel(_model);
+                    if (isEmpty)
+                    {
+                        CopyFromDocument(copyColors: true, copyComponents: true);
+                    }
+                    else
+                    {
+                        CopyFromDocument(copyColors: false, copyComponents: false, copyComponentFlagsOnly: true);
+                    }
                 }
             }
         }

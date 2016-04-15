@@ -38,11 +38,13 @@
         <RowDefinition Height="*"/>
       </Grid.RowDefinitions>
 
+      <!--
       <Button Margin="6,3"
               Command="{Binding CopyFromDocumentCommand}"
               >
         Zkopírovat z nastavení dokumentu
       </Button>
+      -->
 
       <GroupBox Grid.Row="1"
                 Margin="3"

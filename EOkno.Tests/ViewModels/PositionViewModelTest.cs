@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 using System.Xml.Linq;
 using EOkno.Models;
 using EOkno.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using UserExt;
 
 namespace EOkno.Tests.ViewModels
 {
@@ -21,24 +23,13 @@ namespace EOkno.Tests.ViewModels
         {
             PositionViewModel target = new PositionViewModel();
             target.OknaDocument = _oknaDoc;
-
-            target.PovrchoveUpravy.Add(new PovrchovaUpravaViewModel("bez", "bez PU"));
-            PovrchovaUpravaViewModel olej = new PovrchovaUpravaViewModel("olej", "olej");
-            olej.Odstiny = new List<OdstinViewModel>();
-            olej.Odstiny.Add(new OdstinViewModel("o1", "Odst 1"));
-            olej.Odstiny.Add(new OdstinViewModel("o2", "Odst 2"));
-            target.PovrchoveUpravy.Add(olej);
-
-            target.Komponenty.Add(new KomponentaViewModel("Mat 1", "M1", null, target));
-            target.Komponenty.Add(new KomponentaViewModel("Mat 2", "M2", null, target));
-            target.Komponenty.Add(new KomponentaViewModel("Práce 1", null, "P1", target));
-
+            ExtensionsFactory.Nacist(target);
             return target;
         }
 
-        private PositionData GetDefaultPositionData()
+        private PositionData GetPositionData(string xml = "<EOkno/>")
         {
-            XDocument doc = XDocument.Parse("<EOkno/>");
+            XDocument doc = XDocument.Parse(xml);
             return new PositionData(doc.Root);
         }
 
@@ -46,8 +37,8 @@ namespace EOkno.Tests.ViewModels
         public void NovaPozice_VychoziPodleDokumentu_Test()
         {
             var target = GetTarget();
-            var model = GetDefaultPositionData();
-            _oknaDoc.ExtendedProperties = XElement.Parse("<UserData><EOkno s='0'><p k='olej' i='o1' e='o2'/><k m='M1'/><k p='P1'/></EOkno></UserData>");
+            var model = GetPositionData();
+            _oknaDoc.ExtendedProperties = XElement.Parse("<UserData><EOkno s='0'><p k='olej' i='PinO' e='OliO'/><k m='1'/><k p='20'/></EOkno></UserData>");
 
             target.SetModel(model);
             target.SetDefaults();
@@ -56,30 +47,30 @@ namespace EOkno.Tests.ViewModels
             Assert.AreEqual(false, target.NotInheritFromDocument);
 
             Assert.AreEqual("olej", target.VybranaPU.Kod);
-            Assert.AreEqual("o1", target.VybranaPU.VnitrniOdstin.Kod);
-            Assert.AreEqual("o2", target.VybranaPU.VnejsiOdstin.Kod);
+            Assert.AreEqual("PinO", target.VybranaPU.VnitrniOdstin.Kod);
+            Assert.AreEqual("OliO", target.VybranaPU.VnejsiOdstin.Kod);
 
-            bool[] ocekavaneStavy = new [] { true, false, true };
-            Assert.AreEqual(ocekavaneStavy.Length, target.Komponenty.Count);
-            for (int i = 0; i < ocekavaneStavy.Length; i++)
+            Assert.IsTrue(target.Komponenty[0].Vybrano);
+            for (int i = 1; i < target.Komponenty.Count - 1; i++)
             {
-                Assert.AreEqual(ocekavaneStavy[i], target.Komponenty[i].Vybrano);
+                Assert.IsFalse(target.Komponenty[i].Vybrano);
             }
+            Assert.IsTrue(target.Komponenty.Last().Vybrano);
         }
 
         [TestMethod]
         public void DruhaNovaPozice_VychoziPodleDokumentu_Test()
         {
             var target = GetTarget();
-            var model = GetDefaultPositionData();
-            _oknaDoc.ExtendedProperties = XElement.Parse("<UserData><EOkno s='0'><p k='olej' i='o1' e='o2'/><k m='M1'/><k p='P1'/></EOkno></UserData>");
+            var model = GetPositionData();
+            _oknaDoc.ExtendedProperties = XElement.Parse("<UserData><EOkno s='0'><p k='olej' i='PinO' e='OliO'/><k m='1'/><k p='20'/></EOkno></UserData>");
 
             // první pozice
             target.SetModel(model);
             target.SetDefaults();
 
             // druhá pozice
-            model = GetDefaultPositionData();
+            model = GetPositionData();
             target.SetModel(model);
             target.SetDefaults();
 
@@ -87,15 +78,93 @@ namespace EOkno.Tests.ViewModels
             Assert.AreEqual(false, target.NotInheritFromDocument);
 
             Assert.AreEqual("olej", target.VybranaPU.Kod);
-            Assert.AreEqual("o1", target.VybranaPU.VnitrniOdstin.Kod);
-            Assert.AreEqual("o2", target.VybranaPU.VnejsiOdstin.Kod);
+            Assert.AreEqual("PinO", target.VybranaPU.VnitrniOdstin.Kod);
+            Assert.AreEqual("OliO", target.VybranaPU.VnejsiOdstin.Kod);
 
-            bool[] ocekavaneStavy = new [] { true, false, true };
-            Assert.AreEqual(ocekavaneStavy.Length, target.Komponenty.Count);
-            for (int i = 0; i < ocekavaneStavy.Length; i++)
+            Assert.IsTrue(target.Komponenty[0].Vybrano);
+            for (int i = 1; i < target.Komponenty.Count - 1; i++)
             {
-                Assert.AreEqual(ocekavaneStavy[i], target.Komponenty[i].Vybrano);
+                Assert.IsFalse(target.Komponenty[i].Vybrano);
             }
+            Assert.IsTrue(target.Komponenty.Last().Vybrano);
+        }
+
+        [TestMethod]
+        public void NovaPozice_Vlastni_InicializovatPodleDokumentu_Test()
+        {
+            var target = GetTarget();
+            var model = GetPositionData();
+            _oknaDoc.ExtendedProperties = XElement.Parse("<UserData><EOkno s='0'><p k='olej' i='PinO' e='OliO'/><k m='1'/><k p='20'/></EOkno></UserData>");
+
+            target.SetModel(model);
+            target.SetDefaults();
+            target.InheritFromDocument = false;
+
+            Assert.AreEqual("olej", target.VybranaPU.Kod);
+            Assert.AreEqual("PinO", target.VybranaPU.VnitrniOdstin.Kod);
+            Assert.AreEqual("OliO", target.VybranaPU.VnejsiOdstin.Kod);
+
+            Assert.IsTrue(target.Komponenty[0].Vybrano);
+            Assert.IsTrue(target.Komponenty[0].VybranoDokument);
+            for (int i = 1; i < target.Komponenty.Count - 1; i++)
+            {
+                Assert.IsFalse(target.Komponenty[i].Vybrano);
+                Assert.IsFalse(target.Komponenty[i].VybranoDokument);
+            }
+            Assert.IsTrue(target.Komponenty.Last().Vybrano);
+            Assert.IsTrue(target.Komponenty.Last().VybranoDokument);
+        }
+
+        [TestMethod]
+        public void ExistujiciPozice_PodleDokumentu_Test()
+        {
+            var target = GetTarget();
+            var model = GetPositionData("<EOkno doc='1'><p/></EOkno>");
+            _oknaDoc.ExtendedProperties = XElement.Parse("<UserData><EOkno s='0'><p k='olej' i='PinO' e='OliO'/><k m='1'/><k p='20'/></EOkno></UserData>");
+
+            // druhé zobrazení
+            target.SetModel(model);
+
+            Assert.IsTrue(target.InheritFromDocument);
+            Assert.AreEqual("olej", target.VybranaPU.Kod);
+            Assert.AreEqual("PinO", target.VybranaPU.VnitrniOdstin.Kod);
+            Assert.AreEqual("OliO", target.VybranaPU.VnejsiOdstin.Kod);
+
+            Assert.IsTrue(target.Komponenty[0].Vybrano);
+            for (int i = 1; i < target.Komponenty.Count - 1; i++)
+            {
+                Assert.IsFalse(target.Komponenty[i].Vybrano);
+            }
+            Assert.IsTrue(target.Komponenty.Last().Vybrano);
+        }
+
+        [TestMethod]
+        public void ExistujiciPozice_Vlastni_SignalizaceRozdilu_Test()
+        {
+            var target = GetTarget();
+            var model = GetPositionData("<EOkno doc='0'><p k='olej' i='PinO' e='OliO'/><k m='1'/></EOkno>");
+            _oknaDoc.ExtendedProperties = XElement.Parse("<UserData><EOkno s='0'><p k='olej' i='PinO' e='OliO'/><k m='1'/><k p='20'/></EOkno></UserData>");
+
+            // druhé zobrazení
+            target.SetModel(model);
+
+            Assert.IsFalse(target.InheritFromDocument);
+            Assert.AreEqual("olej", target.VybranaPU.Kod);
+            Assert.AreEqual("PinO", target.VybranaPU.VnitrniOdstin.Kod);
+            Assert.AreEqual("OliO", target.VybranaPU.VnejsiOdstin.Kod);
+
+            Assert.IsTrue(target.Komponenty[0].Vybrano);
+            for (int i = 1; i < target.Komponenty.Count; i++)
+            {
+                Assert.IsFalse(target.Komponenty[i].Vybrano);
+            }
+
+            Assert.IsTrue(target.Komponenty[0].VybranoDokument);
+            for (int i = 1; i < target.Komponenty.Count - 1; i++)
+            {
+                Assert.IsFalse(target.Komponenty[i].VybranoDokument);
+            }
+            Assert.IsTrue(target.Komponenty.Last().VybranoDokument);
         }
     }
 }

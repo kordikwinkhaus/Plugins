@@ -31,5 +31,15 @@ namespace EOkno.Models
                 _data.SetAttributeValue(Xml.Inherit, (value) ? Xml.True : Xml.False);
             }
         }
+
+        internal bool IsEmpty()
+        {
+            if (this.PodleDokumentu) return false;
+            if (_material.Count != 0) return false;
+            if (_prace.Count != 0) return false;
+            if (!string.IsNullOrEmpty(this.PovrchovaUpravaKod)) return false;
+
+            return true;
+        }
     }
 }

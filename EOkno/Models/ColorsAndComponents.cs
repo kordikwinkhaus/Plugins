@@ -8,8 +8,8 @@ namespace EOkno.Models
     internal class ColorsAndComponents
     {
         protected readonly XElement _data;
-        private readonly Komponenty _material;
-        private readonly Komponenty _prace;
+        protected readonly Komponenty _material;
+        protected readonly Komponenty _prace;
         private XElement _povrchUprava;
 
         /// <param name="data">XML element pluginu EOkno.</param>
