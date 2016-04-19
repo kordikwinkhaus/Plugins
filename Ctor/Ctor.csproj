@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="ExtensionsFactory.cs" />
     <Compile Include="Models\Area.cs" />
+    <Compile Include="Models\AreaSelector.cs" />
     <Compile Include="Models\Commands.cs" />
     <Compile Include="Models\CompilationException.cs" />
     <Compile Include="Models\CouplingInsertionResult.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Models\FrameAreaBase.cs" />
     <Compile Include="Models\Glasspacket.cs" />
     <Compile Include="Models\IAreaExtensions.cs" />
+    <Compile Include="Models\IAreaProvider.cs" />
     <Compile Include="Models\IContext.cs" />
     <Compile Include="Models\IDatabase.cs" />
     <Compile Include="Models\IFrameBaseExtensions.cs" />
@@ -126,12 +128,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AreaSelectorViewModel.cs" />
     <Compile Include="ViewModels\CodeEditorViewModel.cs" />
     <Compile Include="ViewModels\Context.cs" />
     <Compile Include="ViewModels\ContextScriptScopeExtender.cs" />
     <Compile Include="ViewModels\ContextViewModel.cs" />
     <Compile Include="ViewModels\FastInsertViewModel.cs" />
     <Compile Include="ViewModels\ICodeEditorView.cs" />
+    <Compile Include="Views\AreaSelectorDialog.xaml.cs">
+      <DependentUpon>AreaSelectorDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AutoGreyImage.cs" />
     <Compile Include="Views\BreakPointMargin.cs" />
     <Compile Include="Views\CodeEditorDialog.xaml.cs">
@@ -169,6 +175,10 @@
     <EmbeddedResource Include="PythonHighlight.xshd" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\AreaSelectorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CodeEditorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

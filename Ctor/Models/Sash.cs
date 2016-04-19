@@ -9,7 +9,7 @@ namespace Ctor.Models
     /// <summary>
     /// Objekt křídla.
     /// </summary>
-    public class Sash : Part
+    public class Sash : Part, IAreaProvider
     {
         private readonly ISash _sash;
         private readonly Frame _parent;
@@ -210,9 +210,8 @@ namespace Ctor.Models
             }
             else if (areas.Count > 1)
             {
-                // TODO: zobrazit dialog; storno z dialogu by mělo vyvolat systemexit exception
-                // + udělat interface pro výběr oblastí (jeden dialog vládne všem);
-                // interface pak implementovat explicitně
+                var area = AreaSelector.SelectArea(this);
+                return new SashArea(area, this);
             }
 
             throw new ModelException(Strings.NoEmptyAreaInSash);
@@ -297,5 +296,15 @@ namespace Ctor.Models
         }
 
         #endregion
+
+        IEnumerable<IArea> IAreaProvider.GetEmptyAreas()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<IArea> IAreaProvider.GetUsedAreas()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

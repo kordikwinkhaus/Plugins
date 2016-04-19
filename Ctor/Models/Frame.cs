@@ -10,7 +10,7 @@ namespace Ctor.Models
     /// <summary>
     /// Objekt rámu.
     /// </summary>
-    public class Frame : Part
+    public class Frame : Part, IAreaProvider
     {
         private readonly IFrame _frame;
         private readonly Position _parent;
@@ -82,9 +82,8 @@ namespace Ctor.Models
             }
             else if (areas.Count > 1)
             {
-                // TODO: zobrazit dialog; storno z dialogu by mělo vyvolat systemexit exception
-                // + udělat interface pro výběr oblastí (jeden dialog vládne všem);
-                // interface pak implementovat explicitně
+                var area = AreaSelector.SelectArea(this);
+                return new FrameArea(area, this);
             }
 
             throw new ModelException(Strings.NoEmptyAreaInFrame);
@@ -341,6 +340,16 @@ namespace Ctor.Models
             }
 
             return new RectangleF(original.X - left, original.Y - top, original.Width + left - right, original.Height + top - bottom);
+        }
+
+        IEnumerable<IArea> IAreaProvider.GetEmptyAreas()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<IArea> IAreaProvider.GetUsedAreas()
+        {
+            throw new NotImplementedException();
         }
     }
 }

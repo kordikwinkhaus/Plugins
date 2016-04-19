@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using Ctor.Models;
 using Ctor.Models.Scripting;
+using Ctor.Views;
 using Microsoft.Scripting;
 using Okna.Data;
 using Okna.Documents;
@@ -13,14 +14,16 @@ namespace Ctor.ViewModels
     {
         private readonly string _connection;
         private readonly string _lang;
+        private readonly IInteractionService _interaction;
         private readonly ISqlConnectionWrapper _conn;
         private PythonScriptEngine _engine;
         private ContextScriptScopeExtender _scopeExtender;
 
-        public FastInsertViewModel(string connection, string lang)
+        internal FastInsertViewModel(string connection, string lang, IInteractionService interaction)
         {
             _connection = connection;
             _lang = lang;
+            _interaction = interaction;
 
             _conn = new SqlConnectionWrapper(Okna.Data.Utils.ModifyConnString(connection));
             _conn.TrySetLang();
@@ -68,6 +71,8 @@ namespace Ctor.ViewModels
         }
 
         private IDocumentsDialogFactory _dialogFactory;
+        private InteractionService interaction;
+
         internal IDocumentsDialogFactory DialogFactory
         {
             get
@@ -97,12 +102,13 @@ namespace Ctor.ViewModels
         {
             string code = (string)param;
             var engine = GetScriptEngine();
+            AreaSelector.SelectArea = SelectArea;
 
             try
             {
                 if (!engine.Execute(code))
                 {
-                    Msg.Instance.Error(engine.ErrorMessage);
+                    _interaction.ShowError(engine.ErrorMessage);
                 }
             }
             catch (CompilationException ex)
@@ -111,11 +117,11 @@ namespace Ctor.ViewModels
                 var syntaxError = inner as SyntaxErrorException;
                 if (syntaxError != null)
                 {
-                    Msg.Instance.Error("Syntax error at line " + syntaxError.Line + ", column " + syntaxError.Column);
+                    _interaction.ShowError("Syntax error at line " + syntaxError.Line + ", column " + syntaxError.Column);
                 }
                 else
                 {
-                    Msg.Instance.Error(inner.Message);
+                    _interaction.ShowError(inner.Message);
                 }
             }
         }
@@ -132,6 +138,21 @@ namespace Ctor.ViewModels
             _scopeExtender.ExtendScope(_engine.Variables);
 
             return _engine;
+        }
+
+        internal IArea SelectArea(IAreaProvider areaProvider)
+        {
+            var areaSelectorVM = new AreaSelectorViewModel(areaProvider);
+            var dlg = new AreaSelectorDialog();
+            
+            if (_interaction.ShowDialog(areaSelectorVM) == true)
+            {
+                return areaSelectorVM.SelectedArea;
+            }
+            else
+            {
+                throw new IronPython.Runtime.Exceptions.SystemExitException();
+            }
         }
 
         #endregion

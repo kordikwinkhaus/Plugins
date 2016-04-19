@@ -19,6 +19,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interception\Logger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IInteractionService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\InteractionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WpfExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XmlExtensions.cs" />

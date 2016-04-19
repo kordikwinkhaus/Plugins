@@ -282,4 +282,7 @@
   <data name="ClearOutput" xml:space="preserve">
     <value>Clear output</value>
   </data>
+  <data name="AreaSelection" xml:space="preserve">
+    <value>Area selection</value>
+  </data>
 </root>

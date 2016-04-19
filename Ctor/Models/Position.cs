@@ -10,7 +10,7 @@ namespace Ctor.Models
     /// Objekt pozice.
     /// Instance třídy je ve skriptu nastavena jako proměnná "pos".
     /// </summary>
-    public class Position
+    public class Position : IAreaProvider
     {
         private readonly IPosition _position;
 
@@ -176,9 +176,8 @@ namespace Ctor.Models
             }
             else if (areas.Count > 1)
             {
-                // TODO: zobrazit dialog; storno z dialogu by mělo vyvolat systemexit exception
-                // + udělat interface pro výběr oblastí (jeden dialog vládne všem);
-                // interface pak implementovat explicitně
+                var area = AreaSelector.SelectArea(this);
+                return new PositionArea(area, this);
             }
 
             throw new ModelException(Strings.NoEmptyAreaInPosition);
@@ -327,5 +326,15 @@ namespace Ctor.Models
         }
 
         #endregion
+
+        IEnumerable<IArea> IAreaProvider.GetEmptyAreas()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<IArea> IAreaProvider.GetUsedAreas()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

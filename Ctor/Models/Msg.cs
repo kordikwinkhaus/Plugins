@@ -14,7 +14,7 @@ namespace Ctor.Models
             get { return s_instance; }
         }
 
-        private const string CAPTION = "Ctor plugin";
+        internal const string CAPTION = "Ctor plugin";
 
         internal Msg()
         {

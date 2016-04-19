@@ -1,0 +1,32 @@
+﻿<Window x:Class="Ctor.Views.AreaSelectorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:res="clr-namespace:Ctor.Resources"
+        xmlns:v="clr-namespace:Ctor.Views"
+        mc:Ignorable="d"
+        Title="{x:Static res:Strings.AreaSelection}" 
+        Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+        Height="300" Width="300">
+  <DockPanel>
+    <StackPanel DockPanel.Dock="Bottom"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Margin="3"
+                >
+      <StackPanel.Resources>
+        <Style TargetType="{x:Type Button}">
+          <Setter Property="Margin" Value="3"/>
+          <Setter Property="MinWidth" Value="70"/>
+        </Style>
+      </StackPanel.Resources>
+      
+      <Button Content="{x:Static res:Strings.OK}"/>
+      <Button Content="{x:Static res:Strings.Cancel}"/>
+    </StackPanel>
+
+    <Canvas></Canvas>
+
+  </DockPanel>
+</Window>
