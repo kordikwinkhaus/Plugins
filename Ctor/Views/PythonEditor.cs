@@ -53,8 +53,8 @@ namespace Ctor.Views
             // add rectangle as background for folding margin
             var foldingBackground = new Rectangle();
             foldingBackground.Height = 5000;
-            foldingBackground.Width = 21;
-            foldingBackground.Margin = new Thickness(-2, 0, -19, 0);
+            foldingBackground.Width = 19;
+            foldingBackground.Margin = new Thickness(-2, 0, -17, 0);
             foldingBackground.Fill = Brushes.WhiteSmoke;
             this.TextArea.LeftMargins.Add(foldingBackground);
 
