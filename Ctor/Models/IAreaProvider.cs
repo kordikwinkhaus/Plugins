@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using WHOkna;
 
 namespace Ctor.Models
 {
     interface IAreaProvider
     {
-        IEnumerable<IArea> GetEmptyAreas();
+        float PositionHeight { get; }
 
-        IEnumerable<IArea> GetUsedAreas();
+        float PositionWidth { get; }
+
+        BitmapFrameResult GetPositionImage(double scale);
+
+        IEnumerable<IArea> GetEmptyAreas();
     }
 }

@@ -10,8 +10,12 @@ namespace Ctor.Views
 {
     public partial class FastInsertPage : UserControl, IUserForm3
     {
-        public FastInsertPage()
+        private readonly CustomDialogFactory _dialogFactory;
+
+        public FastInsertPage(CustomDialogFactory dialogFactory)
         {
+            _dialogFactory = dialogFactory;
+
             InitializeComponent();
         }
 
@@ -23,7 +27,11 @@ namespace Ctor.Views
         public IOknaDocument OknaDoc
         {
             get { return ViewModel.Document; }
-            set { ViewModel.Document = value; }
+            set
+            {
+                ViewModel.Document = value;
+                _dialogFactory.ParentHwnd = value.Application.MainWindowHWND();
+            }
         }
 
         public IPart Part { get; set; }
@@ -372,6 +380,7 @@ if pos.IsConstruction:
 
         TaskScheduler _ts;
         string _text;
+
         private void edit_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             _ts = TaskScheduler.FromCurrentSynchronizationContext();

@@ -285,4 +285,7 @@
   <data name="AreaSelection" xml:space="preserve">
     <value>Area selection</value>
   </data>
+  <data name="PleaseSelectArea" xml:space="preserve">
+    <value>Please select area:</value>
+  </data>
 </root>

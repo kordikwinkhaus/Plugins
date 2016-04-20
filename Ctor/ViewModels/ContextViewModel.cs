@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
+using System.Windows.ViewModels;
 using Ctor.Models;
-using Okna.Plugins.ViewModels;
 
 namespace Ctor.ViewModels
 {

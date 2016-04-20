@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Input;
 using EOkno.Models;
+using Okna.Plugins;
 using Okna.Plugins.ViewModels;
 
 namespace EOkno.ViewModels

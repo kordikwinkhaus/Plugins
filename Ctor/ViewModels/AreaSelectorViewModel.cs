@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Windows.ViewModels;
 using Ctor.Models;
-using Okna.Documents.ViewModels;
 using WHOkna;
 
 namespace Ctor.ViewModels
 {
     public class AreaSelectorViewModel : ViewModelBase
     {
-        private IAreaProvider _areaProvider;
-
         internal AreaSelectorViewModel(IAreaProvider areaProvider)
         {
-            _areaProvider = areaProvider;
+            this.AreaProvider = areaProvider;
         }
 
-        public IArea SelectedArea { get; internal set; }
+        internal IAreaProvider AreaProvider { get; private set; }
+
+        internal IArea SelectedArea { get; set; }
     }
 }

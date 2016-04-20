@@ -52,8 +52,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\WinkhausCR.Windows.2.2.2\lib\net40\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,8 +70,17 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WinkhausCR.Data, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinkhausCR.Data.3.1.0\lib\net40\WinkhausCR.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WinkhausCR.Windows, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinkhausCR.Windows.2.2.2\lib\net40\WinkhausCR.Windows.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomDialogFactory.cs" />
     <Compile Include="ExtensionsFactory.cs" />
     <Compile Include="Models\Area.cs" />
     <Compile Include="Models\AreaSelector.cs" />
@@ -91,6 +100,7 @@
     <Compile Include="Models\IContext.cs" />
     <Compile Include="Models\IDatabase.cs" />
     <Compile Include="Models\IFrameBaseExtensions.cs" />
+    <Compile Include="Models\IPartExtensions.cs" />
     <Compile Include="Models\Msg.cs" />
     <Compile Include="Models\ModelException.cs" />
     <Compile Include="Models\Bar.cs" />
@@ -158,6 +168,7 @@
     <Compile Include="Views\SelectItemControl.xaml.cs">
       <DependentUpon>SelectItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ViewBoxExtensions.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -213,7 +224,8 @@
   <Import Project="..\SharedCode\SharedCode.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>XCOPY /Y $(TargetPath) C:\WHOkna5115</PostBuildEvent>
+    <PostBuildEvent>XCOPY /Y $(TargetPath) C:\WHOkna5115
+XCOPY /Y $(TargetDir)WinkhausCR.Windows.dll C:\WHOkna5115</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

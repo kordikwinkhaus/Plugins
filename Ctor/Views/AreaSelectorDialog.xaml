@@ -8,7 +8,11 @@
         mc:Ignorable="d"
         Title="{x:Static res:Strings.AreaSelection}" 
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
-        Height="300" Width="300">
+        Loaded="Window_Loaded"
+        DataContextChanged="Window_DataContextChanged"
+        WindowStartupLocation="CenterOwner"
+        SizeChanged="Window_SizeChanged"
+        Height="400" Width="600">
   <DockPanel>
     <StackPanel DockPanel.Dock="Bottom"
                 Orientation="Horizontal"
@@ -22,11 +26,44 @@
         </Style>
       </StackPanel.Resources>
       
-      <Button Content="{x:Static res:Strings.OK}"/>
-      <Button Content="{x:Static res:Strings.Cancel}"/>
+      <Button Content="{x:Static res:Strings.OK}" Click="OK_Click"/>
+      <Button Content="{x:Static res:Strings.Cancel}"
+              IsCancel="True"
+              />
     </StackPanel>
 
-    <Canvas></Canvas>
+    <Label DockPanel.Dock="Top" Content="{x:Static res:Strings.PleaseSelectArea}"/>
 
+    <Grid Margin="6">
+      <Image x:Name="posImage"
+             VerticalAlignment="Top"
+             HorizontalAlignment="Left"
+             />
+      <Viewbox x:Name="viewbox" 
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               >
+        <Canvas x:Name="areas" Width="1000" Height="1000">
+          <Canvas.Resources>
+            <Style TargetType="{x:Type Rectangle}" x:Key="Empty">
+              <Setter Property="Fill" Value="Silver"/>
+              <Setter Property="Stroke" Value="Gray"/>
+              <Setter Property="Opacity" Value="0.4"/>
+              <Setter Property="Cursor" Value="Hand"/>
+              <Style.Triggers>
+                <Trigger Property="IsMouseDirectlyOver" Value="True">
+                  <Setter Property="Opacity" Value="0.7"/>
+                </Trigger>
+                <Trigger Property="v:AreaSelectorDialog.IsSelected" Value="True">
+                  <Setter Property="Fill" Value="Blue"/>
+                  <Setter Property="Stroke" Value="DarkBlue"/>
+                </Trigger>
+              </Style.Triggers>
+            </Style>
+          </Canvas.Resources>
+        </Canvas>
+      </Viewbox>
+    </Grid>
+    
   </DockPanel>
 </Window>

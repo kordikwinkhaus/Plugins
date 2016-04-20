@@ -1,8 +1,7 @@
 ﻿using System.Windows;
-using Ctor.Models;
+using Ctor;
 using Ctor.ViewModels;
 using Ctor.Views;
-using Okna.Plugins.ViewModels;
 using UserExtensions;
 
 namespace UserExt
@@ -14,9 +13,11 @@ namespace UserExt
             switch (pg)
             {
                 case EPropPage.pDziura:
-                    var interaction = new InteractionService(Msg.CAPTION);
-                    interaction.Register<AreaSelectorDialog, AreaSelectorViewModel>();
-                    var page = new FastInsertPage();
+                    var dialogFactory = new DialogFactory();
+                    dialogFactory.Register<AreaSelectorViewModel, AreaSelectorDialog>();
+                    var proxyDialogFactory = new CustomDialogFactory(dialogFactory);
+                    var interaction = new InteractionService(proxyDialogFactory);
+                    var page = new FastInsertPage(proxyDialogFactory);
                     page.ViewModel = new FastInsertViewModel(connection, lang, interaction);
                     return page;
             }

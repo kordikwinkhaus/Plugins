@@ -1,11 +1,12 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
+using System.Windows.ViewModels;
 using Ctor.Models;
 using Ctor.Models.Scripting;
 using Ctor.Views;
 using Microsoft.Scripting;
 using Okna.Data;
 using Okna.Documents;
-using Okna.Plugins.ViewModels;
 using WHOkna;
 
 namespace Ctor.ViewModels
@@ -108,7 +109,7 @@ namespace Ctor.ViewModels
             {
                 if (!engine.Execute(code))
                 {
-                    _interaction.ShowError(engine.ErrorMessage);
+                    _interaction.ShowError(engine.ErrorMessage, Msg.CAPTION);
                 }
             }
             catch (CompilationException ex)
@@ -117,11 +118,11 @@ namespace Ctor.ViewModels
                 var syntaxError = inner as SyntaxErrorException;
                 if (syntaxError != null)
                 {
-                    _interaction.ShowError("Syntax error at line " + syntaxError.Line + ", column " + syntaxError.Column);
+                    _interaction.ShowError("Syntax error at line " + syntaxError.Line + ", column " + syntaxError.Column, Msg.CAPTION);
                 }
                 else
                 {
-                    _interaction.ShowError(inner.Message);
+                    _interaction.ShowError(inner.Message, Msg.CAPTION);
                 }
             }
         }
@@ -143,9 +144,8 @@ namespace Ctor.ViewModels
         internal IArea SelectArea(IAreaProvider areaProvider)
         {
             var areaSelectorVM = new AreaSelectorViewModel(areaProvider);
-            var dlg = new AreaSelectorDialog();
             
-            if (_interaction.ShowDialog(areaSelectorVM) == true)
+            if (_interaction.ShowDialogCenteredToMouse(areaSelectorVM) == true)
             {
                 return areaSelectorVM.SelectedArea;
             }

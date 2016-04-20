@@ -349,6 +349,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select area:.
+        /// </summary>
+        public static string PleaseSelectArea {
+            get {
+                return ResourceManager.GetString("PleaseSelectArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ready.
         /// </summary>
         public static string Ready {

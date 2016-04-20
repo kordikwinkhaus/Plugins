@@ -36,7 +36,7 @@ namespace Ctor.Models
 
         private WindowType GetWindowTypeCore(int id)
         {
-            DatabaseCommand cmd = new DatabaseCommand
+            Okna.Data.DatabaseCommand cmd = new Okna.Data.DatabaseCommand
             {
                 CommandText = "SELECT * FROM dbo.typyp WHERE indeks=@id"
             };
@@ -64,7 +64,7 @@ namespace Ctor.Models
 
         private FittingsGroup GetFittingsGroupCore(int id)
         {
-            DatabaseCommand cmd = new DatabaseCommand
+            Okna.Data.DatabaseCommand cmd = new Okna.Data.DatabaseCommand
             {
                 CommandText = "SELECT * FROM dbo.grupy WHERE indeks=@id"
             };
@@ -126,7 +126,7 @@ namespace Ctor.Models
             return result;
         }
 
-        public IList<DynamicDictionary> ExecuteQuery(DatabaseCommand cmd)
+        public IList<DynamicDictionary> ExecuteQuery(Okna.Data.DatabaseCommand cmd)
         {
             return _conn.ExecuteQuery(cmd);
         }

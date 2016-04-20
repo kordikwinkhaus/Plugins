@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Windows.Input;
 
-namespace System.Windows.Input
+namespace Okna.Plugins
 {
     public class RelayCommand : ICommand
     {

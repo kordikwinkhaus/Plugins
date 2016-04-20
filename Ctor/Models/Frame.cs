@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Media.Imaging;
 using Ctor.Resources;
 using WHOkna;
 
@@ -344,12 +345,22 @@ namespace Ctor.Models
 
         IEnumerable<IArea> IAreaProvider.GetEmptyAreas()
         {
-            throw new NotImplementedException();
+            return _frame.Areas.Where(a => a.Child == null);
         }
 
-        IEnumerable<IArea> IAreaProvider.GetUsedAreas()
+        BitmapFrameResult IAreaProvider.GetPositionImage(double scale)
         {
-            throw new NotImplementedException();
+            return _frame.TopObject.GetImageOnly(scale);
+        }
+
+        float IAreaProvider.PositionHeight
+        {
+            get { return _parent.Height; }
+        }
+
+        float IAreaProvider.PositionWidth
+        {
+            get { return _parent.Width; }
         }
     }
 }
