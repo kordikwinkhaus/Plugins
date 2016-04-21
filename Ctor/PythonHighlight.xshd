@@ -6,13 +6,13 @@
   <RuleSets>
     <RuleSet ignorecase="false">
       <Delimiters>()[]{}@,:.`=;+-*/% &amp;|^&gt;&lt;</Delimiters>
-      <Span name="Char" stopateol="true" color="Magenta" escapecharacter="\">
-        <Begin>'</Begin>
-        <End>'</End>
-      </Span>
       <Span name="DocComment" color="Brown">
         <Begin>"""</Begin>
         <End>"""</End>
+      </Span>
+      <Span name="DocComment2" color="Brown">
+        <Begin>'''</Begin>
+        <End>'''</End>
       </Span>
       <Span name="LineComment" stopateol="true" color="Green">
         <Begin>#</Begin>
@@ -20,6 +20,10 @@
       <Span name="String" stopateol="true" color="#FF840A0A" escapecharacter="\">
         <Begin>"</Begin>
         <End>"</End>
+      </Span>
+      <Span name="Char" stopateol="true" color="Magenta" escapecharacter="\">
+        <Begin>'</Begin>
+        <End>'</End>
       </Span>
       <KeyWords name="BuiltInStatements" bold="true" color="MidnightBlue">
         <Key word="assert" />
