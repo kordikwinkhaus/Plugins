@@ -23,7 +23,6 @@ namespace Ctor.Models.Scripting
         internal void InitVariablesScope()
         {
             _scope = _engine.CreateScope();
-            _scope.SetVariable("__name__", "__main__");
         }
 
         internal ScriptScope Variables

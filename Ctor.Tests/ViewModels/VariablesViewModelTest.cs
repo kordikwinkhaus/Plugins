@@ -21,7 +21,7 @@ namespace Ctor.Tests.ViewModels
 
             Assert.AreEqual(3, target.Variables.Count);
             Assert.AreEqual(1, target.Variables.Count(v => v.Name == "i" && v.Value == "5"));
-            Assert.AreEqual(1, target.Variables.Count(v => v.Name == "s" && v.Value == "hello world"));
+            Assert.AreEqual(1, target.Variables.Count(v => v.Name == "s" && v.Value == "\"hello world\""));
             Assert.AreEqual(1, target.Variables.Count(v => v.Name == "b" && v.Value == "True"));
         }
 
@@ -43,7 +43,7 @@ namespace Ctor.Tests.ViewModels
             target.Update(vars);
 
             Assert.AreEqual(3, target.Variables.Count);
-            Assert.AreEqual(1, target.Variables.Count(v => v.Name == "s" && v.Value == "hello"));
+            Assert.AreEqual(1, target.Variables.Count(v => v.Name == "s" && v.Value == "\"hello\""));
             Assert.AreEqual(1, target.Variables.Count(v => v.Name == "b" && v.Value == "True"));
             Assert.AreEqual(1, target.Variables.Count(v => v.Name == "d" && v.Value == "5.5"));
         }

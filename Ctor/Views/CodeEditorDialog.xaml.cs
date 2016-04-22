@@ -27,7 +27,7 @@ namespace Ctor.Views
 
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false;
+            //this.DialogResult = false;
         }
 
         private void ok_Click(object sender, RoutedEventArgs e)

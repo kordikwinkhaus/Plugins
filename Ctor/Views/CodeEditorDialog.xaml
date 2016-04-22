@@ -120,19 +120,18 @@
                    TextChanged="txtOutput_TextChanged"
                    />
         </TabItem>
-        <TabItem Header="Globals">
-          
-        </TabItem>
         <TabItem Header="Locals"
                  DataContext="{Binding LocalVariables}"
                  >
-          <v:TreeListView ItemsSource="{Binding Variables}">
+          <v:TreeListView ItemsSource="{Binding Variables}"
+                          Background="{StaticResource {x:Static SystemColors.ControlLightLightBrushKey}}"
+                          >
             <v:TreeListView.Columns>
-              <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
+              <GridViewColumn Header="Name" CellTemplate="{StaticResource CellTemplate_Name}" />
               <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}" />
-              <GridViewColumn Header="Type" DisplayMemberBinding="{Binding }" />
+              <GridViewColumn Header="Type" DisplayMemberBinding="{Binding VariableType}" />
             </v:TreeListView.Columns>
-          </v:TreeListView>    
+          </v:TreeListView>
         </TabItem>
       </TabControl>
     </Grid>

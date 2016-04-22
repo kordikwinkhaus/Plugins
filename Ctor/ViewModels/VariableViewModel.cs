@@ -27,6 +27,13 @@ namespace Ctor.ViewModels
         {
             if (value != null)
             {
+                this.VariableType = value.GetType().ToString();
+                if (value is string)
+                {
+                    this.Value = "\"" + value.ToString() + "\"";
+                    return;
+                }
+
                 var convertible = value as IConvertible;
                 if (convertible != null)
                 {
@@ -36,7 +43,6 @@ namespace Ctor.ViewModels
                 {
                     this.Value = value.ToString();
                 }
-                this.VariableType = value.GetType().ToString();
             }
             else
             {

@@ -3,7 +3,6 @@ using System.Windows.Input;
 using System.Windows.ViewModels;
 using Ctor.Models;
 using Ctor.Models.Scripting;
-using Ctor.Views;
 using Microsoft.Scripting;
 using Okna.Data;
 using Okna.Documents;
@@ -31,6 +30,8 @@ namespace Ctor.ViewModels
             
             this.RunCommand = new RelayCommand(Run);
             this.Context = new ContextViewModel(this);
+
+            AreaSelector.SelectArea = SelectArea;
         }
 
         #region Contextual info
@@ -103,7 +104,6 @@ namespace Ctor.ViewModels
         {
             string code = (string)param;
             var engine = GetScriptEngine();
-            AreaSelector.SelectArea = SelectArea;
 
             try
             {
