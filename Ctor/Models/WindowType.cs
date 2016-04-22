@@ -33,9 +33,14 @@ namespace Ctor.Models
         /// <summary>
         /// Název typu okna.
         /// </summary>
-        public int Name
+        public string Name
         {
-            get { return (int)_data.nazwa; }
+            get { return (string)_data.nazwa; }
+        }
+
+        public override string ToString()
+        {
+            return "{ID = " + this.ID + ", Name = \"" + this.Name + "\"}";
         }
 
         /// <summary>

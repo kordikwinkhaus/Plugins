@@ -1,4 +1,5 @@
-﻿using Ctor.Resources;
+﻿using System.Text;
+using Ctor.Resources;
 using WHOkna;
 
 namespace Ctor.Models
@@ -123,6 +124,19 @@ namespace Ctor.Models
                 CheckInvalidation();
                 return base.Bottom;
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("{Width=")
+              .Append(this.Width)
+              .Append(", Height=")
+              .Append(this.Height)
+              .Append("}");
+
+            return sb.ToString();
         }
     }
 }

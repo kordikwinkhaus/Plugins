@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Windows.Media.Imaging;
 using Ctor.Resources;
 using WHOkna;
@@ -44,6 +45,21 @@ namespace Ctor.Models
         public int ID
         {
             get { return _frame.GetNumber(EProfileType.tOsciez); }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("{ID=")
+              .Append(this.ID)
+              .Append(", Width=")
+              .Append(this.Width)
+              .Append(", Height=")
+              .Append(this.Height)
+              .Append("}");
+
+            return sb.ToString();
         }
 
         /// <summary>

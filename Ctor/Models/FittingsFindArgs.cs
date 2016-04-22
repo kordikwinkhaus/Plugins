@@ -1,4 +1,5 @@
-﻿using Ctor.Resources;
+﻿using System.Text;
+using Ctor.Resources;
 
 namespace Ctor.Models
 {
@@ -55,5 +56,35 @@ namespace Ctor.Models
             }
         }
         private bool _tiltOnly;
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (Standard)
+            {
+                sb.Append("Standard");
+            }
+            if (FalseMullion1)
+            {
+                if (sb.Length != 0) sb.Append(", ");
+                sb.Append("FalseMullion1");
+            }
+            if (FalseMullion2)
+            {
+                if (sb.Length != 0) sb.Append(", ");
+                sb.Append("FalseMullion2");
+                sb.Append(" (").Append(FalseMullionNrArt).Append(")");
+            }
+            if (TiltOnly)
+            {
+                if (sb.Length != 0) sb.Append(", ");
+                sb.Append("Tilt");
+            }
+
+            sb.Insert(0, "{").Append("}");
+
+            return sb.ToString();
+        }
     }
 }

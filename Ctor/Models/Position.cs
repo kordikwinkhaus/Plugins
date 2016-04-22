@@ -43,6 +43,11 @@ namespace Ctor.Models
             }
         }
 
+        public override string ToString()
+        {
+            return "{ID=" + (this.ID + 1) + ", Number=" + this.Number + "}";
+        }
+
         /// <summary>
         /// Vrací/nastavuje popis pozice.
         /// </summary>
