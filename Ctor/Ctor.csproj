@@ -119,6 +119,7 @@
     <Compile Include="Models\SashArea.cs" />
     <Compile Include="Models\Scripting\PythonScriptRunner.cs" />
     <Compile Include="Models\Scripting\TextOutputStream.cs" />
+    <Compile Include="Models\Scripting\TracebackStepEventArgs.cs" />
     <Compile Include="Models\WindowType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -145,6 +146,8 @@
     <Compile Include="ViewModels\ContextViewModel.cs" />
     <Compile Include="ViewModels\FastInsertViewModel.cs" />
     <Compile Include="ViewModels\ICodeEditorView.cs" />
+    <Compile Include="ViewModels\VariablesViewModel.cs" />
+    <Compile Include="ViewModels\VariableViewModel.cs" />
     <Compile Include="Views\AreaSelectorDialog.xaml.cs">
       <DependentUpon>AreaSelectorDialog.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,7 @@
     <Compile Include="Views\HighlightLineBackgroundRenderer.cs" />
     <Compile Include="Views\ILineHighlightParser.cs" />
     <Compile Include="Models\Scripting\IScriptEditor.cs" />
+    <Compile Include="Views\LevelToIndentConverter.cs" />
     <Compile Include="Views\LineTracker.cs" />
     <Compile Include="Views\PythonEditor.cs" />
     <Compile Include="Views\PythonFoldingStrategy.cs" />
@@ -168,6 +172,8 @@
     <Compile Include="Views\SelectItemControl.xaml.cs">
       <DependentUpon>SelectItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TreeListView.cs" />
+    <Compile Include="Views\TreeListViewItem.cs" />
     <Compile Include="Views\ViewBoxExtensions.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -186,6 +192,10 @@
     <EmbeddedResource Include="PythonHighlight.xshd" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Resources\TreeListViewResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AreaSelectorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

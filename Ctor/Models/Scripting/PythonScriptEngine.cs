@@ -16,7 +16,7 @@ namespace Ctor.Models.Scripting
 
         internal PythonScriptEngine()
         {
-            _engine = IronPython.Hosting.Python.CreateEngine();
+            _engine = Python.CreateEngine();
             _runtime = _engine.Runtime;
         }
 

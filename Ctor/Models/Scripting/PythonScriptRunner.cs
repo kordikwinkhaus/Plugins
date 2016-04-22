@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -53,7 +52,6 @@ namespace Ctor.Models.Scripting
 
         internal void Debug()
         {
-            var id = Thread.CurrentThread.ManagedThreadId;
             _debugStrategy = StepIntoStrategy.Instance;
 
             _tracebackAction = new Action<TraceBackFrame, string, object>(OnTraceback);
@@ -65,6 +63,7 @@ namespace Ctor.Models.Scripting
 
         internal event EventHandler ScriptFinished;
         internal event EventHandler DebugInfoChanged;
+        internal event EventHandler<TracebackStepEventArgs> TracebackStep;
 
         private void RunCore(TracebackDelegate traceback)
         {
@@ -236,53 +235,45 @@ namespace Ctor.Models.Scripting
             // For return, payload is the value being returned from the function. 
             // For exception, the payload is information about the exception and where it was thrown.
 
-            var code = frame.f_code;
-            /*
-            var locals = frame.f_locals as PythonDictionary;
-            var globals = frame.f_globals as PythonDictionary;
-
-            txtDebug.Text += Environment.NewLine + "Globals:" + Environment.NewLine;
-            if (globals != null)
-            {
-                foreach (var global in globals)
-                {
-                    txtDebug.Text += global.Key.ToString() + " = " + global.Value.ToString() + Environment.NewLine;
-                }
-            }
-
-            txtDebug.Text += "Locals:" + Environment.NewLine;
-            if (locals != null)
-            {
-                foreach (var local in locals)
-                {
-                    txtDebug.Text += local.Key.ToString() + " = " + local.Value.ToString() + Environment.NewLine;
-                }
-            }
-             */
-
             _curFrame = frame;
-            _curCode = code;
+            _curCode = frame.f_code;
 
             switch (result)
             {
                 case "call":
+                    RaiseTracebackStepEvent(TracebackStepType.Call, frame, payload);
                     _funcs[_debugStrategy.Call(_curFrame, _curCode)]();
                     break;
 
                 case "line":
+                    RaiseTracebackStepEvent(TracebackStepType.Line, frame, payload);
                     _funcs[_debugStrategy.Line(_curFrame, _curCode)]();
                     break;
 
                 case "return":
+                    RaiseTracebackStepEvent(TracebackStepType.Return, frame, payload);
                     _funcs[_debugStrategy.Return(_curFrame, _curCode)]();
                     break;
 
                 case "exception":
+                    RaiseTracebackStepEvent(TracebackStepType.Exception, frame, payload);
                     TracebackException();
                     break;
 
                 default:
                     throw new NotSupportedException(string.Format("{0} not supported!", result));
+            }
+        }
+
+        private void RaiseTracebackStepEvent(TracebackStepType stepType, TraceBackFrame frame, object payload)
+        {
+            var handler = TracebackStep;
+            if (handler != null)
+            {
+                var locals = frame.f_locals as PythonDictionary;
+                var globals = frame.f_globals as PythonDictionary;
+
+                handler(this, new TracebackStepEventArgs(globals, locals, stepType, payload));
             }
         }
 

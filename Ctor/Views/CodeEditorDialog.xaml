@@ -13,6 +13,14 @@
         Title="Python editor" 
         Height="700" Width="800" 
         MinWidth="450" MinHeight="350">
+  <Window.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Resources/TreeListViewResources.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Window.Resources>
+  
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -29,12 +37,14 @@
         </Style>
       </ToolBar.Resources>
       
+      <!--
       <Button Command="{Binding CompileCommand}">
         <StackPanel Orientation="Horizontal">
           <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/compile.png" Margin="0,0,4,0"/>
           <TextBlock Text="{x:Static res:Strings.Compile}"/>
         </StackPanel>
       </Button>
+      -->
       <Button Command="{Binding RunScriptCommand}">
         <StackPanel Orientation="Horizontal">
           <v:AutoGreyImage Source="/Ctor;component/Resources/Icons/run.png"/>
@@ -110,12 +120,19 @@
                    TextChanged="txtOutput_TextChanged"
                    />
         </TabItem>
-        <TabItem Header="Locals">
-          <DataGrid>
-            <DataGrid.Columns>
-              
-            </DataGrid.Columns>
-          </DataGrid>          
+        <TabItem Header="Globals">
+          
+        </TabItem>
+        <TabItem Header="Locals"
+                 DataContext="{Binding LocalVariables}"
+                 >
+          <v:TreeListView ItemsSource="{Binding Variables}">
+            <v:TreeListView.Columns>
+              <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
+              <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}" />
+              <GridViewColumn Header="Type" DisplayMemberBinding="{Binding }" />
+            </v:TreeListView.Columns>
+          </v:TreeListView>    
         </TabItem>
       </TabControl>
     </Grid>

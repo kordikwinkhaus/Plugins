@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Windows.ViewModels;
@@ -34,8 +32,9 @@ namespace Ctor.ViewModels
             _output.TextChanged += output_TextChanged;
 
             _runner = new PythonScriptRunner(scriptEditor, _output, parent.GetScriptEngine(), scheduler);
-            _runner.ScriptFinished += new EventHandler(ScriptFinished);
-            _runner.DebugInfoChanged += new EventHandler(DebugInfoChanged);
+            _runner.ScriptFinished += ScriptFinished;
+            _runner.DebugInfoChanged += DebugInfoChanged;
+            _runner.TracebackStep += TracebackStep;
         }
 
         private void output_TextChanged(object sender, TextChangedEventArgs e)
@@ -67,6 +66,20 @@ namespace Ctor.ViewModels
                 {
                     _debugInfo = value;
                     OnPropertyChanged(nameof(DebugInfo));
+                }
+            }
+        }
+
+        private VariablesViewModel _localVariables;
+        public VariablesViewModel LocalVariables
+        {
+            get { return _localVariables; }
+            set
+            {
+                if (_localVariables != value)
+                {
+                    _localVariables = value;
+                    OnPropertyChanged(nameof(LocalVariables));
                 }
             }
         }
@@ -110,6 +123,10 @@ namespace Ctor.ViewModels
         {
             StopTimer();
 
+            if (this.LocalVariables != null)
+            {
+                this.LocalVariables.Clear();
+            }
             _runner.Run();
             _canDebugScript = false;
         }
@@ -174,6 +191,8 @@ namespace Ctor.ViewModels
             _canDebugScript = true;
             _canDebugStep = false;
 
+            this.LocalVariables?.Clear();
+
             SetReadyTimer();
         }
 
@@ -233,6 +252,18 @@ namespace Ctor.ViewModels
         private void ClearOutput(object param)
         {
             _output.Clear();
+        }
+
+        private void TracebackStep(object sender, TracebackStepEventArgs e)
+        {
+            if (this.LocalVariables == null)
+            {
+                this.LocalVariables = new VariablesViewModel(e.Locals);
+            }
+            else
+            {
+                this.LocalVariables.Update(e.Locals);
+            }
         }
 
         #endregion
