@@ -232,6 +232,10 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\clear.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\collapsed.png" />
+    <Resource Include="Resources\Icons\expanded.png" />
+  </ItemGroup>
   <Import Project="..\SharedCode\SharedCode.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

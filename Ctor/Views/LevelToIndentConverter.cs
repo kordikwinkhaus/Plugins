@@ -7,7 +7,7 @@ namespace Ctor.Views
 {
     public class LevelToIndentConverter : IValueConverter
     {
-        private const double IndentSize = 19.0;
+        private const double IndentSize = 15.0;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
