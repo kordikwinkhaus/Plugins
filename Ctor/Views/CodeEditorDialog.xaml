@@ -131,6 +131,11 @@
               <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}" />
               <GridViewColumn Header="Type" DisplayMemberBinding="{Binding VariableType}" />
             </v:TreeListView.Columns>
+            <v:TreeListView.ItemTemplate>
+              <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                <v:TreeListViewItem Header="{Binding Name}" />
+              </HierarchicalDataTemplate>
+            </v:TreeListView.ItemTemplate>
           </v:TreeListView>
         </TabItem>
       </TabControl>

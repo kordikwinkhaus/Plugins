@@ -146,6 +146,7 @@
     <Compile Include="ViewModels\ContextViewModel.cs" />
     <Compile Include="ViewModels\FastInsertViewModel.cs" />
     <Compile Include="ViewModels\ICodeEditorView.cs" />
+    <Compile Include="ViewModels\TreeViewItemViewModel.cs" />
     <Compile Include="ViewModels\VariablesViewModel.cs" />
     <Compile Include="ViewModels\VariableViewModel.cs" />
     <Compile Include="Views\AreaSelectorDialog.xaml.cs">

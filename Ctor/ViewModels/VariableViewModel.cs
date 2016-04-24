@@ -6,11 +6,17 @@ using System.Windows.ViewModels;
 namespace Ctor.ViewModels
 {
     [DebuggerDisplay("{Name,nq} = {Value,nq}")]
-    public class VariableViewModel : ViewModelBase
+    public class VariableViewModel : TreeViewItemViewModel
     {
         private readonly string _name;
 
         internal VariableViewModel(string name, object value)
+            : this(name, value, null)
+        {
+        }
+
+        public VariableViewModel(string name, object value, VariableViewModel parent) 
+            : base(parent, true)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
 
@@ -82,6 +88,14 @@ namespace Ctor.ViewModels
         internal void Update(object value)
         {
             SetValue(value);
+        }
+
+        protected override void LoadChildren()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                this.Children.Add(new VariableViewModel("var" + i, null, this));
+            }
         }
     }
 }
