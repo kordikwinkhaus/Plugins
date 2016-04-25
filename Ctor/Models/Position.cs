@@ -45,7 +45,7 @@ namespace Ctor.Models
 
         public override string ToString()
         {
-            return "{ID=" + (this.ID + 1) + ", Number=" + this.Number + "}";
+            return "{ID=" + this.ID + ", Number=" + this.Number + "}";
         }
 
         /// <summary>
