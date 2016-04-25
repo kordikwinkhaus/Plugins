@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Ctor.ViewModels;
+﻿using Ctor.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Ctor.Tests.ViewModels
@@ -24,8 +20,7 @@ namespace Ctor.Tests.ViewModels
             target.IsExpanded = true;
             var props = target.Children;
 
-            Assert.AreEqual(1, props.Count);
-            Assert.AreEqual("Length", ((VariableViewModel)(props[0])).Name);
+            Assert.AreEqual(0, props.Count);
         }
 
         [TestMethod]
