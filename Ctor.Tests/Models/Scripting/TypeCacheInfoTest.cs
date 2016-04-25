@@ -39,6 +39,14 @@ namespace Ctor.Tests.Models.Scripting
         }
 
         [TestMethod]
+        public void Ctor_PythonDictionary_PythonType_Test()
+        {
+            var target = new TypeCacheInfo(typeof(PythonDictionary));
+
+            Assert.AreEqual("dict", target.Name);
+        }
+
+        [TestMethod]
         public void DebuggerBrowsable_Test()
         {
             var target = new TypeCacheInfo(typeof(DebugerBrowsableTest));

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using IronPython.Runtime;
 
 namespace Ctor.Models.Scripting
 {
@@ -17,7 +18,9 @@ namespace Ctor.Models.Scripting
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
 
-            _typename = type.ToString();
+            var attrs = type.GetCustomAttributes(false);
+
+            _typename = GetTypeName(type, attrs);
             _properties = GetPublicProperties(type);
 
             if (type == typeof(string))
@@ -36,11 +39,26 @@ namespace Ctor.Models.Scripting
             }
         }
 
+        private string GetTypeName(Type type, object[] attrs)
+        {
+            foreach (var attr in attrs)
+            {
+                var pythonTypeAttr = attr as PythonTypeAttribute;
+                if (pythonTypeAttr != null)
+                {
+                    return pythonTypeAttr.Name;
+                }
+            }
+
+            return type.ToString();
+        }
+
         private List<PropertyInfo> GetPublicProperties(Type type)
         {
             List<PropertyInfo> result = new List<PropertyInfo>();
 
             if (type == typeof(string)) return result;
+
             foreach (var propInfo in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty)
                                          .Where(p => p.GetIndexParameters().Length == 0))
             {
