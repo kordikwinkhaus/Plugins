@@ -13,7 +13,9 @@ namespace Ctor
             _inner = inner;
         }
 
-        internal IntPtr ParentHwnd { get; set; }
+        internal IntPtr MainWindowHwnd { get; set; }
+
+        internal Window DebuggerWindow { get; set; }
 
         public Window GetDialogFor(Type viewModelType)
         {
@@ -31,10 +33,15 @@ namespace Ctor
 
         private void TrySetOwner(Window currentWindow)
         {
-            if (this.ParentHwnd == IntPtr.Zero) return;
-
-            var helper = new WindowInteropHelper(currentWindow);
-            helper.Owner = this.ParentHwnd;
+            if (this.DebuggerWindow != null)
+            {
+                currentWindow.Owner = this.DebuggerWindow;
+            }
+            else if (this.MainWindowHwnd != IntPtr.Zero)
+            {
+                var helper = new WindowInteropHelper(currentWindow);
+                helper.Owner = this.MainWindowHwnd;
+            }
         }
     }
 }

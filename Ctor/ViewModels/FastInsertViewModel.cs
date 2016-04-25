@@ -30,8 +30,6 @@ namespace Ctor.ViewModels
             
             this.RunCommand = new RelayCommand(Run);
             this.Context = new ContextViewModel(this);
-
-            AreaSelector.SelectArea = SelectArea;
         }
 
         #region Contextual info
@@ -104,6 +102,7 @@ namespace Ctor.ViewModels
         {
             string code = (string)param;
             var engine = GetScriptEngine();
+            AreaSelector.SelectArea = SelectArea;
 
             try
             {

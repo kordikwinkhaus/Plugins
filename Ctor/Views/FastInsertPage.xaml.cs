@@ -1,6 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using System.Xml.Linq;
 using Ctor.ViewModels;
 using UserExtensions;
@@ -11,6 +14,9 @@ namespace Ctor.Views
     public partial class FastInsertPage : UserControl, IUserForm3
     {
         private readonly CustomDialogFactory _dialogFactory;
+        private Thread _debugWindowThread;
+        private TaskScheduler _mainWindowTaskScheduler;
+        private string _textToDebug;
 
         public FastInsertPage(CustomDialogFactory dialogFactory)
         {
@@ -30,7 +36,7 @@ namespace Ctor.Views
             set
             {
                 ViewModel.Document = value;
-                _dialogFactory.ParentHwnd = value.Application.MainWindowHWND();
+                _dialogFactory.MainWindowHwnd = value.Application.MainWindowHWND();
             }
         }
 
@@ -378,39 +384,43 @@ if pos.IsConstruction:
     r3.Coupling.SlideToRight()";
         }
 
-        TaskScheduler _ts;
-        string _text;
-
         private void edit_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            _ts = TaskScheduler.FromCurrentSynchronizationContext();
-            _text = txtCode.Text;
+            _mainWindowTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            _textToDebug = txtCode.Text;
 
-            Thread t = new Thread(RunDebuger);
-            t.SetApartmentState(ApartmentState.STA);
-            t.IsBackground = true;
-            t.Start();
-
-            var id = System.Threading.Thread.CurrentThread.ManagedThreadId;
-
-
-//            Task.Factory.StartNew(() => RunDebuger(ts));
-
-            //if (dlg.ShowDialog() == true)
-            //{
-            //    txtCode.Text = dlg.Editor.Text;
-            //}
+            _debugWindowThread = new Thread(RunDebugger);
+            _debugWindowThread.Name = "DebuggingWindowThread";
+            _debugWindowThread.SetApartmentState(ApartmentState.STA);
+            _debugWindowThread.IsBackground = true;
+            _debugWindowThread.Start();
         }
 
-        private void RunDebuger()
+        private void RunDebugger()
         {
-            var dlg = new CodeEditorDialog();
-            dlg.DataContext = new CodeEditorViewModel(dlg.Editor, _viewModel, _ts);
-            dlg.Editor.Text = _text;
-            dlg.ShowInTaskbar = true;
-            var id = System.Threading.Thread.CurrentThread.ManagedThreadId;
-            dlg.Show();
-            System.Windows.Threading.Dispatcher.Run();
+            var dialogFactory = new DialogFactory();
+            dialogFactory.Register<AreaSelectorViewModel, AreaSelectorDialog>();
+            var proxyDialogFactory = new CustomDialogFactory(dialogFactory);
+            var interactionService = new InteractionService(proxyDialogFactory);
+
+            var sc = new DispatcherSynchronizationContext();
+            SynchronizationContext.SetSynchronizationContext(sc);
+
+            var debuggerWindow = new CodeEditorDialog();
+            proxyDialogFactory.DebuggerWindow = debuggerWindow;
+            debuggerWindow.DataContext = new CodeEditorViewModel(debuggerWindow.Editor, _viewModel, _mainWindowTaskScheduler, interactionService);
+            debuggerWindow.Editor.Text = _textToDebug;
+            debuggerWindow.ShowInTaskbar = true;
+            debuggerWindow.Closed += DebuggerWindow_Closed;
+            debuggerWindow.Show();
+
+            Dispatcher.Run();
+        }
+
+        private void DebuggerWindow_Closed(object sender, EventArgs e)
+        {
+            _dialogFactory.DebuggerWindow = null;
+            Dispatcher.FromThread(_debugWindowThread).InvokeShutdown();
         }
     }
 }

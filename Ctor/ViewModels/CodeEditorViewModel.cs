@@ -1,20 +1,28 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Windows.ViewModels;
+using Ctor.Models;
 using Ctor.Models.Scripting;
 using Ctor.Resources;
+using WHOkna;
 
 namespace Ctor.ViewModels
 {
     public class CodeEditorViewModel : ViewModelBase
     {
-        private readonly PythonScriptRunner _runner;
+        private readonly IInteractionService _interaction;
         private readonly TextOutputStream _output;
+        private readonly PythonScriptRunner _runner;
+        private readonly TaskScheduler _thisWindowUIScheduler;
 
-        internal CodeEditorViewModel(IScriptEditor scriptEditor, FastInsertViewModel parent, TaskScheduler scheduler)
+        internal CodeEditorViewModel(IScriptEditor scriptEditor, FastInsertViewModel parent, TaskScheduler mainWindowUIScheduler, IInteractionService interaction)
         {
+            _interaction = interaction;
+
             this.CompileCommand = new RelayCommand(Compile, CanCompile);
             this.RunScriptCommand = new RelayCommand(RunScript, CanRunScript);
             this.DebugScriptCommand = new RelayCommand(DebugScript, CanDebugScript);
@@ -31,10 +39,13 @@ namespace Ctor.ViewModels
             _output = new TextOutputStream();
             _output.TextChanged += output_TextChanged;
 
-            _runner = new PythonScriptRunner(scriptEditor, _output, parent.GetScriptEngine(), scheduler);
+            _runner = new PythonScriptRunner(scriptEditor, _output, parent.GetScriptEngine(), mainWindowUIScheduler);
             _runner.ScriptFinished += ScriptFinished;
             _runner.DebugInfoChanged += DebugInfoChanged;
             _runner.TracebackStep += TracebackStep;
+
+            AreaSelector.SelectArea = SelectArea;
+            _thisWindowUIScheduler = TaskScheduler.FromCurrentSynchronizationContext();
         }
 
         private void output_TextChanged(object sender, TextChangedEventArgs e)
@@ -81,6 +92,41 @@ namespace Ctor.ViewModels
                     _localVariables = value;
                     OnPropertyChanged(nameof(LocalVariables));
                 }
+            }
+        }
+
+        internal IArea SelectArea(IAreaProvider areaProvider)
+        {
+            // toto je voláno ze skriptu, který je prováděn na vláknu hlavního okna
+            // marshaling na UI thread tohoto okna
+
+            var ap = areaProvider;
+            Task<IArea> task = Task<IArea>.Factory.StartNew(() => SelectAreaCore(ap),
+                                                            CancellationToken.None,
+                                                            TaskCreationOptions.None,
+                                                            _thisWindowUIScheduler);
+            task.Wait();
+            if (task.Result != null)
+            {
+                return task.Result;
+            }
+            else
+            {
+                throw new IronPython.Runtime.Exceptions.SystemExitException();
+            }
+        }
+
+        private IArea SelectAreaCore(IAreaProvider areaProvider)
+        {
+            var areaSelectorVM = new AreaSelectorViewModel(areaProvider);
+
+            if (_interaction.ShowDialogCenteredToMouse(areaSelectorVM) == true)
+            {
+                return areaSelectorVM.SelectedArea;
+            }
+            else
+            {
+                return null;
             }
         }
 
