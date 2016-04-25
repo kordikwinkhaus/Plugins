@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Okna.Data;
 
 namespace Ctor.Models
@@ -92,6 +93,7 @@ namespace Ctor.Models
         /// <summary>
         /// Vrací objekt pro zadání parametrů sloupku(ů).
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public MullionFindArgs Mullions
         {
             get { return new MullionFindArgs(_dict); }

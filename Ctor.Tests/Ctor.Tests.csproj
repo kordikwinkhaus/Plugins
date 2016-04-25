@@ -65,8 +65,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Models\Scripting\TypeCacheInfoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\VariablesViewModelTest.cs" />
+    <Compile Include="ViewModels\VariableViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ctor\Ctor.csproj">

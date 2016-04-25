@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Globalization;
-using System.Windows.ViewModels;
+using Ctor.Models.Scripting;
 
 namespace Ctor.ViewModels
 {
@@ -9,6 +8,8 @@ namespace Ctor.ViewModels
     public class VariableViewModel : TreeViewItemViewModel
     {
         private readonly string _name;
+        private TypeCacheInfo _typeInfo;
+        private object _obj;
 
         internal VariableViewModel(string name, object value)
             : this(name, value, null)
@@ -31,28 +32,22 @@ namespace Ctor.ViewModels
 
         private void SetValue(object value)
         {
+            _obj = value;
             if (value != null)
             {
-                this.VariableType = value.GetType().ToString();
-                if (value is string)
-                {
-                    this.Value = "\"" + value.ToString() + "\"";
-                    return;
-                }
+                _typeInfo = TypeCache.GetTypeInfo(value.GetType());
 
-                var convertible = value as IConvertible;
-                if (convertible != null)
+                this.VariableType = _typeInfo.Name;
+                this.Value = _typeInfo.GetDebugValue(value);
+
+                if (!_typeInfo.HasPublicProperties)
                 {
-                    this.Value = convertible.ToString(CultureInfo.InvariantCulture);
-                }
-                else
-                {
-                    this.Value = value.ToString();
+                    this.Children.Clear();
                 }
             }
             else
             {
-                this.Value = "None (null)";
+                this.Value = "None";
                 this.VariableType = "n/a";
             }
         }
@@ -92,9 +87,18 @@ namespace Ctor.ViewModels
 
         protected override void LoadChildren()
         {
-            for (int i = 0; i < 4; i++)
+            if (_typeInfo != null)
             {
-                this.Children.Add(new VariableViewModel("var" + i, null, this));
+                foreach (var propInfo in _typeInfo.GetPublicProperties())
+                {
+                    object value = null;
+                    if (_obj != null)
+                    {
+                        value = propInfo.GetGetMethod(false).Invoke(_obj, null);
+                    }
+                    var vm = new VariableViewModel(propInfo.Name, value, this);
+                    this.Children.Add(vm);
+                }
             }
         }
     }

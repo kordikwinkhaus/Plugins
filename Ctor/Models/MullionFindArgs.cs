@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Ctor.Resources;
 using Okna.Data;
 
@@ -135,6 +136,35 @@ namespace Ctor.Models
             }
 
             return mullions;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("{Target=")
+              .Append(_target.ToString());
+              
+            if (_onlyHorizontal && _onlyVertical)
+            {
+                // nothing
+            }
+            else if (_onlyHorizontal || _onlyVertical)
+            {
+                sb.Append(", Direction=");
+                if (_onlyVertical)
+                {
+                    sb.Append("Vertical");
+                }
+                else
+                {
+                    sb.Append("Horizontal");
+                }
+            }
+
+            sb.Append("}");
+
+            return sb.ToString();
         }
 
         #region Nested classes

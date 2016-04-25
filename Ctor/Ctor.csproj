@@ -120,6 +120,9 @@
     <Compile Include="Models\Scripting\PythonScriptRunner.cs" />
     <Compile Include="Models\Scripting\TextOutputStream.cs" />
     <Compile Include="Models\Scripting\TracebackStepEventArgs.cs" />
+    <Compile Include="Models\Scripting\TypeCache.cs" />
+    <Compile Include="Models\Scripting\TypeCacheInfo.cs" />
+    <Compile Include="Models\Scripting\TypeHelper.cs" />
     <Compile Include="Models\WindowType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
