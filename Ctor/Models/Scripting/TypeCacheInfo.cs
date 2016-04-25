@@ -40,6 +40,7 @@ namespace Ctor.Models.Scripting
         {
             List<PropertyInfo> result = new List<PropertyInfo>();
 
+            if (type == typeof(string)) return result;
             foreach (var propInfo in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty)
                                          .Where(p => p.GetIndexParameters().Length == 0))
             {

@@ -35,8 +35,7 @@ namespace Ctor.Tests.Models.Scripting
             Assert.IsTrue(target.HasPublicProperties);
 
             var props = target.GetPublicProperties();
-            Assert.AreEqual(1, props.Count);
-            Assert.AreEqual("Length", props[0].Name);
+            Assert.AreEqual(0, props.Count); // string má veřejnou vlastnost "Length", ale tu nechceme zobrazovat
         }
 
         [TestMethod]
