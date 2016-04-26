@@ -166,7 +166,8 @@ namespace Ctor.Models.Scripting
                 if (debugDisplayAttr != null)
                 {
                     string valueFmt = debugDisplayAttr.Value;
-                    return value => FormatDebuggerDisplay(type, value, valueFmt);
+                    var tokens = GetTokensForDebuggerDisplay(type, valueFmt);
+                    return value => FormatDebuggerDisplay(type, value, valueFmt, tokens);
                 }
             }
 
@@ -195,79 +196,88 @@ namespace Ctor.Models.Scripting
             }
         }
 
-        private static string FormatDebuggerDisplay(Type type, object value, string valueFmt)
+        private static List<Token> GetTokensForDebuggerDisplay(Type type, string valueFmt)
         {
+            List<Token> tokens = new List<Token>();
+
             var re = new Regex("(\\{[^}]+\\})");
             MatchCollection matches = re.Matches(valueFmt);
 
-            List<TokenInfo> tokens = new List<TokenInfo>();
             for (int i = 0; i < matches.Count; i++)
             {
                 var match = matches[i];
                 if (match.Success)
                 {
                     var group = match.Groups[1];
-                    tokens.Add(new TokenInfo
+                    var token = new Token 
                     {
-                        Value = group.Value,
-                        Length = group.Length,
-                        Index = group.Index
-                    });
+                        Value = group.Value
+                    };
+
+                    string rawExp = token.Value.Substring(1, token.Value.Length - 2);
+                    token.NonQuote = rawExp.EndsWith(",nq");
+                    if (token.NonQuote)
+                    {
+                        rawExp = rawExp.Substring(0, rawExp.Length - 3);
+                    }
+                    bool isFunction = (rawExp.EndsWith(")"));
+                    string memberName = rawExp;
+                    if (isFunction)
+                    {
+                        int id = rawExp.IndexOf('(');
+                        if (id != -1)
+                        {
+                            memberName = memberName.Substring(0, id);
+                        }
+                    }
+                    MethodInfo method = null;
+                    if (isFunction)
+                    {
+                        method = type.GetMethod(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    }
+                    else
+                    {
+                        var propInfo = type.GetProperty(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                        if (propInfo != null)
+                        {
+                            method = propInfo.GetGetMethod(true);
+                        }
+                    }
+
+                    if (method != null)
+                    {
+                        token.Method = method;
+                        tokens.Add(token);
+                    }
                 }
             }
 
+            return tokens;
+        }
+
+        private static string FormatDebuggerDisplay(Type type, object value, string valueFmt, List<Token> tokens)
+        {
             string result = valueFmt;
+
             foreach (var token in tokens)
             {
-                string rawExp = token.Value.Substring(1, token.Length - 2);
-                bool nonQuote = rawExp.EndsWith(",nq");
-                if (nonQuote)
+                object returnValue = token.Method.Invoke(value, null);
+                string strReturnValue = "None";
+                if (returnValue != null)
                 {
-                    rawExp = rawExp.Substring(0, rawExp.Length - 3);
-                }
-                bool isFunction = (rawExp.EndsWith(")"));
-                string memberName = rawExp;
-                if (isFunction)
-                {
-                    int id = rawExp.IndexOf('(');
-                    if (id != -1)
+                    if (returnValue is string && token.NonQuote)
                     {
-                        memberName = memberName.Substring(0, id);
+                        strReturnValue = returnValue.ToString();
+                    }
+                    else
+                    {
+                        var typeInfo = TypeCache.GetTypeInfo(returnValue.GetType());
+                        strReturnValue = typeInfo.GetDebugValue(returnValue);
                     }
                 }
-                MethodInfo method = null;
-                if (isFunction)
-                {
-                    method = type.GetMethod(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                }
-                else
-                {
-                    var propInfo = type.GetProperty(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                    if (propInfo != null)
-                    {
-                        method = propInfo.GetGetMethod(true);
-                    }
-                }
-
-                if (method != null)
-                {
-                    object returnValue = method.Invoke(value, null);
-                    string strReturnValue = "None";
-                    if (returnValue != null)
-                    {
-                        if (returnValue is string && nonQuote)
-                        {
-                            strReturnValue = returnValue.ToString();
-                        }
-                        else
-                        {
-                            var typeInfo = TypeCache.GetTypeInfo(returnValue.GetType());
-                            strReturnValue = typeInfo.GetDebugValue(returnValue);
-                        }
-                    }
-                    result = result.Replace(token.Value, strReturnValue);
-                }
+                result = result.Replace(token.Value, strReturnValue);
             }
+
             return result;
         }
 
@@ -293,11 +303,11 @@ namespace Ctor.Models.Scripting
 
         #region nested classes
 
-        private class TokenInfo
+        private class Token
         {
             internal string Value;
-            internal int Index;
-            internal int Length;
+            internal bool NonQuote;
+            internal MethodInfo Method;
         }
 
         #endregion
