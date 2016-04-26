@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using IronPython.Runtime;
 
 namespace Ctor.Models.Scripting
@@ -42,25 +43,12 @@ namespace Ctor.Models.Scripting
 
             _typename = GetTypeName(type, attrs);
             _properties = GetPublicProperties(type);
-
-            if (type == typeof(string))
-            {
-                _getDebugValue = value => "\"" + value.ToString() + "\"";
-                return;
-            }
-
-            if (TypeHelper.ImplementsInterface(type, typeof(IConvertible)))
-            {
-                _getDebugValue = value => ((IConvertible)value).ToString(CultureInfo.InvariantCulture);
-            }
-            else
-            {
-                _getDebugValue = value => value.ToString();
-            }
+            _getDebugValue = GetDebugValueFunc(type, attrs);
         }
 
-        private string GetTypeName(Type type, object[] attrs)
+        private static string GetTypeName(Type type, object[] attrs)
         {
+            // for "python types" test PythonTypeAttribute
             foreach (var attr in attrs)
             {
                 var pythonTypeAttr = attr as PythonTypeAttribute;
@@ -70,6 +58,17 @@ namespace Ctor.Models.Scripting
                 }
             }
 
+            // test debugger display attribute
+            foreach (var attr in attrs)
+            {
+                var debugDisplayAttr = attr as DebuggerDisplayAttribute;
+                if (debugDisplayAttr != null && !string.IsNullOrEmpty(debugDisplayAttr.Type))
+                {
+                    return debugDisplayAttr.Type;
+                }
+            }
+
+            // for generic types generate C# syntax
             if (type.IsGenericType)
             {
                 StringBuilder sb = new StringBuilder();
@@ -101,6 +100,25 @@ namespace Ctor.Models.Scripting
                 return sb.ToString();
             }
 
+            // arrays
+            if (type.IsArray)
+            {
+                int rank = type.GetArrayRank();
+                var elementType = type.GetElementType();
+                var typeInfo = TypeCache.GetTypeInfo(elementType);
+
+                StringBuilder sb = new StringBuilder();
+                sb.Append(typeInfo.Name);
+                sb.Append("[");
+                for (int i = 1; i < rank; i++)
+                {
+                    sb.Append(",");
+                }
+                sb.Append("]");
+                return sb.ToString();
+            }
+
+            // test C# builtin types (use shorter names)
             string typeName = type.ToString();
             string shortName;
             if (s_builtinTypes.TryGetValue(typeName, out shortName))
@@ -113,14 +131,15 @@ namespace Ctor.Models.Scripting
             }
         }
 
-        private List<PropertyInfo> GetPublicProperties(Type type)
+        private static List<PropertyInfo> GetPublicProperties(Type type)
         {
             List<PropertyInfo> result = new List<PropertyInfo>();
 
             if (type == typeof(string)) return result;
 
             foreach (var propInfo in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty)
-                                         .Where(p => p.GetIndexParameters().Length == 0))
+                                         .Where(p => p.GetIndexParameters().Length == 0)
+                                         .OrderBy(p => p.Name))
             {
                 var attrs = propInfo.GetCustomAttributes(typeof(DebuggerBrowsableAttribute), true);
                 if (attrs != null && attrs.Length != 0)
@@ -135,6 +154,120 @@ namespace Ctor.Models.Scripting
                 result.Add(propInfo);
             }
 
+            return result;
+        }
+
+        private Func<object, string> GetDebugValueFunc(Type type, object[] attrs)
+        {
+            // test debugger display attribute
+            foreach (var attr in attrs)
+            {
+                var debugDisplayAttr = attr as DebuggerDisplayAttribute;
+                if (debugDisplayAttr != null)
+                {
+                    string valueFmt = debugDisplayAttr.Value;
+                    return value => FormatDebuggerDisplay(type, value, valueFmt);
+                }
+            }
+
+            if (type == typeof(string))
+            {
+                return value => "\"" + value.ToString() + "\"";
+            }
+
+            if (TypeHelper.ImplementsInterface(type, typeof(IConvertible)))
+            {
+                return value => ((IConvertible)value).ToString(CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                // for generic types without ToString override use type name instead of "object.ToString()"
+                if (type.IsGenericType)
+                {
+                    var toStringMethod = type.GetMethod("ToString", new Type[] { });
+                    if (toStringMethod.GetBaseDefinition().DeclaringType == typeof(object))
+                    {
+                        return value => this.Name;
+                    }
+                }
+
+                return value => value.ToString();
+            }
+        }
+
+        private static string FormatDebuggerDisplay(Type type, object value, string valueFmt)
+        {
+            var re = new Regex("(\\{[^}]+\\})");
+            MatchCollection matches = re.Matches(valueFmt);
+
+            List<TokenInfo> tokens = new List<TokenInfo>();
+            for (int i = 0; i < matches.Count; i++)
+            {
+                var match = matches[i];
+                if (match.Success)
+                {
+                    var group = match.Groups[1];
+                    tokens.Add(new TokenInfo
+                    {
+                        Value = group.Value,
+                        Length = group.Length,
+                        Index = group.Index
+                    });
+                }
+            }
+
+            string result = valueFmt;
+            foreach (var token in tokens)
+            {
+                string rawExp = token.Value.Substring(1, token.Length - 2);
+                bool nonQuote = rawExp.EndsWith(",nq");
+                if (nonQuote)
+                {
+                    rawExp = rawExp.Substring(0, rawExp.Length - 3);
+                }
+                bool isFunction = (rawExp.EndsWith(")"));
+                string memberName = rawExp;
+                if (isFunction)
+                {
+                    int id = rawExp.IndexOf('(');
+                    if (id != -1)
+                    {
+                        memberName = memberName.Substring(0, id);
+                    }
+                }
+                MethodInfo method = null;
+                if (isFunction)
+                {
+                    method = type.GetMethod(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                }
+                else
+                {
+                    var propInfo = type.GetProperty(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    if (propInfo != null)
+                    {
+                        method = propInfo.GetGetMethod(true);
+                    }
+                }
+
+                if (method != null)
+                {
+                    object returnValue = method.Invoke(value, null);
+                    string strReturnValue = "None";
+                    if (returnValue != null)
+                    {
+                        if (returnValue is string && nonQuote)
+                        {
+                            strReturnValue = returnValue.ToString();
+                        }
+                        else
+                        {
+                            var typeInfo = TypeCache.GetTypeInfo(returnValue.GetType());
+                            strReturnValue = typeInfo.GetDebugValue(returnValue);
+                        }
+                    }
+                    result = result.Replace(token.Value, strReturnValue);
+                }
+            }
             return result;
         }
 
@@ -157,5 +290,16 @@ namespace Ctor.Models.Scripting
         {
             return _properties;
         }
+
+        #region nested classes
+
+        private class TokenInfo
+        {
+            internal string Value;
+            internal int Index;
+            internal int Length;
+        }
+
+        #endregion
     }
 }
