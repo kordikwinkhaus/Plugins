@@ -14,13 +14,19 @@ namespace Ctor.ViewModels
 {
     public class CodeEditorViewModel : ViewModelBase
     {
+        private readonly IScriptEditor _scriptEditor;
+        private readonly FastInsertViewModel _parent;
         private readonly IInteractionService _interaction;
-        private readonly TextOutputStream _output;
-        private readonly PythonScriptRunner _runner;
+        private readonly TaskScheduler _mainWindowUIScheduler;
         private readonly TaskScheduler _thisWindowUIScheduler;
+        private readonly TextOutputStream _output;
+        private PythonScriptRunner _runner;
 
         internal CodeEditorViewModel(IScriptEditor scriptEditor, FastInsertViewModel parent, TaskScheduler mainWindowUIScheduler, IInteractionService interaction)
         {
+            _scriptEditor = scriptEditor;
+            _parent = parent;
+            _mainWindowUIScheduler = mainWindowUIScheduler;
             _interaction = interaction;
 
             this.CompileCommand = new RelayCommand(Compile, CanCompile);
@@ -38,11 +44,6 @@ namespace Ctor.ViewModels
 
             _output = new TextOutputStream();
             _output.TextChanged += output_TextChanged;
-
-            _runner = new PythonScriptRunner(scriptEditor, _output, parent.GetScriptEngine(), mainWindowUIScheduler);
-            _runner.ScriptFinished += ScriptFinished;
-            _runner.DebugInfoChanged += DebugInfoChanged;
-            _runner.TracebackStep += TracebackStep;
 
             AreaSelector.SelectArea = SelectArea;
             _thisWindowUIScheduler = TaskScheduler.FromCurrentSynchronizationContext();
@@ -149,12 +150,21 @@ namespace Ctor.ViewModels
         public ICommand StopDebugCommand { get; private set; }
         public ICommand ClearOutputCommand { get; private set; }
 
+        private void CreateRunner()
+        {
+            _runner = new PythonScriptRunner(_scriptEditor, _output, _parent.GetScriptEngine(), _mainWindowUIScheduler);
+            _runner.ScriptFinished += ScriptFinished;
+            _runner.DebugInfoChanged += DebugInfoChanged;
+            _runner.TracebackStep += TracebackStep;
+        }
+
         private void Compile(object param)
         {
             if (this.CanCompile(param))
             {
                 StopTimer();
 
+                CreateRunner();
                 _runner.Compile();
                 this.DebugInfo = Strings.SuccessfullyCompiled;
 
@@ -177,6 +187,7 @@ namespace Ctor.ViewModels
             {
                 this.LocalVariables.Clear();
             }
+            CreateRunner();
             _runner.Run();
             _canDebugScript = false;
         }
@@ -196,6 +207,7 @@ namespace Ctor.ViewModels
             _canDebugScript = false;
             _canDebugStep = true;
 
+            CreateRunner();
             _runner.Debug();
         }
 
@@ -246,6 +258,11 @@ namespace Ctor.ViewModels
             this.LocalVariables?.Clear();
 
             SetReadyTimer();
+
+            _runner.ScriptFinished -= ScriptFinished;
+            _runner.DebugInfoChanged -= DebugInfoChanged;
+            _runner.TracebackStep -= TracebackStep;
+            _runner = null;
 
             this.ExecutingScript = false;
         }
