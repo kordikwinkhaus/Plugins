@@ -11,8 +11,8 @@ namespace Ctor.Views
 {
     internal class BreakPointMargin : AbstractMargin
     {
-        private const int _margin = 20;
-        private const int _radius = _margin / 2 - 3;
+        private const int _margin = 18;
+        private const int _radius = _margin / 2 - 4;
         private IList<int> _breakpoints;
 
         public BreakPointMargin(IList<int> breakpoints)
