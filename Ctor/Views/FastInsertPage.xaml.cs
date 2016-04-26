@@ -29,7 +29,6 @@ namespace Ctor.Views
 
         public XElement ObjectData { get; set; }
 
-        private IOknaDocument _oknaDoc;
         public IOknaDocument OknaDoc
         {
             get { return ViewModel.Document; }
