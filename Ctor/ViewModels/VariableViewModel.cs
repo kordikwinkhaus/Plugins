@@ -47,7 +47,7 @@ namespace Ctor.ViewModels
             }
             else
             {
-                this.Value = "None";
+                this.Value = TypeCacheInfo.NULL;
                 this.VariableType = "n/a";
             }
         }

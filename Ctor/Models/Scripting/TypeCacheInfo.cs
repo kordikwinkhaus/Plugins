@@ -12,6 +12,8 @@ namespace Ctor.Models.Scripting
 {
     internal class TypeCacheInfo
     {
+        internal const string NULL = "null";
+
         private static Dictionary<string, string> s_builtinTypes = new Dictionary<string, string>
         {
             { "System.Boolean", "bool" },
@@ -262,7 +264,7 @@ namespace Ctor.Models.Scripting
             foreach (var token in tokens)
             {
                 object returnValue = token.Method.Invoke(value, null);
-                string strReturnValue = "None";
+                string strReturnValue = NULL;
                 if (returnValue != null)
                 {
                     if (returnValue is string && token.NonQuote)
