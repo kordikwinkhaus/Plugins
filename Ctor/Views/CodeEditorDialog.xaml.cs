@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
+using Ctor.Models;
 using Ctor.Models.Scripting;
+using Ctor.Resources;
 using Ctor.ViewModels;
 
 namespace Ctor.Views
@@ -25,19 +28,35 @@ namespace Ctor.Views
             get { return codeEditor; }
         }
 
+        public bool SaveChanges { get; private set; }
+
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
-            //this.DialogResult = false;
+            this.SaveChanges = false;
+            this.Close();
         }
 
         private void ok_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
+            this.SaveChanges = true;
+            this.Close();
         }
 
         private void txtOutput_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             txtOutput.ScrollToEnd();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            var vm = (CodeEditorViewModel)this.DataContext;
+            if (vm.ExecutingScript)
+            {
+                MessageBox.Show(Strings.RunningScript, Msg.CAPTION, MessageBoxButton.OK, MessageBoxImage.Error);
+                e.Cancel = true;
+            }
         }
     }
 }

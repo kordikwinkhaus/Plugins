@@ -385,6 +385,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The script is executed now. Wait for the completion or finish the debug session..
+        /// </summary>
+        public static string RunningScript {
+            get {
+                return ResourceManager.GetString("RunningScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Run to breakpoint.
         /// </summary>
         public static string RunToBreakpoint {

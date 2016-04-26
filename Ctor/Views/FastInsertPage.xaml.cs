@@ -383,7 +383,7 @@ if pos.IsConstruction:
     r3.Coupling.SlideToRight()";
         }
 
-        private void edit_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void edit_Click(object sender, RoutedEventArgs e)
         {
             _mainWindowTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             _textToDebug = txtCode.Text;
@@ -413,7 +413,15 @@ if pos.IsConstruction:
             debuggerWindow.Closed += DebuggerWindow_Closed;
             debuggerWindow.Show();
 
-            Dispatcher.Run();
+            Dispatcher.Run(); // blocking call
+
+            if (debuggerWindow.SaveChanges)
+            {
+                string code = debuggerWindow.Editor.Text;
+                this.Dispatcher.BeginInvoke(new Action(() => txtCode.Text = code));
+            }
+
+            debuggerWindow.Closed -= DebuggerWindow_Closed;
         }
 
         private void DebuggerWindow_Closed(object sender, EventArgs e)

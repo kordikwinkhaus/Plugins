@@ -288,4 +288,7 @@
   <data name="PleaseSelectArea" xml:space="preserve">
     <value>Please select area:</value>
   </data>
+  <data name="RunningScript" xml:space="preserve">
+    <value>The script is executed now. Wait for the completion or finish the debug session.</value>
+  </data>
 </root>

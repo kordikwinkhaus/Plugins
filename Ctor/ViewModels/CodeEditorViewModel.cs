@@ -136,6 +136,8 @@ namespace Ctor.ViewModels
         private bool _canDebugScript = true;
         private bool _canDebugStep = false;
 
+        public bool ExecutingScript { get; private set; }
+
         public ICommand CompileCommand { get; private set; }
         public ICommand RunScriptCommand { get; private set; }
         public ICommand DebugScriptCommand { get; private set; }
@@ -167,6 +169,8 @@ namespace Ctor.ViewModels
 
         private void RunScript(object param)
         {
+            this.ExecutingScript = true;
+
             StopTimer();
 
             if (this.LocalVariables != null)
@@ -184,6 +188,8 @@ namespace Ctor.ViewModels
 
         private void DebugScript(object param)
         {
+            this.ExecutingScript = true;
+
             StopTimer();
 
             _canRunScript = false;
@@ -240,6 +246,8 @@ namespace Ctor.ViewModels
             this.LocalVariables?.Clear();
 
             SetReadyTimer();
+
+            this.ExecutingScript = false;
         }
 
         private void SetReadyTimer()
