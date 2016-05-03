@@ -333,6 +333,15 @@ namespace Ctor.ViewModels
             }
             else
             {
+                if (e.StepType == TracebackStepType.Exception)
+                {
+                    e.Locals.Add("$exception$", e.Payload);
+                }
+                else if (e.StepType == TracebackStepType.Return)
+                {
+                    e.Locals.Add("$returnValue$", e.Payload);
+                }
+
                 this.LocalVariables.Update(e.Locals);
             }
         }
