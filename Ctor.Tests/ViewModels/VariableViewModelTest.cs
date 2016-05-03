@@ -263,6 +263,32 @@ namespace Ctor.Tests.ViewModels
             Assert.AreEqual(TypeCacheInfo.NULL, target.Value);
         }
 
+        [TestMethod]
+        public void ObjectAsProperty_Test()
+        {
+            var o = new Outer();
+            var target = GetTarget("o", o);
+
+            target.IsExpanded = true;
+
+            Assert.AreEqual(1, target.Children.Count);
+            Assert.IsFalse(target.HasDummyChild);
+
+            Verify(target.Children[0], "Obj", "inner");
+
+            Assert.AreEqual(1, target.Children[0].Children.Count);
+            Assert.IsTrue(target.Children[0].HasDummyChild);
+
+            target.Children[0].IsExpanded = true;
+
+            Assert.AreEqual(2, target.Children[0].Children.Count);
+            Assert.IsFalse(target.Children[0].HasDummyChild);
+
+            Verify(target.Children[0].Children[0], "OtherProp", TypeCacheInfo.NULL);
+            Assert.AreEqual(0, target.Children[0].Children[0].Children.Count);
+            Verify(target.Children[0].Children[1], "Value", "5");
+        }
+
         private void Verify(TreeViewItemViewModel treeViewItemViewModel, string name, string value)
         {
             VariableViewModel vm = (VariableViewModel)treeViewItemViewModel;
@@ -288,6 +314,23 @@ namespace Ctor.Tests.ViewModels
         public int Prop
         {
             get { throw new InvalidOperationException("message"); }
+        }
+    }
+
+    class Outer
+    {
+        public Inner Obj { get; set; } = new Inner();
+    }
+
+    class Inner
+    {
+        public int Value { get; set; } = 5;
+
+        public MyClass OtherProp { get; set; }
+
+        public override string ToString()
+        {
+            return "inner";
         }
     }
 }

@@ -94,6 +94,7 @@ namespace Ctor.ViewModels
 
                     if (propValue != null)
                     {
+                        _obj = propValue;
                         _typeInfo = TypeCache.GetTypeInfo(propValue.GetType());
 
                         this.VariableType = _typeInfo.Name;
@@ -103,6 +104,12 @@ namespace Ctor.ViewModels
                         {
                             this.Children.Clear();
                         }
+                    }
+                    else
+                    {
+                        this.Value = TypeCacheInfo.NULL;
+                        this.VariableType = TypeCache.GetTypeInfo(_propInfo.PropertyType).Name;
+                        this.Children.Clear();
                     }
                 }
                 catch (Exception ex)

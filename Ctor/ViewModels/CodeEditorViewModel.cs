@@ -339,7 +339,7 @@ namespace Ctor.ViewModels
                 }
                 else if (e.StepType == TracebackStepType.Return)
                 {
-                    e.Locals.Add("$returnValue$", e.Payload);
+                    e.Locals.Add("$return$", e.Payload);
                 }
 
                 this.LocalVariables.Update(e.Locals);
