@@ -24,8 +24,9 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
-      <RowDefinition Height="*"/>
+      <RowDefinition Height="2*" MinHeight="200"/>
       <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*" MinHeight="150"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
 
@@ -109,7 +110,13 @@
     
     <v:PythonEditor x:Name="codeEditor" Grid.Row="1"/>
 
-    <Grid Grid.Row="2" Height="200">
+    <GridSplitter Grid.Row="2" 
+                  Height="5"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Center"
+                  />
+
+    <Grid Grid.Row="3">
       <TabControl TabStripPlacement="Bottom">
         <TabItem Header="Output">
           <TextBox x:Name="txtOutput" 
@@ -143,7 +150,7 @@
       </TabControl>
     </Grid>
 
-    <DockPanel Grid.Row="3">
+    <DockPanel Grid.Row="4">
       <StackPanel DockPanel.Dock="Right" 
                   Orientation="Horizontal" 
                   HorizontalAlignment="Right"
@@ -180,7 +187,5 @@
              VerticalAlignment="Center"
              />
     </DockPanel>
-
-    
   </Grid>
 </Window>
