@@ -117,7 +117,7 @@
             <DockPanel Background="{TemplateBinding Background}">
               <GridViewHeaderRowPresenter Columns="{Binding Path=Columns, RelativeSource={RelativeSource TemplatedParent}}"
                                           DockPanel.Dock="Top"/>
-              <ScrollViewer HorizontalScrollBarVisibility="Auto"
+              <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                             VerticalScrollBarVisibility="Auto"
                             >
                 <ItemsPresenter/>

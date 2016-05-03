@@ -123,8 +123,10 @@
         <TabItem Header="Locals"
                  DataContext="{Binding LocalVariables}"
                  >
-          <v:TreeListView ItemsSource="{Binding Variables}"
+          <v:TreeListView x:Name="tlvLocals" 
+                          ItemsSource="{Binding Variables}"
                           Background="{StaticResource {x:Static SystemColors.ControlLightLightBrushKey}}"
+                          SizeChanged="TreeListView_SizeChanged"
                           >
             <v:TreeListView.Columns>
               <GridViewColumn Header="Name" CellTemplate="{StaticResource CellTemplate_Name}" />
