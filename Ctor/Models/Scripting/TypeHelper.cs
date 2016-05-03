@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Ctor.Models.Scripting
 {
@@ -7,7 +6,20 @@ namespace Ctor.Models.Scripting
     {
         internal static bool ImplementsInterface(Type type, Type interfaceType)
         {
-            return type.GetInterfaces().Contains(interfaceType);
+            foreach (Type implementedInterface in type.GetInterfaces())
+            {
+                if (implementedInterface == interfaceType)
+                {
+                    return true;
+                }
+                if (implementedInterface.IsGenericType && 
+                    implementedInterface.GetGenericTypeDefinition() == interfaceType)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

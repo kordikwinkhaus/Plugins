@@ -29,6 +29,12 @@ namespace Ctor.ViewModels
             get { return this.Children.Count == 1 && this.Children[0] == DummyChild; }
         }
 
+        protected void AddDummyChild()
+        {
+            this.Children.Clear();
+            this.Children.Add(DummyChild);
+        }
+
         private bool _isExpanded;
         public bool IsExpanded
         {
