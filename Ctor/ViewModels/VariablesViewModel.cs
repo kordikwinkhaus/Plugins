@@ -68,5 +68,12 @@ namespace Ctor.ViewModels
                 this.Variables.Remove(vm);
             }
         }
+
+        internal void UpdateSpecial(string specialName, object payload)
+        {
+            var vm = new VariableViewModel(specialName, payload);
+            this.Variables.Add(vm);
+            _varsDict.Add(specialName, vm);
+        }
     }
 }
