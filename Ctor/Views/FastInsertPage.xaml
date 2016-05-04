@@ -6,9 +6,14 @@
              xmlns:v="clr-namespace:Ctor.Views"
              xmlns:res="clr-namespace:Ctor.Resources"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:sharedCtrls="clr-namespace:Okna.Plugins.Controls"
              Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="300"
+             UseLayoutRounding="True"
+             TextOptions.TextFormattingMode="Display"
+             SnapsToDevicePixels="True"
+             >
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -59,10 +64,33 @@
                 >
       <StackPanel.Resources>
         <Style TargetType="{x:Type Button}">
-          <Setter Property="Margin" Value="5,0,0,5"/>
+          <Setter Property="Margin" Value="2"/>
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="{x:Type Button}">
+                <Grid x:Name="grid" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+                  <Border BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" BorderThickness="1">
+                    <ContentPresenter VerticalAlignment="Center" 
+                                      HorizontalAlignment="Center"
+                                      />
+                  </Border>
+                </Grid>
+                <ControlTemplate.Triggers>
+                  <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="grid" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                  </Trigger>
+                  <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="grid" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                  </Trigger>
+                </ControlTemplate.Triggers>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
         </Style>
       </StackPanel.Resources>
-      <WrapPanel>
+      <sharedCtrls:RoundWrapPanel ItemHeight="32"
+                                  RoundStep="32"
+                                  >
         <Button Click="Clear_Click">Clear</Button>
         <Button Click="Mirror_Click">Mirror</Button>
         <Button Click="Fix_Click">FIX</Button>
@@ -79,7 +107,7 @@
         <Button Click="fksls_Click">f+k(sls)</Button>
         <Button Click="_2xohr_Click">2xOHR</Button>
         <Button Click="_3xRoz_Click">3xROZ</Button>
-      </WrapPanel>
+      </sharedCtrls:RoundWrapPanel>
 
       <DockPanel>
         <Button DockPanel.Dock="Right" Click="edit_Click">edit</Button>
