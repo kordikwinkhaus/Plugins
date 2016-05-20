@@ -32,7 +32,7 @@ namespace EOkno.Views
 
         public object Title
         {
-            get { return "EOkno"; }
+            get { return "EOkno - komponenty"; }
         }
 
         public IPart Part { get; set; }
