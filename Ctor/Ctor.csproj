@@ -81,9 +81,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomDialogFactory.cs" />
+    <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Data\Repository.cs" />
     <Compile Include="ExtensionsFactory.cs" />
     <Compile Include="Models\Area.cs" />
     <Compile Include="Models\AreaSelector.cs" />
+    <Compile Include="Models\ScriptCommand.cs" />
     <Compile Include="Models\Commands.cs" />
     <Compile Include="Models\CompilationException.cs" />
     <Compile Include="Models\CouplingInsertionResult.cs" />
