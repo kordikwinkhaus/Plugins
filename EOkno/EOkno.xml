@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<config>
+<config sleva="10">
   <povrchoveUpravy>
     <povrchovaUprava kod="bez PU" nazev="bez povrchové úpravy"/>
-    <povrchovaUprava kod="olej" nazev="olej">
+    <povrchovaUprava kod="olej" nazev="olej" default="true">
       <odstin kod="WenO">Wenge</odstin>
       <odstin kod="PalO">Palisander</odstin>
       <odstin kod="KasO">Kaštan</odstin>
@@ -13,7 +13,7 @@
       <odstin kod="BilO">Bílá</odstin>
       <odstin kod="MahO">Mahagon</odstin>
       <odstin kod="BroO">Bronz</odstin>
-      <odstin kod="MekO">Metal Efekt Kaštan</odstin>
+      <odstin kod="MekO" default="true">Metal Efekt Kaštan</odstin>
       <odstin kod="MeaO">Metal Efekt Akat</odstin>
       <odstin kod="MeoO">Metal Efekt Onyx</odstin>
       <odstin kod="MebO">Metal Efekt Bronz</odstin>
@@ -48,20 +48,20 @@
     </povrchovaUprava>
   </povrchoveUpravy>
   <komponenty>
-    <komponenta material="1">Profily</komponenta>
-    <komponenta material="2">Kování</komponenta>
+    <komponenta material="1" default="true">Profily</komponenta>
+    <komponenta material="2" default="true">Kování</komponenta>
     <komponenta material="3">Vrchní PÚ</komponenta>
     <komponenta material="4">Impregnace</komponenta>
-    <komponenta material="5">Silikonový tmel</komponenta>
-    <komponenta material="6">Lepidlo</komponenta>
-    <komponenta material="7">Těsnění celoobv.</komponenta>
-    <komponenta material="8">Těsnění pod sklo</komponenta>
-    <komponenta material="9">Podložky mont.</komponenta>
+    <komponenta material="5" default="true">Silikonový tmel</komponenta>
+    <komponenta material="6" default="true">Lepidlo</komponenta>
+    <komponenta material="7" default="true">Těsnění celoobv.</komponenta>
+    <komponenta material="8" default="true">Těsnění pod sklo</komponenta>
+    <komponenta material="9" default="true">Podložky mont.</komponenta>
     <komponenta material="10">Hřebíky do lišt</komponenta>
-    <komponenta material="11">Kliky</komponenta>
-    <komponenta material="12">Spojky N</komponenta>
-    <komponenta material="13">Kontraprofily</komponenta>
-    <komponenta material="14">Sklo</komponenta>
+    <komponenta material="11" default="true">Kliky</komponenta>
+    <komponenta material="12" default="true">Spojky N</komponenta>
+    <komponenta material="13" default="true">Kontraprofily</komponenta>
+    <komponenta material="14" default="true">Sklo</komponenta>
     <komponenta prace="20">Pokosy a drážky</komponenta>
   </komponenty>
 </config>

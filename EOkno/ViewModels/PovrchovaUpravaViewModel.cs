@@ -12,18 +12,20 @@ namespace EOkno.ViewModels
     {
         private ColorsAndComponents _model;
 
-        internal PovrchovaUpravaViewModel(string kod, string nazev)
+        internal PovrchovaUpravaViewModel(string kod, string nazev, bool isDefault)
         {
             if (string.IsNullOrEmpty(kod)) throw new ArgumentNullException(nameof(kod));
             if (string.IsNullOrEmpty(nazev)) throw new ArgumentNullException(nameof(nazev));
 
             this.Kod = kod;
             this.Nazev = nazev;
+            this.IsDefault = isDefault;
             this.Odstiny = new List<OdstinViewModel>();
         }
 
         public string Kod { get; private set; }
         public string Nazev { get; private set; }
+        internal bool IsDefault { get; private set; }
 
         public bool MaOdstiny
         {
@@ -86,8 +88,7 @@ namespace EOkno.ViewModels
 
         internal void Clear()
         {
-            this.VnejsiOdstin = null;
-            this.VnitrniOdstin = null;
+            this.VnitrniOdstin = this.VnejsiOdstin = this.Odstiny.SingleOrDefault(o => o.IsDefault);
         }
 
         internal bool Init(ColorsAndComponents model)

@@ -90,6 +90,7 @@
     <Compile Include="Views\PositionView.xaml.cs">
       <DependentUpon>PositionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="XElementExtensions.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

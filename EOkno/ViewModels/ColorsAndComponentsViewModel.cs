@@ -17,6 +17,8 @@ namespace EOkno.ViewModels
             this.DeselectAllCommand = new RelayCommand(DeselectAll);
         }
 
+        internal decimal VychoziSleva { get; set; }
+
         public ICommand SelectAllCommand { get; private set; }
 
         private void SelectAll(object param)
@@ -74,10 +76,14 @@ namespace EOkno.ViewModels
 
         internal virtual void SetDefaults()
         {
-            this.VybranaPU = this.PovrchoveUpravy.FirstOrDefault();
+            this.VybranaPU = this.PovrchoveUpravy.SingleOrDefault(p => p.IsDefault);
+            if (this.VybranaPU == null)
+            {
+                this.VybranaPU = this.PovrchoveUpravy.FirstOrDefault();
+            }
             this.VybranaPU?.Clear();
 
-            this.Komponenty.ForEach(k => k.Vybrano = true);
+            this.Komponenty.ForEach(k => k.SetDefaultState());
         }
 
         internal virtual void NotifyChange()

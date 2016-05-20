@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Xml.Linq;
+using EOkno;
 using EOkno.ViewModels;
 using EOkno.Views;
 using Okna.Plugins;
@@ -50,44 +52,54 @@ namespace UserExt
         {
             try
             {
+                List<KomponentaViewModel> komponenty = new List<KomponentaViewModel>();
+                List<PovrchovaUpravaViewModel> povrchoveUpravy = new List<PovrchovaUpravaViewModel>();
+                List<string> kody = new List<string>();
+
                 string directory = Utils.GetPluginDirectory<DocumentViewModel>();
                 string filename = Path.Combine(directory, "EOkno.xml");
                 XDocument doc = XDocument.Load(filename);
 
                 foreach (var elem in doc.Root.Element("komponenty").Elements("komponenta"))
                 {
-                    var komponenta = new KomponentaViewModel(elem.Value, elem.Attribute("material")?.Value, elem.Attribute("prace")?.Value, vm);
+                    var komponenta = new KomponentaViewModel(elem.Value, elem.Attribute("material")?.Value, elem.Attribute("prace")?.Value, elem.GetDefault(), vm);
 
-                    if (vm.Komponenty.Any(k => k.Material == komponenta.Material && k.Prace == komponenta.Prace))
+                    if (komponenty.Any(k => k.Material == komponenta.Material && k.Prace == komponenta.Prace))
                     {
                         throw new InvalidOperationException("Nalezen duplicitní kód materiálu nebo práce.");
                     }
                     else
                     {
-                        vm.Komponenty.Add(komponenta);
+                        komponenty.Add(komponenta);
                     }
                 }
 
                 foreach (var elem in doc.Root.Element("povrchoveUpravy").Elements("povrchovaUprava"))
                 {
-                    var povrchovaUprava = new PovrchovaUpravaViewModel(elem.Attribute("kod").Value, elem.Attribute("nazev").Value);
-                    if (vm.PovrchoveUpravy.Any(pu => pu.Kod == povrchovaUprava.Kod))
+                    var povrchovaUprava = new PovrchovaUpravaViewModel(elem.Attribute("kod").Value, elem.Attribute("nazev").Value, elem.GetDefault());
+                    if (povrchoveUpravy.Any(pu => pu.Kod == povrchovaUprava.Kod))
                     {
                         throw new InvalidOperationException("Nalezen duplicitní kód povrchové úpravy: " + povrchovaUprava.Kod);
                     }
+                    else if (povrchovaUprava.IsDefault && vm.PovrchoveUpravy.Any(pu => pu.IsDefault))
+                    {
+                        throw new InvalidOperationException("Duplicitní označení povrchové úpravy jako výchozí: " + povrchovaUprava.Kod);
+                    }
                     else
                     {
-                        vm.PovrchoveUpravy.Add(povrchovaUprava);
+                        povrchoveUpravy.Add(povrchovaUprava);
                     }
-
-                    List<string> kody = new List<string>();
 
                     foreach (var odstinElem in elem.Elements("odstin"))
                     {
-                        var odstin = new OdstinViewModel(odstinElem.Attribute("kod").Value, odstinElem.Value);
+                        var odstin = new OdstinViewModel(odstinElem.Attribute("kod").Value, odstinElem.Value, odstinElem.GetDefault());
                         if (kody.Contains(odstin.Kod))
                         {
                             throw new InvalidOperationException("Nalezen duplicitní kód odstínu: " + odstin.Kod);
+                        }
+                        else if (odstin.IsDefault && povrchovaUprava.Odstiny.Any(o => o.IsDefault))
+                        {
+                            throw new InvalidOperationException("Duplicitní označení odstínu jako výchozího: " + odstin.Kod);
                         }
                         else
                         {
@@ -96,6 +108,17 @@ namespace UserExt
                         }
                     }
                 }
+
+                decimal sleva = 0;
+                var slevaAttr = doc.Root.Attribute("sleva");
+                if (slevaAttr != null &&
+                    decimal.TryParse(slevaAttr.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out sleva))
+                {
+                    vm.VychoziSleva = sleva;
+                }
+
+                vm.Komponenty.AddRange(komponenty);
+                vm.PovrchoveUpravy.AddRange(povrchoveUpravy);
             }
             catch (Exception ex)
             {

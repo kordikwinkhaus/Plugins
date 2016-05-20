@@ -49,5 +49,11 @@ namespace EOkno.ViewModels
                 }
             }
         }
+
+        internal override void SetDefaults()
+        {
+            base.SetDefaults();
+            this.Sleva = this.VychoziSleva;
+        }
     }
 }

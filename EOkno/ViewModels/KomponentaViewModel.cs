@@ -11,10 +11,10 @@ namespace EOkno.ViewModels
         private readonly Func<ColorsAndComponents, bool> _jeVybrano;
         private readonly Action<ColorsAndComponents, bool> _zmenitVybrano;
         private ColorsAndComponents _model;
-
+        private readonly bool _defaultState;
         private readonly ColorsAndComponentsViewModel _parent;
 
-        internal KomponentaViewModel(string nazev, string material, string prace, ColorsAndComponentsViewModel parent)
+        internal KomponentaViewModel(string nazev, string material, string prace, bool defaultState, ColorsAndComponentsViewModel parent)
         {
             if (string.IsNullOrEmpty(nazev)) throw new ArgumentNullException(nameof(nazev));
             if (parent == null) throw new ArgumentNullException(nameof(parent));
@@ -39,6 +39,7 @@ namespace EOkno.ViewModels
             this.Nazev = nazev;
             this.Material = material;
             this.Prace = prace;
+            _defaultState = defaultState;
             _parent = parent;
         }
 
@@ -90,6 +91,11 @@ namespace EOkno.ViewModels
         {
             _model = model;
             this.Vybrano = _jeVybrano(_model);
+        }
+
+        internal void SetDefaultState()
+        {
+            this.Vybrano = _defaultState;
         }
     }
 }
