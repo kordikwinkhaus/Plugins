@@ -31,7 +31,7 @@ namespace EOkno.Views
 
         public object Title
         {
-            get { return "EOkno - komponenty"; }
+            get { return "eOkno - komponenty"; }
         }
 
         public bool SetData(XElement data, int document, int position, int profileType)
