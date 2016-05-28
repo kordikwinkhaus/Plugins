@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using Ctor.Resources;
 using WHOkna;
@@ -148,6 +147,8 @@ namespace Ctor.Models
             frame.Update(true);
         }
 
+        #region Areas
+
         /// <summary>
         /// Vrací oblast na zadané souřadnici.
         /// </summary>
@@ -189,6 +190,8 @@ namespace Ctor.Models
 
             throw new ModelException(Strings.NoEmptyAreaInPosition);
         }
+
+        #endregion
 
         /// <summary>
         /// Vloží rámy do prázdných polí.

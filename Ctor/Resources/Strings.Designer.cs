@@ -304,6 +304,15 @@ namespace Ctor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Frame/sash does not contain glasspacket {0}..
+        /// </summary>
+        public static string NoGlasspacket {
+            get {
+                return ResourceManager.GetString("NoGlasspacket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Frame {0} does not contain sash {1}..
         /// </summary>
         public static string NoSashInFrame {

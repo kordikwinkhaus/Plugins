@@ -160,5 +160,22 @@ namespace Ctor.Models
         protected abstract int GetParentColor();
 
         #endregion
+
+        #region Glasspackets
+
+        /// <summary>
+        /// Vloží zadaný paket do tohoto pole.
+        /// </summary>
+        /// <param name="nrArt">Číslo výrobku paketu.</param>
+        public Glasspacket InsertGlasspacket(string nrArt)
+        {
+            var parameters = Parameters.ForGlasspacket(nrArt);
+            _area.AddChild(EProfileType.tSzyba, parameters);
+            return CreateGlasspacket((IGlazing)_area.Child);
+        }
+
+        protected abstract Glasspacket CreateGlasspacket(IGlazing glazing);
+
+        #endregion
     }
 }

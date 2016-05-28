@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Media.Imaging;
 using Ctor.Resources;
 using WHOkna;
 
@@ -12,7 +11,7 @@ namespace Ctor.Models
     /// <summary>
     /// Objekt rámu.
     /// </summary>
-    public class Frame : Part, IAreaProvider
+    public class Frame : FrameBase, IAreaProvider
     {
         private readonly IFrame _frame;
         private readonly Position _parent;
@@ -70,6 +69,8 @@ namespace Ctor.Models
             get { return _frame.FrameType; }
         }
 
+        #region Areas
+
         /// <summary>
         /// Vrací oblast na zadané souřadnici.
         /// </summary>
@@ -105,6 +106,15 @@ namespace Ctor.Models
 
             throw new ModelException(Strings.NoEmptyAreaInFrame);
         }
+
+        protected override FrameAreaBase GetEmptyAreaForGlasspacket()
+        {
+            return this.GetEmptyArea();
+        }
+
+        #endregion
+
+        #region Sashes
 
         /// <summary>
         /// Vloží křídla do prázdných polí.
@@ -167,27 +177,26 @@ namespace Ctor.Models
             throw new ModelException(msg);
         }
 
-        /// <summary>
-        /// Vloží zadaný paket do prázdných polí rámu a křídel v něm obsažených.
-        /// </summary>
-        /// <param name="nrArt">Číslo výrobku paketu.</param>
-        public void InsertGlasspackets(string nrArt)
+        #endregion
+
+        #region Glasspackets
+
+        protected override Glasspacket CreateGlasspacket(IGlazing glazing)
         {
-            InsertGlasspackets(Parameters.ForGlasspacket(nrArt));
+            return new Glasspacket(glazing, this);
         }
 
-        internal void InsertGlasspackets(Dictionary<string, object> parameters)
+        internal override void InsertGlasspackets(Dictionary<string, object> parameters)
         {
             foreach (var sash in GetSashes())
             {
                 sash.InsertGlasspackets(parameters);
             }
 
-            foreach (IArea area in _frame.Areas.Where(a => a.Child == null))
-            {
-                area.AddChild(EProfileType.tSzyba, parameters);
-            }
+            base.InsertGlasspackets(parameters);
         }
+
+        #endregion  
 
         #region FalseMullion(s)
 
@@ -359,6 +368,8 @@ namespace Ctor.Models
             return new RectangleF(original.X - left, original.Y - top, original.Width + left - right, original.Height + top - bottom);
         }
 
+        #region IAreaProvider
+
         IEnumerable<IArea> IAreaProvider.GetEmptyAreas()
         {
             return _frame.Areas.Where(a => a.Child == null);
@@ -378,5 +389,7 @@ namespace Ctor.Models
         {
             get { return _parent.Width; }
         }
+
+        #endregion
     }
 }

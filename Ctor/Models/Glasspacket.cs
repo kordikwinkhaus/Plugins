@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using WHOkna;
 
 namespace Ctor.Models
@@ -11,7 +9,18 @@ namespace Ctor.Models
     public class Glasspacket : Part
     {
         private readonly IGlazing _glazing;
-        private readonly Sash _parent;
+        private readonly FrameBase _parent;
+
+        internal Glasspacket(IGlazing glazing, Frame parent)
+            : base(glazing)
+        {
+            if (parent == null) throw new ArgumentNullException(nameof(parent));
+
+            _glazing = glazing;
+            _parent = parent;
+
+            this.ParentFrame = parent;
+        }
 
         internal Glasspacket(IGlazing glazing, Sash parent)
             : base(glazing)
@@ -20,6 +29,9 @@ namespace Ctor.Models
 
             _glazing = glazing;
             _parent = parent;
+
+            this.ParentSash = parent;
+            this.ParentFrame = parent.Parent;
         }
 
         internal IGlazing Data
@@ -27,8 +39,17 @@ namespace Ctor.Models
             get { return _glazing; }
         }
 
-        // TODO: společná třída pro rám a křídlo
-        public Sash Parent { get; set; }
+        /// <summary>
+        /// Rodičovské křídlo.
+        /// Vrací null pokud je sklo v rámu.
+        /// </summary>
+        public Sash ParentSash { get; private set; }
+
+        /// <summary>
+        /// Rodičovský rám.
+        /// Je nastaveno i v případě, že sklo je vsazeno do křídla.
+        /// </summary>
+        public Frame ParentFrame { get; private set; }
 
         /// <summary>
         /// Vrací ID skla (pořadová čísla od jedné).

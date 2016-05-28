@@ -34,5 +34,10 @@ namespace Ctor.Models
         }
 
         #endregion
+
+        protected override Glasspacket CreateGlasspacket(IGlazing glazing)
+        {
+            return new Glasspacket(glazing, _parent);
+        }
     }
 }

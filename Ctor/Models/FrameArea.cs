@@ -39,6 +39,11 @@ namespace Ctor.Models
             throw new ModelException(Strings.CannotInsertSash);
         }
 
+        protected override Glasspacket CreateGlasspacket(IGlazing glazing)
+        {
+            return new Glasspacket(glazing, _parent);
+        }
+
         #region Insert false mullion
 
         /// <summary>

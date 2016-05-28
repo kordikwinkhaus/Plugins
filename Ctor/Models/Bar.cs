@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Xml.Linq;
 using Ctor.Resources;
 using WHOkna;
 
@@ -58,6 +59,8 @@ namespace Ctor.Models
             }
         }
 
+        #region SlideTo...
+
         /// <summary>
         /// Zarovná prvek nahoru.
         /// </summary>
@@ -107,5 +110,7 @@ namespace Ctor.Models
                 throw new ModelException(Strings.CannotAlignItem);
             }
         }
+
+        #endregion
     }
 }

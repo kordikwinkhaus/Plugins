@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Media.Imaging;
 using Ctor.Resources;
 using WHOkna;
 
@@ -11,7 +10,7 @@ namespace Ctor.Models
     /// <summary>
     /// Objekt křídla.
     /// </summary>
-    public class Sash : Part, IAreaProvider
+    public class Sash : FrameBase, IAreaProvider
     {
         private readonly ISash _sash;
         private readonly Frame _parent;
@@ -61,22 +60,7 @@ namespace Ctor.Models
             return sb.ToString();
         }
 
-        /// <summary>
-        /// Vloží zadaný paket do prázdných polí křídla.
-        /// </summary>
-        /// <param name="nrArt">Číslo výrobku paketu.</param>
-        public void InsertGlasspackets(string nrArt)
-        {
-            InsertGlasspackets(Parameters.ForGlasspacket(nrArt));
-        }
-
-        internal void InsertGlasspackets(Dictionary<string, object> parameters)
-        {
-            foreach (IArea area in _sash.Areas.Where(a => a.Child == null))
-            {
-                area.AddChild(EProfileType.tSzyba, parameters);
-            }
-        }
+        #region Glasspackets
 
         public IList<Glasspacket> GetGlasspackets()
         {
@@ -87,6 +71,15 @@ namespace Ctor.Models
             }
             return result;
         }
+
+        protected override Glasspacket CreateGlasspacket(IGlazing glazing)
+        {
+            return new Glasspacket(glazing, this);
+        }
+
+        #endregion
+
+        #region Fittings
 
         /// <summary>
         /// Vloží kování do křídla.
@@ -198,6 +191,10 @@ namespace Ctor.Models
             _sash.OnCommand(Commands.ShowFittingsDialog);
         }
 
+        #endregion
+
+        #region Areas
+
         /// <summary>
         /// Vrací oblast na zadané souřadnici.
         /// </summary>
@@ -233,6 +230,13 @@ namespace Ctor.Models
 
             throw new ModelException(Strings.NoEmptyAreaInSash);
         }
+
+        protected override FrameAreaBase GetEmptyAreaForGlasspacket()
+        {
+            return this.GetEmptyArea();
+        }
+
+        #endregion
 
         #region InsertMullion
 
@@ -314,6 +318,8 @@ namespace Ctor.Models
 
         #endregion
 
+        #region IAreaProvider
+
         IEnumerable<IArea> IAreaProvider.GetEmptyAreas()
         {
             return _sash.Areas.Where(a => a.Child == null);
@@ -333,5 +339,7 @@ namespace Ctor.Models
         {
             get { return _parent.Parent.Width; }
         }
+
+        #endregion
     }
 }

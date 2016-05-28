@@ -291,4 +291,7 @@
   <data name="RunningScript" xml:space="preserve">
     <value>The script is executed now. Wait for the completion or finish the debug session.</value>
   </data>
+  <data name="NoGlasspacket" xml:space="preserve">
+    <value>Frame/sash does not contain glasspacket {0}.</value>
+  </data>
 </root>
