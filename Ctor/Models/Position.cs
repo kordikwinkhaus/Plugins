@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Imaging;
+using System.Xml.Linq;
 using Ctor.Resources;
 using WHOkna;
 
@@ -333,7 +334,13 @@ namespace Ctor.Models
 
         #endregion
 
-        public bool LoadCouplingProfilesSet(string setSymbol, bool enlargeConstructionArea)
+        /// <summary>
+        /// Vloží sestavu spojovacích profilů.
+        /// </summary>
+        /// <param name="setSymbol">Číslo sady.</param>
+        /// <param name="enlargeConstructionArea">Zda-li zvětšit konstrukční oblast.</param>
+        /// <returns>Vrací true, pokud se vložení zdařilo.</returns>
+        public bool InsertCouplingProfilesSet(string setSymbol, bool enlargeConstructionArea)
         {
             CheckTopObject();
 
@@ -351,6 +358,18 @@ namespace Ctor.Models
             return result;
         }
 
+        /// <summary>
+        /// Vrací XML element s uživatelskými daty.
+        /// Pouze pro pozice s konstrukcí.
+        /// </summary>
+        public XElement UserData
+        {
+            get
+            {
+                CheckTopObject();
+                return _position.Data.ExtendedProperties;
+            }
+        }
 
         IEnumerable<IArea> IAreaProvider.GetEmptyAreas()
         {
