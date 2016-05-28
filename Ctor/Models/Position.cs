@@ -333,6 +333,25 @@ namespace Ctor.Models
 
         #endregion
 
+        public bool LoadCouplingProfilesSet(string setSymbol, bool enlargeConstructionArea)
+        {
+            CheckTopObject();
+
+            bool result = _position.Data.LoadCouplingProfilesSet(setSymbol, enlargeConstructionArea);
+
+            if (result)
+            {
+                if (_position.Data.Update(true))
+                {
+                    _position.Data.CheckPoint();
+                    _position.Data.Invalidate();
+                }
+            }
+
+            return result;
+        }
+
+
         IEnumerable<IArea> IAreaProvider.GetEmptyAreas()
         {
             return _position.Data.Areas.Where(a => a.Child == null && a.Rectangle.Height != 0 && a.Rectangle.Width != 0);
