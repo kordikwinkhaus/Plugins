@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Linq;
 using WHOkna;
 
 namespace Ctor.Models
@@ -63,6 +64,14 @@ namespace Ctor.Models
         public virtual float Bottom
         {
             get { return _part.Rectangle.Bottom; }
+        }
+
+        /// <summary>
+        /// Vrací XML element s uživatelskými daty.
+        /// </summary>
+        public XElement UserData
+        {
+            get { return _part.ExtendedProperties; }
         }
     }
 }
