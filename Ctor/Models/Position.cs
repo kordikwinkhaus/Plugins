@@ -132,6 +132,16 @@ namespace Ctor.Models
                 }
             } while (top.Bars.Count() != 0 && count++ < 10);
 
+            count = 0;
+            do
+            {
+                foreach (var bar in top.Outline)
+                {
+                    bar.OnCommand(Commands.Delete);
+                }
+            }
+            while (top.Outline.Count() != 0 && count++ < 10);
+
             top.Invalidate();
         }
 
@@ -374,6 +384,8 @@ namespace Ctor.Models
             }
         }
 
+        #region IAreaProvider
+
         IEnumerable<IArea> IAreaProvider.GetEmptyAreas()
         {
             return _position.Data.Areas.Where(a => a.Child == null && a.Rectangle.Height != 0 && a.Rectangle.Width != 0);
@@ -393,5 +405,7 @@ namespace Ctor.Models
         {
             get { return this.Width; }
         }
+
+        #endregion
     }
 }
