@@ -83,6 +83,7 @@ namespace Ctor.Views
 
     frame = area.InsertFrame(typeID, colorID)
     frame.InsertGlasspackets(glasspacket)";
+            RunOrEditCode();
         }
 
         private void FixVS_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -113,6 +114,7 @@ namespace Ctor.Views
     frame = area.InsertFrame(typeID, colorID)
     frame.Insert" + dir + @"Mullion(mullionNrArt)
     frame.InsertGlasspackets(glasspacket)";
+            RunOrEditCode();
         }
 
         private void _1kl_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -146,6 +148,7 @@ namespace Ctor.Views
         args = sash.GetFittingsFindArgs()
         fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
         sash.InsertFittings(fittingsTypeID, " + dir + ")";
+            RunOrEditCode();
         }
 
         private void _1ks_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -170,6 +173,7 @@ namespace Ctor.Views
         args.TiltOnly = True
         fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
         sash.InsertFittings(fittingsTypeID)";
+            RunOrEditCode();
         }
 
         private void _2kl_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -205,6 +209,7 @@ namespace Ctor.Views
             args = sash.GetFittingsFindArgs()
             fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
             sash.InsertFittings(fittingsTypeID)";
+            RunOrEditCode();
         }
 
         private void _3kl_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -250,6 +255,7 @@ if pos.IsConstruction:
             args = sash.GetFittingsFindArgs()
             fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
             sash.InsertFittings(fittingsTypeID)";
+            RunOrEditCode();
         }
 
         private void _3kp_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -298,6 +304,7 @@ if pos.IsConstruction:
                 sash.InsertFittings(fittingsTypeID, True)
             else:
                 sash.InsertFittings(fittingsTypeID)";
+            RunOrEditCode();
         }
 
         private void fkslv_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -328,6 +335,7 @@ if pos.IsConstruction:
         args = sash.GetFittingsFindArgs()
         fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
         sash.InsertFittings(fittingsTypeID, True)";
+            RunOrEditCode();
         }
 
         private void fksls_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -359,6 +367,7 @@ if pos.IsConstruction:
         args.TiltOnly = True
         fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
         sash.InsertFittings(fittingsTypeID)";
+            RunOrEditCode();
         }
 
         private void _2xohr_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -367,6 +376,7 @@ if pos.IsConstruction:
     area = pos.GetEmptyArea()
     r = area.InsertVerticalCoupling('Ohraničník', 0)
     r.Area2.InsertHorizontalCoupling('Ohraničník', 0, 0.666)";
+            RunOrEditCode();
         }
 
         private void _3xRoz_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -381,6 +391,19 @@ if pos.IsConstruction:
     r2.Coupling.SlideToLeft()
     r3 = r2.Area2.InsertVerticalCoupling(prof, colorID)
     r3.Coupling.SlideToRight()";
+            RunOrEditCode();
+        }
+
+        private void RunOrEditCode()
+        {
+            if (rbRun.IsChecked == true)
+            {
+                _viewModel.RunCommand.Execute(txtCode.Text);
+            }
+            else
+            {
+                edit_Click(null, null);
+            }
         }
 
         private void edit_Click(object sender, RoutedEventArgs e)
@@ -428,6 +451,221 @@ if pos.IsConstruction:
         {
             _dialogFactory.DebuggerWindow = null;
             Dispatcher.FromThread(_debugWindowThread).InvokeShutdown();
+        }
+
+        private void randFix_Click(object sender, RoutedEventArgs e)
+        {
+            txtCode.Text = @"if pos.IsConstruction:
+    area = pos.GetEmptyArea()
+    if area.Width < 300:
+        msg.Fail('Oblast pro okno je příliš úzká.')
+    if area.Height < 300:
+        msg.Fail('Oblast pro okno je příliš nízká.')
+
+    type = db.GetWindowType(50) # RAND samostatný FIX
+    colorID = 71                # smrk B bez PÚ (P)
+    glasspacket = type.DefaultGlasspacket
+
+    frame = area.InsertFrame(type.ID, colorID)
+    frame.InsertGlasspackets(glasspacket)";
+            RunOrEditCode();
+        }
+
+        private void rand1kp_Click(object sender, RoutedEventArgs e)
+        {
+            txtCode.Text = @"if pos.IsConstruction:
+    area = pos.GetEmptyArea()
+    if area.Width < 400:
+        msg.Fail('Oblast pro okno je příliš úzká.')
+    if area.Height < 500:
+        msg.Fail('Oblast pro okno je příliš nízká.')
+
+    type = db.GetWindowType(43) # RAND samostatné FIX
+    colorID = 71                # smrk B bez PÚ (P)
+    glasspacket = type.DefaultGlasspacket
+    fittingsGroup = type.DefaultFittingsGroup
+
+    pos.InsertCouplingProfilesSet('SR20LHP', False)
+
+    area = pos.GetEmptyArea()
+    frame = area.InsertFrame(type.ID, colorID)
+    sash = frame.InsertSash()
+    sash.InsertGlasspackets(glasspacket)
+    if ctx.InsertFittings:
+        args = sash.GetFittingsFindArgs()
+        fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
+        sash.InsertFittings(fittingsTypeID, True)";
+            RunOrEditCode();
+        }
+
+        private void rand1kl_Click(object sender, RoutedEventArgs e)
+        {
+            txtCode.Text = @"if pos.IsConstruction:
+    area = pos.GetEmptyArea()
+    if area.Width < 400:
+        msg.Fail('Oblast pro okno je příliš úzká.')
+    if area.Height < 500:
+        msg.Fail('Oblast pro okno je příliš nízká.')
+
+    type = db.GetWindowType(43) # RAND samostatné FIX
+    colorID = 71                # smrk B bez PÚ (P)
+    glasspacket = type.DefaultGlasspacket
+    fittingsGroup = type.DefaultFittingsGroup
+
+    pos.InsertCouplingProfilesSet('SR20LHP', False)
+
+    area = pos.GetEmptyArea()
+    frame = area.InsertFrame(type.ID, colorID)
+    sash = frame.InsertSash()
+    sash.InsertGlasspackets(glasspacket)
+    if ctx.InsertFittings:
+        args = sash.GetFittingsFindArgs()
+        fittingsTypeID = db.FindFittingsType(fittingsGroup, args)
+        sash.InsertFittings(fittingsTypeID, False)";
+            RunOrEditCode();
+        }
+
+        private void rand_fix1k_Click(object sender, RoutedEventArgs e)
+        {
+            txtCode.Text = @"if pos.IsConstruction:
+    area = pos.GetEmptyArea()
+    if area.Width < 1500:
+        msg.Fail('Oblast pro okno je příliš úzká.')
+    if area.Height < 500:
+        msg.Fail('Oblast pro okno je příliš nízká.')
+
+    typOknoP = db.GetWindowType(46) # RAND vložený pravý
+    typFix = db.GetWindowType(44)  # RAND vložený FIX
+    colorID = 71                   # smrk B bez PÚ (P)
+
+    pos.InsertCouplingProfilesSet('NF/N-W RL', False)
+
+    area = pos.GetEmptyArea()
+    x1 = pos.Width * 0.3
+    if x1 < 600: x1 = 600
+    if x1 > 1200: x1 = 1200
+    r1 = r = area.InsertVerticalCoupling('Ohraničník', 0, pos.Width - x1)
+
+    frameP = r1.Area2.InsertFrame(typOknoP.ID, colorID)
+    sashP = frameP.InsertSash()
+    sashP.InsertGlasspackets(typOknoP.DefaultGlasspacket)
+
+    if ctx.InsertFittings:
+        args = sashP.GetFittingsFindArgs()
+        fittingsTypeID = db.FindFittingsType(typOknoP.DefaultFittingsGroup, args)
+        sashP.InsertFittings(fittingsTypeID, True)
+
+    fix = r1.Area1.InsertFrame(typFix.ID, colorID)
+    fix.InsertGlasspacket(typFix.DefaultGlasspacket)";
+            RunOrEditCode();
+        }
+
+        private void rand_1kfix_Click(object sender, RoutedEventArgs e)
+        {
+            txtCode.Text = @"if pos.IsConstruction:
+    area = pos.GetEmptyArea()
+    if area.Width < 1200:
+        msg.Fail('Oblast pro okno je příliš úzká.')
+    if area.Height < 500:
+        msg.Fail('Oblast pro okno je příliš nízká.')
+
+    typOknoL = db.GetWindowType(47) # RAND vložený levý
+    typFix = db.GetWindowType(44)  # RAND vložený FIX
+    colorID = 71                   # smrk B bez PÚ (P)
+
+    pos.InsertCouplingProfilesSet('NF/N-W L', False)
+
+    area = pos.GetEmptyArea()
+    x1 = pos.Width * 0.3
+    if x1 < 600: x1 = 600
+    if x1 > 1200: x1 = 1200
+    r1 = r = area.InsertVerticalCoupling('Ohraničník', 0, x1)
+
+    frameL = r1.Area1.InsertFrame(typOknoL.ID, colorID)
+    sashL = frameL.InsertSash()
+    sashL.InsertGlasspackets(typOknoL.DefaultGlasspacket)
+
+    if ctx.InsertFittings:
+        args = sashL.GetFittingsFindArgs()
+        fittingsTypeID = db.FindFittingsType(typOknoL.DefaultFittingsGroup, args)
+        sashL.InsertFittings(fittingsTypeID, False)
+
+
+    fix = r1.Area2.InsertFrame(typFix.ID, colorID)
+    fix.InsertGlasspacket(typFix.DefaultGlasspacket)";
+            RunOrEditCode();
+        }
+
+        private void rand_fix1kpfix_Click(object sender, RoutedEventArgs e)
+        {
+            txtCode.Text = @"if pos.IsConstruction:
+    area = pos.GetEmptyArea()
+    if area.Width < 1200:
+        msg.Fail('Oblast pro okno je příliš úzká.')
+    if area.Height < 500:
+        msg.Fail('Oblast pro okno je příliš nízká.')
+
+    typOkno = db.GetWindowType(49) # RAND vložené střed
+    typFix = db.GetWindowType(44)  # RAND vložený FIX
+    colorID = 71                   # smrk B bez PÚ (P)
+
+    pos.InsertCouplingProfilesSet('NF/N-W M', False)
+
+    area = pos.GetEmptyArea()
+    x1 = pos.Width * 0.4
+    x2 = pos.Width * 0.6
+    r1 = r = area.InsertVerticalCoupling('Ohraničník', 0, x1)
+    r2 = r1.Area2.InsertVerticalCoupling('Ohraničník', 0, x2)
+
+    frame = r2.Area1.InsertFrame(typOkno.ID, colorID)
+    sash = frame.InsertSash()
+    sash.InsertGlasspackets(typOkno.DefaultGlasspacket)
+    if ctx.InsertFittings:
+        args = sash.GetFittingsFindArgs()
+        fittingsTypeID = db.FindFittingsType(typOkno.DefaultFittingsGroup, args)
+        sash.InsertFittings(fittingsTypeID, True)
+
+    fix1 = r1.Area1.InsertFrame(typFix.ID, colorID)
+    fix1.InsertGlasspacket(typFix.DefaultGlasspacket)
+    fix2 = r2.Area2.InsertFrame(typFix.ID, colorID)
+    fix2.InsertGlasspacket(typFix.DefaultGlasspacket)";
+            RunOrEditCode();
+        }
+
+        private void rand_fix1klfix_Click(object sender, RoutedEventArgs e)
+        {
+            txtCode.Text = @"if pos.IsConstruction:
+    area = pos.GetEmptyArea()
+    if area.Width < 1200:
+        msg.Fail('Oblast pro okno je příliš úzká.')
+    if area.Height < 500:
+        msg.Fail('Oblast pro okno je příliš nízká.')
+
+    typOkno = db.GetWindowType(49) # RAND vložené střed
+    typFix = db.GetWindowType(44)  # RAND vložený FIX
+    colorID = 71                   # smrk B bez PÚ (P)
+
+    pos.InsertCouplingProfilesSet('NF/N-W M', False)
+
+    area = pos.GetEmptyArea()
+    x1 = pos.Width * 0.4
+    x2 = pos.Width * 0.6
+    r1 = r = area.InsertVerticalCoupling('Ohraničník', 0, x1)
+    r2 = r1.Area2.InsertVerticalCoupling('Ohraničník', 0, x2)
+
+    frame = r2.Area1.InsertFrame(typOkno.ID, colorID)
+    sash = frame.InsertSash()
+    sash.InsertGlasspackets(typOkno.DefaultGlasspacket)
+    if ctx.InsertFittings:
+        args = sash.GetFittingsFindArgs()
+        fittingsTypeID = db.FindFittingsType(typOkno.DefaultFittingsGroup, args)
+        sash.InsertFittings(fittingsTypeID, True)
+
+    fix1 = r1.Area1.InsertFrame(typFix.ID, colorID)
+    fix1.InsertGlasspacket(typFix.DefaultGlasspacket)
+    fix2 = r2.Area2.InsertFrame(typFix.ID, colorID)
+    fix2.InsertGlasspacket(typFix.DefaultGlasspacket)";
+            RunOrEditCode();
         }
     }
 }

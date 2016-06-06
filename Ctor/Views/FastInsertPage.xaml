@@ -88,33 +88,59 @@
           </Setter>
         </Style>
       </StackPanel.Resources>
-      <sharedCtrls:RoundWrapPanel ItemHeight="32"
-                                  RoundStep="32"
-                                  >
-        <Button Click="Clear_Click">Clear</Button>
-        <Button Click="Mirror_Click">Mirror</Button>
-        <Button Click="Fix_Click">FIX</Button>
-        <Button Click="FixVS_Click">FIX+VS</Button>
-        <Button Click="FixHS_Click">FIX+HS</Button>
-        <Button Click="_1kl_Click">1kl</Button>
-        <Button Click="_1kp_Click">1kp</Button>
-        <Button Click="_1ks_Click">1ks</Button>
-        <Button Click="_2kl_Click">2kl</Button>
-        <Button Click="_2kp_Click">2kp</Button>
-        <Button Click="_3kl_Click">3kl</Button>
-        <Button Click="_3kp_Click">3kp</Button>
-        <Button Click="fkslv_Click">f+k(slv)</Button>
-        <Button Click="fksls_Click">f+k(sls)</Button>
-        <Button Click="_2xohr_Click">2xOHR</Button>
-        <Button Click="_3xRoz_Click">3xROZ</Button>
-      </sharedCtrls:RoundWrapPanel>
+      <TabControl>
+        <TabItem Header="Standard">
+          <sharedCtrls:RoundWrapPanel ItemHeight="32"
+                                      RoundStep="32"
+                                      >
+            <Button Click="Clear_Click">Clear</Button>
+            <Button Click="Mirror_Click">Mirror</Button>
+            <Button Click="Fix_Click">FIX</Button>
+            <Button Click="FixVS_Click">FIX+VS</Button>
+            <Button Click="FixHS_Click">FIX+HS</Button>
+            <Button Click="_1kl_Click">1kl</Button>
+            <Button Click="_1kp_Click">1kp</Button>
+            <Button Click="_1ks_Click">1ks</Button>
+            <Button Click="_2kl_Click">2kl</Button>
+            <Button Click="_2kp_Click">2kp</Button>
+            <Button Click="_3kl_Click">3kl</Button>
+            <Button Click="_3kp_Click">3kp</Button>
+            <Button Click="fkslv_Click">f+k(slv)</Button>
+            <Button Click="fksls_Click">f+k(sls)</Button>
+            <Button Click="_2xohr_Click">2xOHR</Button>
+            <Button Click="_3xRoz_Click">3xROZ</Button>
+          </sharedCtrls:RoundWrapPanel>
+        </TabItem>
+        <TabItem Header="RAND">
+          <sharedCtrls:RoundWrapPanel ItemHeight="32"
+                                      RoundStep="32"
+                                      >
+            <Button Click="Clear_Click">Clear</Button>
+            <Button Click="Mirror_Click">Mirror</Button>
+            <Button Click="randFix_Click">FIX</Button>
+            <Button Click="rand1kp_Click">1kp</Button>
+            <Button Click="rand1kl_Click">1kl</Button>
+            <Button Click="rand_fix1k_Click">fix+1k</Button>
+            <Button Click="rand_1kfix_Click">1k+fix</Button>
+            <Button Click="rand_fix1kpfix_Click">fix+1kp+fix</Button>
+            <Button Click="rand_fix1klfix_Click" xml:space="preserve"> fix+1kl+fix </Button>
+          </sharedCtrls:RoundWrapPanel>
+        </TabItem>
+      </TabControl>
 
-      <DockPanel>
+      <StackPanel Orientation="Horizontal">
+        <RadioButton x:Name="rbRun" Margin="6" IsChecked="True">Run</RadioButton>
+        <RadioButton x:Name="rbEdit" Margin="6">Edit</RadioButton>
+      </StackPanel>
+
+      <!--
+      <DockPanel Visibility="Collapsed">
         <Button DockPanel.Dock="Right" Click="edit_Click">edit</Button>
         <Button Command="{Binding RunCommand}"
                 CommandParameter="{Binding Text, ElementName=txtCode}"
                 >RUN</Button>
       </DockPanel>
+      -->
     </StackPanel>
 
     <TextBox x:Name="txtCode" 
@@ -125,6 +151,7 @@
              AcceptsTab="True"
              Height="300"
              VerticalAlignment="Top"
+             Visibility="Collapsed"
              >
       <sys:String xml:space="preserve">if pos.IsConstruction:
     area = pos.GetEmptyArea()
