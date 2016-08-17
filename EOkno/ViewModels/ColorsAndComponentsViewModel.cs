@@ -19,6 +19,8 @@ namespace EOkno.ViewModels
 
         internal decimal VychoziSleva { get; set; }
 
+        internal decimal VychoziDph { get; set; }
+
         public ICommand SelectAllCommand { get; private set; }
 
         private void SelectAll(object param)

@@ -25,5 +25,6 @@
 
         // dokument
         internal const string Sleva = "s";
+        internal const string Dph = "d";
     }
 }

@@ -50,10 +50,24 @@ namespace EOkno.ViewModels
             }
         }
 
+        public decimal DPH
+        {
+            get { return _model.DPH; }
+            set
+            {
+                if (_model.DPH != value)
+                {
+                    _model.DPH = value;
+                    OnPropertyChanged(nameof(DPH));
+                }
+            }
+        }
+
         internal override void SetDefaults()
         {
             base.SetDefaults();
             this.Sleva = this.VychoziSleva;
+            this.DPH = this.VychoziDph;
         }
     }
 }

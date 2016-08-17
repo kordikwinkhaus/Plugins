@@ -67,6 +67,8 @@
       <StackPanel Margin="4">
         <Label>Sleva (%)</Label>
         <TextBox Text="{Binding Sleva, StringFormat={}{0:0.##}}"/>
+        <Label>DPH (%)</Label>
+        <TextBox Text="{Binding DPH, StringFormat={}{0:0.##}}"/>
       </StackPanel>
     </GroupBox>
 

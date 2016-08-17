@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<config sleva="10">
+<config sleva="10" dph="15">
   <povrchoveUpravy>
     <povrchovaUprava kod="bez PU" nazev="bez povrchové úpravy"/>
     <povrchovaUprava kod="olej" nazev="olej" default="true">

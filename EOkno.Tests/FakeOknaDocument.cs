@@ -70,6 +70,14 @@ namespace EOkno.Tests
             }
         }
 
+        public int ContextID
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public DateTime ContractDate
         {
             get
@@ -97,6 +105,19 @@ namespace EOkno.Tests
         }
 
         public string Dealer
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int DeliveryAddress
         {
             get
             {
@@ -360,6 +381,19 @@ namespace EOkno.Tests
         }
 
         public bool UpdateTechnology
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public XElement UserTechChanges
         {
             get
             {

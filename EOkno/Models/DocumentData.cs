@@ -9,15 +9,23 @@ namespace EOkno.Models
         public DocumentData(XElement data)
             : base(data)
         {
-            XAttribute slevaAttr = _data.Attribute(Xml.Sleva);
-            if (slevaAttr != null)
+            _sleva = GetDecimal(Xml.Sleva);
+            _dph = GetDecimal(Xml.Dph);
+        }
+
+        private decimal GetDecimal(string attrName)
+        {
+            XAttribute attr = _data.Attribute(attrName);
+            if (attr != null)
             {
-                decimal sleva;
-                if (decimal.TryParse(slevaAttr.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out sleva))
+                decimal attrAsNumber;
+                if (decimal.TryParse(attr.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out attrAsNumber))
                 {
-                    _sleva = sleva;
+                    return attrAsNumber;
                 }
             }
+
+            return 0;
         }
 
         private decimal _sleva;
@@ -28,6 +36,17 @@ namespace EOkno.Models
             {
                 _sleva = value;
                 _data.SetAttributeValue(Xml.Sleva, _sleva.ToString(CultureInfo.InvariantCulture));
+            }
+        }
+
+        private decimal _dph;
+        public decimal DPH
+        {
+            get { return _dph; }
+            set
+            {
+                _dph = value;
+                _data.SetAttributeValue(Xml.Dph, _dph.ToString(CultureInfo.InvariantCulture));
             }
         }
     }

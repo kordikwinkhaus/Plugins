@@ -9,7 +9,6 @@ using EOkno;
 using EOkno.ViewModels;
 using EOkno.Views;
 using Okna.Plugins;
-using Okna.Plugins.Interception;
 using UserExtensions;
 
 namespace UserExt
@@ -28,7 +27,7 @@ namespace UserExt
                     vmDoc.Broker = s_broker;
                     var docView = new DocumentView { DataContext = vmDoc };
 #if (DEBUG)
-                    return new InterceptionView(docView, true);
+                    return new Okna.Plugins.Interception.InterceptionView(docView, true);
 #else
                     return docView;
 #endif
@@ -39,7 +38,7 @@ namespace UserExt
                     s_broker.Position = vmPos;
                     var posView = new PositionView { DataContext = vmPos };
 #if (DEBUG)
-                    return new InterceptionView3(posView);
+                    return new Okna.Plugins.Interception.InterceptionView3(posView);
 #else
                     return posView;
 #endif
@@ -109,13 +108,8 @@ namespace UserExt
                     }
                 }
 
-                decimal sleva = 0;
-                var slevaAttr = doc.Root.Attribute("sleva");
-                if (slevaAttr != null &&
-                    decimal.TryParse(slevaAttr.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out sleva))
-                {
-                    vm.VychoziSleva = sleva;
-                }
+                vm.VychoziSleva = GetDecimal(doc, "sleva");
+                vm.VychoziDph = GetDecimal(doc, "dph");
 
                 vm.Komponenty.AddRange(komponenty);
                 vm.PovrchoveUpravy.AddRange(povrchoveUpravy);
@@ -124,6 +118,18 @@ namespace UserExt
             {
                 MessageBox.Show(ex.Message, ex.GetType().ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private static decimal GetDecimal(XDocument doc, string attrName)
+        {
+            decimal attrAsNumber;
+            var attr = doc.Root.Attribute(attrName);
+            if (attr != null &&
+                decimal.TryParse(attr.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out attrAsNumber))
+            {
+                 return attrAsNumber;
+            }
+            return 0;
         }
     }
 }
