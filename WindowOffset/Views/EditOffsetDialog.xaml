@@ -27,8 +27,60 @@
     <Canvas Background="White"></Canvas>
 
     <StackPanel Grid.Column="1">
-      <DataGrid>
-        
+      <DataGrid ItemsSource="{Binding Items}" 
+                AutoGenerateColumns="False" 
+                CanUserReorderColumns="False" 
+                CanUserAddRows="False" 
+                CanUserSortColumns="False" 
+                SelectionMode="Single" 
+                GridLinesVisibility="None" 
+                HeadersVisibility="Column" 
+                RowBackground="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
+                PreviewKeyDown="DataGrid_PreviewKeyDown"
+                >
+        <DataGrid.CellStyle>
+          <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+            <Setter Property="Template">
+              <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                  <Grid Background="{TemplateBinding Background}">
+                    <ContentPresenter VerticalAlignment="Center" />
+                  </Grid>
+                </ControlTemplate>
+              </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="4,3,4,3" />
+          </Style>
+        </DataGrid.CellStyle>
+        <DataGrid.Columns>
+          <DataGridTextColumn Binding="{Binding Name}" 
+                              Header="{x:Static res:Resources.Side}"
+                              IsReadOnly="True" 
+                              Width="*"
+                              />
+          <DataGridTemplateColumn Header="{x:Static res:Resources.Offset}">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                  <TextBox 
+                           Width="50" 
+                         
+                           />
+                  <!--
+                    Text="{Binding Mode=TwoWay, Path=Value, UpdateSourceTrigger=PropertyChanged}" 
+                           TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus" 
+                  -->
+                  <Button IsTabStop="False" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+                    X
+                    <Button.ToolTip>
+                      Reset ....
+                    </Button.ToolTip>
+                  </Button>
+                </StackPanel>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
       </DataGrid>
     </StackPanel>
 

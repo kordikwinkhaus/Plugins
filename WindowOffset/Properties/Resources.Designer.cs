@@ -79,6 +79,15 @@ namespace WindowOffset.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Offset.
+        /// </summary>
+        public static string Offset {
+            get {
+                return ResourceManager.GetString("Offset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
         public static string OK {
@@ -93,6 +102,24 @@ namespace WindowOffset.Properties {
         public static string PluginTitle {
             get {
                 return ResourceManager.GetString("PluginTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        public static string Position {
+            get {
+                return ResourceManager.GetString("Position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Side.
+        /// </summary>
+        public static string Side {
+            get {
+                return ResourceManager.GetString("Side", resourceCulture);
             }
         }
     }

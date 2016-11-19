@@ -123,10 +123,19 @@
   <data name="EditOffset" xml:space="preserve">
     <value>Edit window offset</value>
   </data>
+  <data name="Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
     <value>Window Offset</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Side" xml:space="preserve">
+    <value>Side</value>
   </data>
 </root>
