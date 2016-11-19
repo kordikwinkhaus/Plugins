@@ -34,5 +34,15 @@ namespace WindowOffset.ViewModels
 
             _subitems.Add(subitem);
         }
+
+        protected override bool CanResetValue(object param)
+        {
+            return this.Offset != 0;
+        }
+
+        protected override void ResetValue(object param)
+        {
+            this.Offset = 0;
+        }
     }
 }

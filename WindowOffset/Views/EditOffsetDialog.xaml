@@ -53,29 +53,34 @@
           </Style>
         </DataGrid.CellStyle>
         <DataGrid.Columns>
-          <DataGridTextColumn Binding="{Binding Name}" 
-                              Header="{x:Static res:Resources.Side}"
-                              IsReadOnly="True" 
-                              Width="*"
-                              />
+          <DataGridTemplateColumn Header="{x:Static res:Resources.Side}" Width="*">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Name}"
+                           Margin="{Binding Converter={x:Static v:RowOffsetConverter.Instance}}"
+                           />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
           <DataGridTemplateColumn Header="{x:Static res:Resources.Offset}">
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
-                <StackPanel Orientation="Horizontal">
-                  <TextBox 
-                           Width="50" 
-                         
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,3,6,3">
+                  <TextBox Text="{Binding Mode=TwoWay, Path=Offset, UpdateSourceTrigger=LostFocus}" 
+                           Width="40" 
+                           HorizontalContentAlignment="Right"
                            />
                   <!--
-                    Text="{Binding Mode=TwoWay, Path=Value, UpdateSourceTrigger=PropertyChanged}" 
-                           TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus" 
+                           TextChanged="TextBox_TextChanged" 
+                           LostFocus="TextBox_LostFocus" 
                   -->
-                  <Button IsTabStop="False" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
-                    X
-                    <Button.ToolTip>
-                      Reset ....
-                    </Button.ToolTip>
-                  </Button>
+                  <Button IsTabStop="False" 
+                          Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                          Command="{Binding ResetValueCommand}"
+                          ToolTip="{x:Static res:Resources.ResetValue}"
+                          Content="✕"
+                          />
                 </StackPanel>
               </DataTemplate>
             </DataGridTemplateColumn.CellTemplate>

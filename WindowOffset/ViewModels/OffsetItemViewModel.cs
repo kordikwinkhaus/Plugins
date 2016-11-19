@@ -13,6 +13,9 @@ namespace WindowOffset.ViewModels
             this.ResetValueCommand = new RelayCommand(ResetValue, CanResetValue);
         }
 
+        // strana v konstrukci 0=levý, 1=lh, 2=horní...
+        internal int Side { get; set; }
+
         private string _name;
         public string Name
         {
@@ -29,12 +32,12 @@ namespace WindowOffset.ViewModels
 
         public ICommand ResetValueCommand { get; private set; }
 
-        private bool CanResetValue(object param)
+        protected virtual bool CanResetValue(object param)
         {
             return this.HasOwnValue;
         }
 
-        private void ResetValue(object param)
+        protected virtual void ResetValue(object param)
         {
             if (this.CanResetValue(param))
             {

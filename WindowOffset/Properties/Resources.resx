@@ -138,4 +138,31 @@
   <data name="Side" xml:space="preserve">
     <value>Side</value>
   </data>
+  <data name="Bottom" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="BottomLeft" xml:space="preserve">
+    <value>Bottom Left</value>
+  </data>
+  <data name="BottomRight" xml:space="preserve">
+    <value>Bottom Right</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="Top" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="TopLeft" xml:space="preserve">
+    <value>Top Left</value>
+  </data>
+  <data name="TopRight" xml:space="preserve">
+    <value>Top Right</value>
+  </data>
+  <data name="ResetValue" xml:space="preserve">
+    <value>Reset value</value>
+  </data>
 </root>

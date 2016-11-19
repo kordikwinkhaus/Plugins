@@ -61,6 +61,33 @@ namespace WindowOffset.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bottom.
+        /// </summary>
+        public static string Bottom {
+            get {
+                return ResourceManager.GetString("Bottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom Left.
+        /// </summary>
+        public static string BottomLeft {
+            get {
+                return ResourceManager.GetString("BottomLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom Right.
+        /// </summary>
+        public static string BottomRight {
+            get {
+                return ResourceManager.GetString("BottomRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -75,6 +102,15 @@ namespace WindowOffset.Properties {
         public static string EditOffset {
             get {
                 return ResourceManager.GetString("EditOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left.
+        /// </summary>
+        public static string Left {
+            get {
+                return ResourceManager.GetString("Left", resourceCulture);
             }
         }
         
@@ -115,11 +151,56 @@ namespace WindowOffset.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset value.
+        /// </summary>
+        public static string ResetValue {
+            get {
+                return ResourceManager.GetString("ResetValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right.
+        /// </summary>
+        public static string Right {
+            get {
+                return ResourceManager.GetString("Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Side.
         /// </summary>
         public static string Side {
             get {
                 return ResourceManager.GetString("Side", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top.
+        /// </summary>
+        public static string Top {
+            get {
+                return ResourceManager.GetString("Top", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top Left.
+        /// </summary>
+        public static string TopLeft {
+            get {
+                return ResourceManager.GetString("TopLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top Right.
+        /// </summary>
+        public static string TopRight {
+            get {
+                return ResourceManager.GetString("TopRight", resourceCulture);
             }
         }
     }
