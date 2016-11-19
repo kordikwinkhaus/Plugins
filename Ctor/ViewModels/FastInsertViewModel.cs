@@ -70,24 +70,9 @@ namespace Ctor.ViewModels
             }
         }
 
-        private IDocumentsDialogFactory _dialogFactory;
-        private InteractionService interaction;
-
         internal IDocumentsDialogFactory DialogFactory
         {
-            get
-            {
-                if (_dialogFactory == null)
-                {
-                    var oknaApp = this.Document.Application;
-                    if (oknaApp != null)
-                    {
-                        _dialogFactory = new DocumentsDialogFactory();
-                        _dialogFactory.Init(oknaApp, _connection);
-                    }
-                }
-                return _dialogFactory;
-            }
+            get { return DocumentsDialogFactory.Instance; }
         }
 
         public ContextViewModel Context { get; private set; }

@@ -13,6 +13,7 @@
              UseLayoutRounding="True"
              TextOptions.TextFormattingMode="Display"
              SnapsToDevicePixels="True"
+             PreviewMouseRightButtonUp="UserControl_PreviewMouseRightButtonUp"     
              >
   <Grid>
     <Grid.RowDefinitions>

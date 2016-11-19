@@ -407,5 +407,21 @@ namespace Ctor.Models
         }
 
         #endregion
+
+        public bool Test()
+        {
+            // pozice:
+            bool result = _position.AddArticle(_position.Data, 4, 5, "ICEMA145", false, false, true, false, false, "MYTEST");
+
+            var cena = _position.AdditionalElementsValue;
+
+            var parts = _position.Data.AdditionalParts.ToList();
+
+            return result;
+
+            // kdekoliv na IPart:
+            //_position.Data.AddAdditionalPart()
+            //_position.Data.RemoveAdditionalPart();
+        }
     }
 }

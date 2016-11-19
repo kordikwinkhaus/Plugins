@@ -667,5 +667,10 @@ if pos.IsConstruction:
     fix2.InsertGlasspacket(typFix.DefaultGlasspacket)";
             RunOrEditCode();
         }
+
+        private void UserControl_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }
