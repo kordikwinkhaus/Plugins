@@ -73,12 +73,6 @@
     <Compile Include="ViewModels\VariableViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ctor\Ctor.csproj">
-      <Project>{7b16f83b-d70d-4ea9-a8bf-3f0636d81d9c}</Project>
-      <Name>Ctor</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>
