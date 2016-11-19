@@ -73,6 +73,9 @@
     <Compile Include="Views\GlasspacketView.xaml.cs">
       <DependentUpon>GlasspacketView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Smlouva.xaml.cs">
+      <DependentUpon>Smlouva.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -86,6 +89,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Views\GlasspacketView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Smlouva.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

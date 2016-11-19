@@ -13,6 +13,9 @@ namespace UserExt
             {
                 case EPropPage.pSzyba:
                     return new GlasspacketView { DataContext = new GlasspacketViewModel() };
+
+                case EPropPage.pUmowa:
+                    return new Smlouva();
             }
 
             return null;
