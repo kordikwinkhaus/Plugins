@@ -1,0 +1,53 @@
+﻿<Window x:Class="WindowOffset.Views.EditOffsetDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:v="clr-namespace:WindowOffset.Views"
+        xmlns:res="clr-namespace:WindowOffset.Properties"
+        mc:Ignorable="d"
+        Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        Title="{x:Static res:Resources.EditOffset}" 
+        WindowStartupLocation="CenterOwner"
+        Height="400" Width="600">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="200"/>
+    </Grid.ColumnDefinitions>
+
+    <Canvas Background="White"></Canvas>
+
+    <StackPanel Grid.Column="1">
+      <DataGrid>
+        
+      </DataGrid>
+    </StackPanel>
+
+    <StackPanel Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Margin="3"
+                >
+      <StackPanel.Resources>
+        <Style TargetType="{x:Type Button}">
+          <Setter Property="MinWidth" Value="70"/>
+          <Setter Property="Margin" Value="3" />
+          <Setter Property="Padding" Value="3,2" />
+        </Style>
+      </StackPanel.Resources>
+
+      <Button Content="{x:Static res:Resources.OK}" />
+      <Button Content="{x:Static res:Resources.Cancel}" IsCancel="True"/>
+    </StackPanel>
+  </Grid>
+</Window>

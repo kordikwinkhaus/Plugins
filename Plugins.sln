@@ -19,9 +19,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EOkno.Tests", "EOkno.Tests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowOffset", "WindowOffset\WindowOffset.csproj", "{3C571A23-A3C3-4EC9-B348-7AC9715669A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowOffset.Tests", "WindowOffset.Tests\WindowOffset.Tests.csproj", "{BEFF18A6-A6DF-4DCF-A94D-63F422465CD1}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SharedCode\SharedCode.projitems*{0af3a600-6720-4974-8351-a55ac5111438}*SharedItemsImports = 13
+		SharedCode\SharedCode.projitems*{3c571a23-a3c3-4ec9-b348-7ac9715669a5}*SharedItemsImports = 4
 		SharedCode\SharedCode.projitems*{b58a9099-09a4-43a3-bb4e-2d75e8648396}*SharedItemsImports = 4
 		SharedCode\SharedCode.projitems*{e56f0c97-ab5f-4710-8289-eeb232ae3105}*SharedItemsImports = 4
 	EndGlobalSection
@@ -85,6 +88,14 @@ Global
 		{3C571A23-A3C3-4EC9-B348-7AC9715669A5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3C571A23-A3C3-4EC9-B348-7AC9715669A5}.Release|x86.ActiveCfg = Release|Any CPU
 		{3C571A23-A3C3-4EC9-B348-7AC9715669A5}.Release|x86.Build.0 = Release|Any CPU
+		{BEFF18A6-A6DF-4DCF-A94D-63F422465CD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEFF18A6-A6DF-4DCF-A94D-63F422465CD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEFF18A6-A6DF-4DCF-A94D-63F422465CD1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BEFF18A6-A6DF-4DCF-A94D-63F422465CD1}.Debug|x86.Build.0 = Debug|Any CPU
+		{BEFF18A6-A6DF-4DCF-A94D-63F422465CD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEFF18A6-A6DF-4DCF-A94D-63F422465CD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEFF18A6-A6DF-4DCF-A94D-63F422465CD1}.Release|x86.ActiveCfg = Release|Any CPU
+		{BEFF18A6-A6DF-4DCF-A94D-63F422465CD1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

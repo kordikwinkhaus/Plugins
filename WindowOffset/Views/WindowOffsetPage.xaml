@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="WindowOffset.Views.WindowOffsetPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:res="clr-namespace:WindowOffset.Properties"
+             mc:Ignorable="d" 
+             Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
+             SnapsToDevicePixels="True"
+             UseLayoutRounding="True"
+             PreviewMouseRightButtonUp="UserControl_PreviewMouseRightButtonUp"
+             d:DesignHeight="300" d:DesignWidth="300">
+  <Grid>
+    <Button x:Name="cmdEdit" 
+            Margin="6" 
+            Padding="2"
+            Content="{x:Static res:Resources.EditOffset}" 
+            Click="cmdEdit_Click"
+            />
+  </Grid>
+</UserControl>
