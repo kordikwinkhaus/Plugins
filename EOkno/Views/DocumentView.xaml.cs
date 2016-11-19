@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Xml.Linq;
 using EOkno.Models;
 using EOkno.ViewModels;
@@ -67,6 +68,11 @@ namespace EOkno.Views
         private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             _viewmodel = (DocumentViewModel)e.NewValue;
+        }
+
+        private void UserControl_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

@@ -9,7 +9,10 @@
              mc:Ignorable="d" 
              DataContextChanged="UserControl_DataContextChanged"
              TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
              SnapsToDevicePixels="True"
+             UseLayoutRounding="True"
+             PreviewMouseRightButtonUp="UserControl_PreviewMouseRightButtonUp"
              xml:lang="cs"
              d:DesignHeight="300" d:DesignWidth="500">
   <UserControl.Resources>

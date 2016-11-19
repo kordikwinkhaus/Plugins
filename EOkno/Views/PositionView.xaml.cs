@@ -1,6 +1,8 @@
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
-﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Xml.Linq;
 using EOkno.Models;
 using EOkno.ViewModels;
@@ -83,9 +85,14 @@ namespace EOkno.Views
             }
         }
 
-        private void UserControl_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             _viewmodel = (PositionViewModel)e.NewValue;
+        }
+
+        private void UserControl_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

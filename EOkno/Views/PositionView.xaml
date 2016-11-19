@@ -10,7 +10,10 @@
              d:DesignHeight="300" d:DesignWidth="300"
              DataContextChanged="UserControl_DataContextChanged"
              TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
              SnapsToDevicePixels="True"
+             UseLayoutRounding="True"
+             PreviewMouseRightButtonUp="UserControl_PreviewMouseRightButtonUp"
              >
   <UserControl.Resources>
     <v:BoolToBrushConverter x:Key="BoolToBrushConverter"/>
