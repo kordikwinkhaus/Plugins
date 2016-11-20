@@ -24,7 +24,32 @@
       <ColumnDefinition Width="200"/>
     </Grid.ColumnDefinitions>
 
-    <Canvas Background="White"></Canvas>
+    <Canvas Background="White">
+        <!--
+      <Canvas.LayoutTransform>
+        <ScaleTransform ScaleX="0.1" ScaleY="0.1"/>
+      </Canvas.LayoutTransform>
+        -->
+      <Polygon Points="{Binding WindowPoints}"
+               Stroke="Black"
+               StrokeThickness="1"
+               />
+
+      <Grid Canvas.Left="100" Canvas.Top="50"
+            Width="250"
+            >
+        <TextBlock 
+                 Text="1000"
+                 TextBlock.TextAlignment="Center"
+                 VerticalAlignment="Center"
+                 />
+        <Border BorderThickness="1,0,1,0"
+              BorderBrush="Black"
+              />
+      </Grid>
+      
+
+    </Canvas>
 
     <StackPanel Grid.Column="1">
       <DataGrid ItemsSource="{Binding Items}" 

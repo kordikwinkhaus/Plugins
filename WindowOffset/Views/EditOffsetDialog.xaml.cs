@@ -99,5 +99,18 @@ namespace WindowOffset.Views
 
             return null;
         }
+
+        //private Size MeasureString(string candidate)
+        //{
+        //    var formattedText = new FormattedText(
+        //candidate,
+        //CultureInfo.CurrentUICulture,
+        //FlowDirection.LeftToRight,
+        //new Typeface(this.textBlock.FontFamily, this.textBlock.FontStyle, this.textBlock.FontWeight, this.textBlock.FontStretch),
+        //this.textBlock.FontSize,
+        //Brushes.Black);
+
+        //    return new Size(formattedText.Width, formattedText.Height);
+        //}
     }
 }

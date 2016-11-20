@@ -25,6 +25,13 @@ namespace WindowOffset.ViewModels
             _topObject = topObject;
 
             Init();
+
+            this.TestDim = new DimensionViewModel
+            {
+                Value = 1000,
+                Start = new System.Windows.Point(100, 100),
+                End = new System.Windows.Point(400, 100)
+            };
         }
 
         private void Init()
@@ -181,5 +188,7 @@ namespace WindowOffset.ViewModels
         public ObservableCollection<OffsetItemViewModel> Items { get; } = new ObservableCollection<OffsetItemViewModel>();
 
         public PointCollection WindowPoints { get; } = new PointCollection();
+
+        public DimensionViewModel TestDim { get; set; }
     }
 }

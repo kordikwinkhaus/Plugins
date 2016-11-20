@@ -56,6 +56,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionsFactory.cs" />
+    <Compile Include="Models\Polygon.cs" />
+    <Compile Include="Models\Dimension.cs" />
+    <Compile Include="Models\DimensionLayer.cs" />
+    <Compile Include="Models\DimLayerSide.cs" />
+    <Compile Include="Models\MainOffset.cs" />
+    <Compile Include="Models\SideOffset.cs" />
+    <Compile Include="Models\WallHole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -69,6 +76,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\DimensionViewModel.cs" />
     <Compile Include="ViewModels\EditOffsetViewModel.cs" />
     <Compile Include="ViewModels\MainOffsetItemViewModel.cs" />
     <Compile Include="ViewModels\OffsetItemViewModel.cs" />
@@ -76,6 +84,7 @@
       <DependentUpon>EditOffsetDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RowOffsetConverter.cs" />
+    <Compile Include="Views\WindowCanvas.cs" />
     <Compile Include="Views\WindowOffsetPage.xaml.cs">
       <DependentUpon>WindowOffsetPage.xaml</DependentUpon>
     </Compile>
