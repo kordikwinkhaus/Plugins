@@ -497,6 +497,16 @@ namespace EOkno.Tests
             throw new NotImplementedException();
         }
 
+        public int GetSubDocIndex(string guid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetSubDocIndex(IPosition pos)
+        {
+            throw new NotImplementedException();
+        }
+
         public IPosition InsertPos(int at)
         {
             throw new NotImplementedException();
