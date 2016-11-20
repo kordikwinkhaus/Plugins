@@ -37,6 +37,7 @@ namespace WindowOffset.Tests.ViewModels
 
             Assert.AreEqual(6, target.Items.Count);
             VerifySides(target, 0, 1, 2, 4, 6);
+            Assert.AreEqual(5, target.WindowPoints.Count);
         }
 
         [TestMethod]
@@ -51,6 +52,7 @@ namespace WindowOffset.Tests.ViewModels
 
             Assert.AreEqual(6, target.Items.Count);
             VerifySides(target, 0, 1, 3, 4, 6);
+            Assert.AreEqual(5, target.WindowPoints.Count);
         }
 
         [TestMethod]
@@ -65,6 +67,7 @@ namespace WindowOffset.Tests.ViewModels
 
             Assert.AreEqual(4, target.Items.Count);
             VerifySides(target, 1, 4, 6);
+            Assert.AreEqual(3, target.WindowPoints.Count);
         }
 
         [TestMethod]
@@ -79,6 +82,7 @@ namespace WindowOffset.Tests.ViewModels
 
             Assert.AreEqual(6, target.Items.Count);
             VerifySides(target, 0, 2, 3, 4, 6);
+            Assert.AreEqual(5, target.WindowPoints.Count);
         }
 
         [TestMethod]
@@ -93,6 +97,7 @@ namespace WindowOffset.Tests.ViewModels
 
             Assert.AreEqual(4, target.Items.Count);
             VerifySides(target, 0, 3, 6);
+            Assert.AreEqual(3, target.WindowPoints.Count);
         }
 
         [TestMethod]
@@ -107,6 +112,7 @@ namespace WindowOffset.Tests.ViewModels
 
             Assert.AreEqual(6, target.Items.Count);
             VerifySides(target, 0, 2, 4, 5, 6);
+            Assert.AreEqual(5, target.WindowPoints.Count);
         }
 
         [TestMethod]
@@ -121,6 +127,7 @@ namespace WindowOffset.Tests.ViewModels
 
             Assert.AreEqual(4, target.Items.Count);
             VerifySides(target, 0, 2, 5);
+            Assert.AreEqual(3, target.WindowPoints.Count);
         }
 
         [TestMethod]
@@ -135,6 +142,7 @@ namespace WindowOffset.Tests.ViewModels
 
             Assert.AreEqual(6, target.Items.Count);
             VerifySides(target, 0, 2, 4, 6, 7);
+            Assert.AreEqual(5, target.WindowPoints.Count);
         }
 
         private void VerifySides(EditOffsetViewModel target, params int[] sides)
