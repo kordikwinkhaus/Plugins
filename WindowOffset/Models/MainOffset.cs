@@ -7,6 +7,11 @@ namespace WindowOffset.Models
     {
         private readonly List<SideOffset> _subitems = new List<SideOffset>();
 
+        public MainOffset()
+        {
+            this.Side = -1;
+        }
+
         internal void Add(SideOffset subitem)
         {
             if (subitem == null) throw new ArgumentNullException(nameof(subitem));

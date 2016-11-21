@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using WindowOffset.Models;
 
 namespace WindowOffset.ViewModels
@@ -8,11 +9,13 @@ namespace WindowOffset.ViewModels
     {
         private readonly List<SideOffsetViewModel> _subitems = new List<SideOffsetViewModel>();
         private readonly MainOffset _mainModel;
+        private readonly PointF _centroid;
 
-        internal MainOffsetViewModel(MainOffset model)
+        internal MainOffsetViewModel(MainOffset model, PointF centroid)
             : base(model)
         {
             _mainModel = model;
+            _centroid = centroid;
         }
 
         public override int Offset
@@ -43,6 +46,16 @@ namespace WindowOffset.ViewModels
         protected override void ResetValue(object param)
         {
             this.Offset = 0;
+        }
+
+        public override double X
+        {
+            get { return _centroid.X / 5 + 20; }
+        }
+
+        public override double Y
+        {
+            get { return _centroid.Y / 5 + 20; }
         }
     }
 }

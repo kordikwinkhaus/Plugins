@@ -81,12 +81,17 @@
     <Compile Include="ViewModels\DimensionViewModel.cs" />
     <Compile Include="ViewModels\EditOffsetViewModel.cs" />
     <Compile Include="ViewModels\MainOffsetViewModel.cs" />
+    <Compile Include="ViewModels\SideOffsetLineViewModel.cs" />
     <Compile Include="ViewModels\SideOffsetViewModel.cs" />
+    <Compile Include="Views\CenterItemConverter.cs" />
     <Compile Include="Views\EditOffsetDialog.xaml.cs">
       <DependentUpon>EditOffsetDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\OffsetSideTextboxMarginConverter.cs" />
     <Compile Include="Views\RowOffsetConverter.cs" />
-    <Compile Include="Views\WindowCanvas.cs" />
+    <Compile Include="Views\WindowArea.cs" />
+    <Compile Include="Views\WindowAreaItem.cs" />
+    <Compile Include="Views\WindowAreaItemStyleSelector.cs" />
     <Compile Include="Views\WindowOffsetPage.xaml.cs">
       <DependentUpon>WindowOffsetPage.xaml</DependentUpon>
     </Compile>
@@ -103,6 +108,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\EditOffsetDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WindowAreaStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

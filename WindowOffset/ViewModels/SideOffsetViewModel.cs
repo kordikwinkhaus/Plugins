@@ -14,8 +14,6 @@ namespace WindowOffset.ViewModels
 
         internal SideOffsetViewModel(SideOffset model)
         {
-            if (model == null) throw new ArgumentNullException(nameof(model));
-
             _model = model;
             _name = GetName(model.Side);
             this.ResetValueCommand = new RelayCommand(ResetValue, CanResetValue);
@@ -112,6 +110,16 @@ namespace WindowOffset.ViewModels
             _model.TrySetParentOffset(offset);
             OnPropertyChanged(nameof(Offset));
             OnPropertyChanged(nameof(HasOwnValue));
+        }
+
+        public virtual double X
+        {
+            get { return (_model.Start.X + _model.End.X) / 10 + 20; }
+        }
+
+        public virtual double Y
+        {
+            get { return (_model.Start.Y + _model.End.Y) / 10 + 20; }
         }
     }
 }

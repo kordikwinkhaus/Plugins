@@ -193,7 +193,7 @@ namespace WindowOffset.Tests.Models
         {
             using (_mocks.Record())
             {
-                SetupCommonResults(bottomLeft: new SizeF(500, 500));
+                SetupCommonResults(bottomLeft: new SizeF(300, 400));
             }
 
             var target = new WallHole(_data, _topObject);
@@ -201,15 +201,15 @@ namespace WindowOffset.Tests.Models
             Assert.AreEqual(5, target.SideOffsets.Count);
             VerifySides(target, 0, 2, 4, 6, 7);
             VerifyPoints(target,
-                new PointF(0, 500),
+                new PointF(0, 600),
                 new PointF(0, 0),
                 new PointF(1000, 0),
                 new PointF(1000, 1000),
-                new PointF(500, 1000));
+                new PointF(300, 1000));
             VerifyTopDims(target, 1000);
-            VerifyLeftDims(target, 1000, new float[] { 500, 500 });
+            VerifyLeftDims(target, 1000, new float[] { 600, 400 });
             VerifyRightDims(target);
-            VerifyBottomDims(target, new float[] { 500, 500 });
+            VerifyBottomDims(target, new float[] { 300, 700 });
         }
 
         private void VerifySides(WallHole target, params int[] sides)

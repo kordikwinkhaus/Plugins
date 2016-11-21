@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
@@ -32,7 +33,7 @@ namespace WindowOffset.ViewModels
 
         private void Init()
         {
-            _mainItem = new MainOffsetViewModel(_wallHole.MainOffset);
+            _mainItem = new MainOffsetViewModel(_wallHole.MainOffset, _wallHole.Centroid);
             this.CanvasItems.Add(_mainItem);
             this.OffsetItems.Add(_mainItem);
             foreach (var sideOffset in _wallHole.SideOffsets)
@@ -41,6 +42,7 @@ namespace WindowOffset.ViewModels
                 _mainItem.Add(sideOffsetVM);
                 this.CanvasItems.Add(sideOffsetVM);
                 this.OffsetItems.Add(sideOffsetVM);
+                this.CanvasItems.Add(new SideOffsetLineViewModel(sideOffset));
             }
 
             
@@ -48,6 +50,6 @@ namespace WindowOffset.ViewModels
 
         public IList<SideOffsetViewModel> OffsetItems { get; } = new List<SideOffsetViewModel>();
 
-        public IList<SideOffsetViewModel> CanvasItems { get; } = new List<SideOffsetViewModel>();
+        public IList CanvasItems { get; } = new ArrayList();
     }
 }

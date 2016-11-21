@@ -87,7 +87,7 @@ namespace WindowOffset.Models
             // bottom left?
             if (bottomLeft.Height != 0 && bottomLeft.Width != 0)
             {
-                AddItem(7, bottomLeft.Width, size.Height, 0, bottomLeft.Height);
+                AddItem(7, bottomLeft.Width, size.Height, 0, size.Height - bottomLeft.Height);
             }
         }
 

@@ -13,7 +13,16 @@
         UseLayoutRounding="True"
         Title="{x:Static res:Resources.EditOffset}" 
         WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
         Height="400" Width="600">
+  <Window.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="WindowAreaStyles.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Window.Resources>
+  
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*"/>
@@ -24,12 +33,11 @@
       <ColumnDefinition Width="200"/>
     </Grid.ColumnDefinitions>
 
-    <Canvas Background="White">
         <!--
+    <Canvas Background="White">
       <Canvas.LayoutTransform>
         <ScaleTransform ScaleX="0.1" ScaleY="0.1"/>
       </Canvas.LayoutTransform>
-        -->
       <Polygon Points="{Binding WindowPoints}"
                Stroke="Black"
                StrokeThickness="1"
@@ -48,8 +56,15 @@
               />
       </Grid>
       
-
     </Canvas>
+        -->
+
+    <v:WindowArea ItemsSource="{Binding CanvasItems}"
+                  Background="White"
+                  ItemContainerStyleSelector="{x:Static v:WindowAreaItemStyleSelector.Instance}"
+                  >
+      
+    </v:WindowArea>
 
     <StackPanel Grid.Column="1">
       <DataGrid ItemsSource="{Binding OffsetItems}" 
