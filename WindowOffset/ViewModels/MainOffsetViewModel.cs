@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WindowOffset.Models;
 
 namespace WindowOffset.ViewModels
 {
-    public class MainOffsetItemViewModel : OffsetItemViewModel
+    public class MainOffsetViewModel : SideOffsetViewModel
     {
-        private readonly List<OffsetItemViewModel> _subitems = new List<OffsetItemViewModel>();
+        private readonly List<SideOffsetViewModel> _subitems = new List<SideOffsetViewModel>();
+        private readonly MainOffset _mainModel;
 
-        public MainOffsetItemViewModel()
+        internal MainOffsetViewModel(MainOffset model)
+            : base(model)
         {
-
+            _mainModel = model;
         }
 
         public override int Offset
@@ -23,12 +23,12 @@ namespace WindowOffset.ViewModels
                 base.Offset = value;
                 foreach (var subitem in _subitems)
                 {
-                    subitem.TrySetParentValue(value);
+                    subitem.TrySetParentOffset(value);
                 }
             }
         }
 
-        internal void Add(OffsetItemViewModel subitem)
+        internal void Add(SideOffsetViewModel subitem)
         {
             if (subitem == null) throw new ArgumentNullException(nameof(subitem));
 

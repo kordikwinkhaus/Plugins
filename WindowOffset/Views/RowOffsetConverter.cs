@@ -19,7 +19,7 @@ namespace WindowOffset.Views
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is MainOffsetItemViewModel)
+            if (value is MainOffsetViewModel)
             {
                 return s_normal;
             }

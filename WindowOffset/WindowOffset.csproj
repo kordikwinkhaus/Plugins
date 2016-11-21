@@ -80,8 +80,8 @@
     </Compile>
     <Compile Include="ViewModels\DimensionViewModel.cs" />
     <Compile Include="ViewModels\EditOffsetViewModel.cs" />
-    <Compile Include="ViewModels\MainOffsetItemViewModel.cs" />
-    <Compile Include="ViewModels\OffsetItemViewModel.cs" />
+    <Compile Include="ViewModels\MainOffsetViewModel.cs" />
+    <Compile Include="ViewModels\SideOffsetViewModel.cs" />
     <Compile Include="Views\EditOffsetDialog.xaml.cs">
       <DependentUpon>EditOffsetDialog.xaml</DependentUpon>
     </Compile>

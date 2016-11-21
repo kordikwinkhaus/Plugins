@@ -52,7 +52,7 @@
     </Canvas>
 
     <StackPanel Grid.Column="1">
-      <DataGrid ItemsSource="{Binding Items}" 
+      <DataGrid ItemsSource="{Binding OffsetItems}" 
                 AutoGenerateColumns="False" 
                 CanUserReorderColumns="False" 
                 CanUserAddRows="False" 
