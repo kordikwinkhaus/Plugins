@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
 using System.Xml.Linq;
 using Okna.Plugins.ViewModels;
 using WHOkna;
 using WindowOffset.Models;
-using WindowOffset.Properties;
 
 namespace WindowOffset.ViewModels
 {
@@ -45,7 +37,17 @@ namespace WindowOffset.ViewModels
                 this.CanvasItems.Add(new SideOffsetLineViewModel(sideOffset));
             }
 
-            
+
+        }
+
+        internal void RecalculateSize(double actualWidth, double actualHeight, double textHeight)
+        {
+            if (actualWidth == 0) return;
+            if (actualHeight == 0) return;
+            if (textHeight == 0)
+            {
+                textHeight = 20;
+            }
         }
 
         public IList<SideOffsetViewModel> OffsetItems { get; } = new List<SideOffsetViewModel>();

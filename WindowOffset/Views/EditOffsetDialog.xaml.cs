@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using WindowOffset.ViewModels;
 
 namespace WindowOffset.Views
 {
@@ -12,6 +14,21 @@ namespace WindowOffset.Views
         public EditOffsetDialog()
         {
             InitializeComponent();
+        }
+
+        private EditOffsetViewModel _viewmodel;
+        internal EditOffsetViewModel ViewModel
+        {
+            get { return _viewmodel; }
+            set { this.DataContext = _viewmodel = value; }
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (_viewmodel != null)
+            {
+                _viewmodel.RecalculateSize(windowArea.ActualWidth, windowArea.ActualHeight, GetTextHeight());
+            }
         }
 
         public virtual bool ShowDialog(IntPtr hWndParent)
@@ -100,17 +117,21 @@ namespace WindowOffset.Views
             return null;
         }
 
-        //private Size MeasureString(string candidate)
-        //{
-        //    var formattedText = new FormattedText(
-        //candidate,
-        //CultureInfo.CurrentUICulture,
-        //FlowDirection.LeftToRight,
-        //new Typeface(this.textBlock.FontFamily, this.textBlock.FontStyle, this.textBlock.FontWeight, this.textBlock.FontStretch),
-        //this.textBlock.FontSize,
-        //Brushes.Black);
+        private double _textSize = 0;
+        private double GetTextHeight()
+        {
+            if (_textSize == 0)
+            {
+                var formattedText = new FormattedText("1234567890",
+                    CultureInfo.CurrentUICulture,
+                    FlowDirection.LeftToRight,
+                    new Typeface(tbFontSettings.FontFamily, tbFontSettings.FontStyle, tbFontSettings.FontWeight, tbFontSettings.FontStretch),
+                    tbFontSettings.FontSize,
+                    Brushes.Black);
+                _textSize = formattedText.Height;
+            }
 
-        //    return new Size(formattedText.Width, formattedText.Height);
-        //}
+            return _textSize;
+        }
     }
 }

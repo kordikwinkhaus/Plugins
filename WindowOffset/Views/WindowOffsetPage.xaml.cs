@@ -103,7 +103,7 @@ namespace WindowOffset.Views
             {
                 var dlg = new EditOffsetDialog();
                 var vm = new EditOffsetViewModel(_data, _topObject);
-                dlg.DataContext = vm;
+                dlg.ViewModel = vm;
             
                 dlg.ShowDialog(this.OknaDoc?.Application?.MainWindowHWND() ?? IntPtr.Zero);
             }

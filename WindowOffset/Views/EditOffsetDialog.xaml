@@ -14,7 +14,11 @@
         Title="{x:Static res:Resources.EditOffset}" 
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
-        Height="400" Width="600">
+        Height="450" Width="700" 
+        SizeChanged="Window_SizeChanged"
+        MinHeight="350"
+        MinWidth="500"
+        >
   <Window.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -33,38 +37,11 @@
       <ColumnDefinition Width="200"/>
     </Grid.ColumnDefinitions>
 
-        <!--
-    <Canvas Background="White">
-      <Canvas.LayoutTransform>
-        <ScaleTransform ScaleX="0.1" ScaleY="0.1"/>
-      </Canvas.LayoutTransform>
-      <Polygon Points="{Binding WindowPoints}"
-               Stroke="Black"
-               StrokeThickness="1"
-               />
-
-      <Grid Canvas.Left="100" Canvas.Top="50"
-            Width="250"
-            >
-        <TextBlock 
-                 Text="1000"
-                 TextBlock.TextAlignment="Center"
-                 VerticalAlignment="Center"
-                 />
-        <Border BorderThickness="1,0,1,0"
-              BorderBrush="Black"
-              />
-      </Grid>
-      
-    </Canvas>
-        -->
-
-    <v:WindowArea ItemsSource="{Binding CanvasItems}"
+    <v:WindowArea x:Name="windowArea" 
+                  ItemsSource="{Binding CanvasItems}"
                   Background="White"
                   ItemContainerStyleSelector="{x:Static v:WindowAreaItemStyleSelector.Instance}"
-                  >
-      
-    </v:WindowArea>
+                  />
 
     <StackPanel Grid.Column="1">
       <DataGrid ItemsSource="{Binding OffsetItems}" 
@@ -72,6 +49,7 @@
                 CanUserReorderColumns="False" 
                 CanUserAddRows="False" 
                 CanUserSortColumns="False" 
+                CanUserDeleteRows="False"
                 SelectionMode="Single" 
                 GridLinesVisibility="None" 
                 HeadersVisibility="Column" 
@@ -143,6 +121,7 @@
         </Style>
       </StackPanel.Resources>
 
+      <TextBlock x:Name="tbFontSettings" />
       <Button Content="{x:Static res:Resources.OK}" />
       <Button Content="{x:Static res:Resources.Cancel}" IsCancel="True"/>
     </StackPanel>
