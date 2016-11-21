@@ -427,10 +427,12 @@ namespace EOkno.Tests
             }
         }
 
+#pragma warning disable 0067
         public event DocumentNotification AfterSave;
         public event DocumentNotification BeforeSave;
         public event DocumentNotification Changed;
         public event SelectionNotification SelectionChanged;
+#pragma warning restore 0067
 
         public int ActivateContext()
         {
