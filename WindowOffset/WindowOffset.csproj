@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="ViewModels\DimensionViewModel.cs" />
     <Compile Include="ViewModels\EditOffsetViewModel.cs" />
+    <Compile Include="ViewModels\IScaleable.cs" />
     <Compile Include="ViewModels\MainOffsetViewModel.cs" />
     <Compile Include="ViewModels\SideOffsetLineViewModel.cs" />
     <Compile Include="ViewModels\SideOffsetViewModel.cs" />

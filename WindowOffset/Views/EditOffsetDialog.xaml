@@ -37,11 +37,13 @@
       <ColumnDefinition Width="200"/>
     </Grid.ColumnDefinitions>
 
-    <v:WindowArea x:Name="windowArea" 
-                  ItemsSource="{Binding CanvasItems}"
-                  Background="White"
-                  ItemContainerStyleSelector="{x:Static v:WindowAreaItemStyleSelector.Instance}"
-                  />
+    <Grid Background="White">
+      <v:WindowArea x:Name="windowArea" 
+                    ItemsSource="{Binding CanvasItems}"
+                    ItemContainerStyleSelector="{x:Static v:WindowAreaItemStyleSelector.Instance}"
+                    Margin="6"
+                    />
+    </Grid>
 
     <StackPanel Grid.Column="1">
       <DataGrid ItemsSource="{Binding OffsetItems}" 

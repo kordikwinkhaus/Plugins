@@ -7,7 +7,7 @@ using WindowOffset.Properties;
 
 namespace WindowOffset.ViewModels
 {
-    public class SideOffsetViewModel : ViewModelBase
+    public class SideOffsetViewModel : ViewModelBase, IScaleable
     {
         private readonly SideOffset _model;
         private readonly string _name;
@@ -112,14 +112,41 @@ namespace WindowOffset.ViewModels
             OnPropertyChanged(nameof(HasOwnValue));
         }
 
-        public virtual double X
+        public virtual void Recalculate(double scale, double left, double top)
         {
-            get { return (_model.Start.X + _model.End.X) / 10 + 20; }
+            double x = (_model.Start.X + _model.End.X) / 2.0;
+            double y = (_model.Start.Y + _model.End.Y) / 2.0;
+
+            this.X = x / scale + left;
+            this.Y = y / scale + top;
         }
 
-        public virtual double Y
+        private double _x;
+        public double X
         {
-            get { return (_model.Start.Y + _model.End.Y) / 10 + 20; }
+            get { return _x; }
+            set
+            {
+                if (_x != value)
+                {
+                    _x = value;
+                    OnPropertyChanged(nameof(X));
+                }
+            }
+        }
+
+        private double _y;
+        public double Y
+        {
+            get { return _y; }
+            set
+            {
+                if (_y != value)
+                {
+                    _y = value;
+                    OnPropertyChanged(nameof(Y));
+                }
+            }
         }
     }
 }

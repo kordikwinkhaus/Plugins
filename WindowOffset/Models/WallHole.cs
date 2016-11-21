@@ -30,6 +30,7 @@ namespace WindowOffset.Models
             this.MainOffset = new MainOffset();
 
             var size = _topObject.Dimensions;
+            this.Size = new SizeF(size.Width, size.Height);
             var topLeft = _topObject.get_Slants(0);
             var topRight = _topObject.get_Slants(1);
             var bottomRight = _topObject.get_Slants(2);
@@ -218,6 +219,8 @@ namespace WindowOffset.Models
 
             this.Centroid = Polygon.ComputeCentroid(vertices);
         }
+
+        internal SizeF Size { get; private set; }
 
         internal MainOffset MainOffset { get; private set; }
 

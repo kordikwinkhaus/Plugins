@@ -48,14 +48,10 @@ namespace WindowOffset.ViewModels
             this.Offset = 0;
         }
 
-        public override double X
+        public override void Recalculate(double scale, double left, double top)
         {
-            get { return _centroid.X / 5 + 20; }
-        }
-
-        public override double Y
-        {
-            get { return _centroid.Y / 5 + 20; }
+            this.X = _centroid.X / scale + left;
+            this.Y = _centroid.Y / scale + top;
         }
     }
 }
