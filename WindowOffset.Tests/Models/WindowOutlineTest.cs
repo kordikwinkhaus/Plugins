@@ -15,6 +15,27 @@ namespace WindowOffset.Tests.Models
         const float DELTA = 0.01f;
 
         [TestMethod]
+        public void Scale_Test()
+        {
+            var target = new WindowOutline
+            {
+                Size = new SizeF(1000, 2000),
+                TopLeft = new SizeF(10, 20),
+                TopRight = new SizeF(30, 40),
+                BottomRight = new SizeF(50, 60),
+                BottomLeft = new SizeF(70, 80)
+            };
+
+            var result = target.Scale(2);
+
+            VerifySize(new SizeF(2000, 4000), result.Size);
+            VerifySize(new SizeF(20, 40), result.TopLeft);
+            VerifySize(new SizeF(60, 80), result.TopRight);
+            VerifySize(new SizeF(100, 120), result.BottomRight);
+            VerifySize(new SizeF(140, 160), result.BottomLeft);
+        }
+
+        [TestMethod]
         public void ApplyTo_ScaleToNearestEvenDim_Test()
         {
             var target = new WindowOutline
@@ -26,19 +47,36 @@ namespace WindowOffset.Tests.Models
                 BottomLeft = new SizeF(399.59082f, 399.590759f)
             };
 
-            var newOutline = target.Scale(800f / 799.181641f);
-
             var topObject = new MyTopObject();
-            //target.ApplyTo(topObject);
-            newOutline.ApplyTo(topObject);
+            target.ApplyTo(topObject);
 
-            var slant = new SizeF(400, 400);
             VerifySize(new SizeF(800, 800), topObject.Dimensions.Size);
-
+            var slant = new SizeF(400, 400);
             for (int i = 0; i < 4; i++)
             {
                 VerifySize(slant, topObject.get_Slants(i));
             }
+        }
+
+        [TestMethod]
+        public void ApplyTo_ScaleToNearestEvenDim_Test2()
+        {
+            var target = new WindowOutline
+            {
+                Size = new SizeF(902.917969f, 902.917969f),
+                TopLeft = new SizeF(451.458954f, 902.917969f),
+                TopRight = new SizeF(451.459f, 902.917969f)
+            };
+
+            var topObject = new MyTopObject();
+            target.ApplyTo(topObject);
+
+            VerifySize(new SizeF(902, 902), topObject.Dimensions.Size);
+            var slant = new SizeF(451, 902);
+            VerifySize(slant, topObject.get_Slants(0));
+            VerifySize(slant, topObject.get_Slants(1));
+            VerifySize(SizeF.Empty, topObject.get_Slants(2));
+            VerifySize(SizeF.Empty, topObject.get_Slants(3));
         }
 
         private void VerifySize(SizeF expected, SizeF actual)
