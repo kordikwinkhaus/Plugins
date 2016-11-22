@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindowOffset.Models
 {
@@ -24,7 +21,17 @@ namespace WindowOffset.Models
         public void Add(Dimension item)
         {
             if (item == null) throw new ArgumentNullException(nameof(item));
+
+            float from = 0;
+            if (_dims.Count > 0)
+            {
+                var last = _dims[_dims.Count - 1];
+                from = last.From + last.Value;
+            }
+            item.From = from;
+
             _dims.Add(item);
+
         }
 
         public void Clear()

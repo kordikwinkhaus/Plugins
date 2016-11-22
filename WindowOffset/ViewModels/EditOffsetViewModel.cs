@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using Okna.Plugins.ViewModels;
@@ -14,8 +13,8 @@ namespace WindowOffset.ViewModels
         private readonly ITopObject _topObject;
         private readonly WallHole _wallHole;
         private MainOffsetViewModel _mainItem;
-        private const int WIDTH_MARGIN = 20;
-        private const int HEIGHT_MARGIN = 10;
+        internal const int WIDTH_MARGIN = 20;
+        internal const int HEIGHT_MARGIN = 10;
 
         internal EditOffsetViewModel(XElement data, ITopObject topObject)
         {
@@ -40,7 +39,57 @@ namespace WindowOffset.ViewModels
                 this.CanvasItems.Add(new SideOffsetLineViewModel(sideOffset));
             }
 
+            int layerId = 0;
+            foreach (var layer in _wallHole.TopDims)
+            {
+                foreach (var dim in layer)
+                {
+                    var dimVM = new DimensionViewModel(dim);
+                    dimVM.Layer = layerId;
+                    this.CanvasItems.Add(dimVM);
+                }
+                layerId++;
+            }
 
+            layerId = 0;
+            foreach (var layer in _wallHole.BottomDims)
+            {
+                foreach (var dim in layer)
+                {
+                    var dimVM = new DimensionViewModel(dim);
+                    dimVM.Layer = layerId;
+                    dimVM.ModelLength = _wallHole.Size.Height;
+                    this.CanvasItems.Add(dimVM);
+                }
+                layerId++;
+            }
+
+            layerId = 0;
+            foreach (var layer in _wallHole.LeftDims)
+            {
+                foreach (var dim in layer)
+                {
+                    var dimVM = new DimensionViewModel(dim);
+                    dimVM.Layer = layerId;
+                    dimVM.IsVertical = true;
+                    this.CanvasItems.Add(dimVM);
+                }
+                layerId++;
+            }
+
+            layerId = 0;
+            foreach (var layer in _wallHole.RightDims)
+            {
+                foreach (var dim in layer)
+                {
+                    var dimVM = new DimensionViewModel(dim);
+                    dimVM.Layer = layerId;
+                    dimVM.IsVertical = true;
+                    dimVM.ModelLength = _wallHole.Size.Width;
+                    this.CanvasItems.Add(dimVM);
+                }
+                layerId++;
+            }
         }
 
         internal void RecalculateSize(double actualWidth, double actualHeight, double textHeight)
@@ -56,7 +105,7 @@ namespace WindowOffset.ViewModels
             double topMargin = _wallHole.TopDims.Count * dimLayerHeight;
             double leftMargin = _wallHole.LeftDims.Count * dimLayerHeight;
             double bottomMargin = _wallHole.BottomDims.Count * dimLayerHeight;
-            double rightMargin = _wallHole.BottomDims.Count * dimLayerHeight;
+            double rightMargin = _wallHole.RightDims.Count * dimLayerHeight;
 
             double availableWidth = actualWidth - leftMargin - rightMargin - 2 * WIDTH_MARGIN;
             double availableHeight = actualHeight - topMargin - bottomMargin - 2 * HEIGHT_MARGIN;
@@ -70,7 +119,7 @@ namespace WindowOffset.ViewModels
 
             foreach (var item in this.CanvasItems)
             {
-                item.Recalculate(scale, left, top);
+                item.Recalculate(scale, left, top, dimLayerHeight);
             }
         }
 

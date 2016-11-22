@@ -12,7 +12,7 @@ namespace WindowOffset.ViewModels
             _model = model;
         }
 
-        public void Recalculate(double scale, double left, double top)
+        public void Recalculate(double scale, double left, double top, double dimLayerHeight)
         {
             this.X1 = _model.Start.X / scale + left;
             this.Y1 = _model.Start.Y / scale + top;

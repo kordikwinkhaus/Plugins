@@ -37,7 +37,7 @@
       <ColumnDefinition Width="200"/>
     </Grid.ColumnDefinitions>
 
-    <Grid Background="White">
+    <Grid>
       <v:WindowArea x:Name="windowArea" 
                     ItemsSource="{Binding CanvasItems}"
                     ItemContainerStyleSelector="{x:Static v:WindowAreaItemStyleSelector.Instance}"

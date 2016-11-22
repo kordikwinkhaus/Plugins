@@ -8,5 +8,7 @@
         }
 
         internal float Value { get; private set; }
+
+        internal float From { get; set; }
     }
 }

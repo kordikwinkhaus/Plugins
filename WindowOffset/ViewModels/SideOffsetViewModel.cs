@@ -112,7 +112,7 @@ namespace WindowOffset.ViewModels
             OnPropertyChanged(nameof(HasOwnValue));
         }
 
-        public virtual void Recalculate(double scale, double left, double top)
+        public virtual void Recalculate(double scale, double left, double top, double dimLayerHeight)
         {
             double x = (_model.Start.X + _model.End.X) / 2.0;
             double y = (_model.Start.Y + _model.End.Y) / 2.0;

@@ -2,6 +2,6 @@
 {
     public interface IScaleable
     {
-        void Recalculate(double scale, double left, double top);
+        void Recalculate(double scale, double left, double top, double dimLayerHeight);
     }
 }

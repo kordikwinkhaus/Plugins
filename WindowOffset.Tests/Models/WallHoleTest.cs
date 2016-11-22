@@ -251,15 +251,19 @@ namespace WindowOffset.Tests.Models
 
             Assert.AreEqual(layersCount, layers.Count);
             Assert.AreEqual(1, layers[0].Count);
-            Assert.AreEqual(mainDim, layers[0].First().Value);
+            Assert.AreEqual(mainDim, layers[0][0].Value);
+            Assert.AreEqual(0, layers[0][0].From);
 
             if (layersCount == 2)
             {
                 var subLayer = layers[1];
                 Assert.AreEqual(subDims.Length, subLayer.Count);
+                float sumFrom = 0;
                 for (int i = 0; i < subDims.Length; i++)
                 {
                     Assert.AreEqual(subDims[i], subLayer[i].Value);
+                    Assert.AreEqual(sumFrom, subLayer[i].From);
+                    sumFrom += subLayer[i].Value;
                 }
             }
         }

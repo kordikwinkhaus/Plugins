@@ -8,13 +8,13 @@
     <Setter Property="ContentTemplate">
       <Setter.Value>
         <DataTemplate>
-            <Line X1="{Binding X1}" 
-                  Y1="{Binding Y1}"
-                  X2="{Binding X2}"
-                  Y2="{Binding Y2}"
-                  Stroke="Black"
-                  StrokeThickness="1"
-                  />
+          <Line X1="{Binding X1}" 
+                Y1="{Binding Y1}"
+                X2="{Binding X2}"
+                Y2="{Binding Y2}"
+                Stroke="Black"
+                StrokeThickness="2"
+                />
         </DataTemplate>
       </Setter.Value>
     </Setter>
@@ -65,10 +65,49 @@
   </Style>
 
   <Style x:Key="DimensionStyle" TargetType="{x:Type v:WindowAreaItem}">
+    <Setter Property="Canvas.Left" Value="{Binding X}"/>
+    <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+    <Setter Property="Width" Value="{Binding Width}"/>
+    <Setter Property="Height" Value="{Binding Height}"/>
     <Setter Property="ContentTemplate">
       <Setter.Value>
         <DataTemplate>
-          <TextBlock Text="Dimension" />
+          <Border x:Name="border" 
+                  Margin="0,2"
+                  BorderThickness="1,0,1,0"
+                  BorderBrush="Black">
+            <TextBlock Text="{Binding Value}"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"
+                       />
+          </Border>
+          <DataTemplate.Triggers>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding IsFirst}" Value="False"/>
+                <Condition Binding="{Binding IsVertical}" Value="False"/>
+              </MultiDataTrigger.Conditions>
+              <MultiDataTrigger.Setters>
+                <Setter TargetName="border" Property="BorderThickness" Value="0,0,1,0"/>
+              </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding IsFirst}" Value="False"/>
+                <Condition Binding="{Binding IsVertical}" Value="True"/>
+              </MultiDataTrigger.Conditions>
+              <MultiDataTrigger.Setters>
+                <Setter TargetName="border" Property="BorderThickness" Value="1,0,0,0"/>
+              </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <DataTrigger Binding="{Binding IsVertical}" Value="True">
+              <Setter Property="LayoutTransform">
+                <Setter.Value>
+                  <RotateTransform Angle="-90"/>
+                </Setter.Value>
+              </Setter>
+            </DataTrigger>
+          </DataTemplate.Triggers>
         </DataTemplate>
       </Setter.Value>
     </Setter>

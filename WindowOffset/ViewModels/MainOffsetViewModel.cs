@@ -48,7 +48,7 @@ namespace WindowOffset.ViewModels
             this.Offset = 0;
         }
 
-        public override void Recalculate(double scale, double left, double top)
+        public override void Recalculate(double scale, double left, double top, double dimLayerHeight)
         {
             this.X = _centroid.X / scale + left;
             this.Y = _centroid.Y / scale + top;
