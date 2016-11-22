@@ -251,11 +251,7 @@ namespace WindowOffset.Models
                 lines.Add(Line.Create(sideOffset));
             }
 
-            for (int i = 1; i < lines.Count; i++)
-            {
-                IntersectLines(lines[i - 1], lines[i]);
-            }
-            IntersectLines(lines.Last(), lines.First());
+            TrimLines(lines);
 
             RectangleF area = GetBoundingRectangle(lines);
 
@@ -271,11 +267,43 @@ namespace WindowOffset.Models
             return result;
         }
 
+        private static void TrimLines(List<Line> lines)
+        {
+            // "ořeže" přesahy offsetovaných úseček
+
+            while (true)
+            {
+                for (int i = 1; i < lines.Count; i++)
+                {
+                    IntersectLines(lines[i - 1], lines[i]);
+                }
+                IntersectLines(lines.Last(), lines.First());
+
+                bool removedLine = false;
+                for (int i = lines.Count - 1; i >= 0; i--)
+                {
+                    if (!lines[i].IsValid())
+                    {
+                        lines.RemoveAt(i);
+                        removedLine = true;
+                    }
+                }
+
+                if (!removedLine)
+                {
+                    return;
+                }
+            }
+        }
+
         private static void IntersectLines(Line line, Line nextLine)
         {
-            var intersection = line.Intersection(nextLine);
-            line.End = intersection;
-            nextLine.Start = intersection;
+            if (!line.ContinuesWith(nextLine))
+            {
+                var intersection = line.Intersection(nextLine);
+                line.End = intersection;
+                nextLine.Start = intersection;
+            }
         }
 
         private static RectangleF GetBoundingRectangle(List<Line> lines)

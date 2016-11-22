@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Linq;
 using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
@@ -38,6 +39,38 @@ namespace WindowOffset.Tests.Models
 
             float a = 829.289f;
             VerifyOutline(result, a, a, topLeft: new SizeF(a, a));
+        }
+
+        [TestMethod]
+        public void GetWindowOutline_TopRight_DiffOffset_RemovePart_Test()
+        {
+            using (_mocks.Record())
+            {
+                SetupCommonResults(topRight: new SizeF(940, 1000));
+            }
+            var target = new WallHole(_data, _topObject);
+            target.MainOffset.Offset = 50;
+            target.SideOffsets.Single(s => s.Side == 3).Offset = 100;
+            target.SideOffsets.Single(s => s.Side == 6).Offset = 20;
+
+            var result = target.GetWindowOutline();
+            VerifyOutline(result, 793.956f, 844.633f, topRight: new SizeF(793.956f, 844.633f));
+        }
+
+        [TestMethod]
+        public void GetWindowOutline_TopRight_DiffOffset_Remove2Parts_Test()
+        {
+            using (_mocks.Record())
+            {
+                SetupCommonResults(topRight: new SizeF(500, 900), bottomLeft: new SizeF(850, 400));
+            }
+            var target = new WallHole(_data, _topObject);
+            target.MainOffset.Offset = 50;
+            target.SideOffsets.Single(s => s.Side == 3).Offset = 100;
+            target.SideOffsets.Single(s => s.Side == 7).Offset = 150;
+
+            var result = target.GetWindowOutline();
+            VerifyOutline(result, 798.728f, 783.622f, topRight: new SizeF(435.346f, 783.622f), bottomLeft: new SizeF(798.728f, 375.872f));
         }
 
         /*
@@ -286,12 +319,12 @@ private void VerifySubSideDims(IList<DimensionLayer> layers, float[] subDims)
         private void VerifyOutline(WindowOutline result, float width, float height, 
             SizeF topLeft = new SizeF(), SizeF topRight = new SizeF(), SizeF bottomLeft = new SizeF(), SizeF bottomRight = new SizeF())
         {
-            Assert.AreEqual(result.Size.Width, width, DELTA);
-            Assert.AreEqual(result.Size.Height, height, DELTA);
-            VerifySize(result.TopLeft, topLeft);
-            VerifySize(result.TopRight, topRight);
-            VerifySize(result.BottomLeft, bottomLeft);
-            VerifySize(result.BottomRight, bottomRight);
+            Assert.AreEqual(width, result.Size.Width, DELTA);
+            Assert.AreEqual(height, result.Size.Height, DELTA);
+            VerifySize(topLeft, result.TopLeft);
+            VerifySize(topRight, result.TopRight);
+            VerifySize(bottomLeft, result.BottomLeft);
+            VerifySize(bottomRight, result.BottomRight);
         }
 
         private void VerifySize(SizeF expected, SizeF actual)

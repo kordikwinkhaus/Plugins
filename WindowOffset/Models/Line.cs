@@ -8,57 +8,67 @@ namespace WindowOffset.Models
     [DebuggerDisplay("{Start}  ->  {End}")]
     internal class Line
     {
-        private const float DELTA = 0.00001f;
+        private const float DELTA = 0.001f;
 
         internal static Line Create(SideOffset model)
         {
-            switch (model.Side)
+            if (!IsValidLineSide(model.Start, model.End, model.Side))
             {
-                case 0:
-                    if (Abs(model.Start.X - model.End.X) > DELTA) throw new ArgumentException();
-                    if (model.Start.Y < model.End.Y) throw new ArgumentException();
-                    break;
-
-                case 1:
-                    if (model.Start.X > model.End.X) throw new ArgumentException();
-                    if (model.Start.Y < model.End.Y) throw new ArgumentException();
-                    break;
-
-                case 2:
-                    if (Abs(model.Start.Y - model.End.Y) > DELTA) throw new ArgumentException();
-                    if (model.Start.X > model.End.X) throw new ArgumentException();
-                    break;
-
-                case 3:
-                    if (model.Start.X > model.End.X) throw new ArgumentException();
-                    if (model.Start.Y > model.End.Y) throw new ArgumentException();
-                    break;
-
-                case 4:
-                    if (Abs(model.Start.X - model.End.X) > DELTA) throw new ArgumentException();
-                    if (model.Start.Y > model.End.Y) throw new ArgumentException();
-                    break;
-
-                case 5:
-                    if (model.Start.X < model.End.X) throw new ArgumentException();
-                    if (model.Start.Y > model.End.Y) throw new ArgumentException();
-                    break;
-
-                case 6:
-                    if (Abs(model.Start.Y - model.End.Y) > DELTA) throw new ArgumentException();
-                    if (model.Start.X < model.End.X) throw new ArgumentException();
-                    break;
-
-                case 7:
-                    if (model.Start.X < model.End.X) throw new ArgumentException();
-                    if (model.Start.Y < model.End.Y) throw new ArgumentException();
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
+                throw new ArgumentException();
             }
 
             return LineOffset(model);
+        }
+
+        private static bool IsValidLineSide(PointF start, PointF end, int side)
+        {
+            switch (side)
+            {
+                case 0:
+                    if (Abs(start.X - end.X) > DELTA) return false;
+                    if (start.Y < end.Y) return false;
+                    break;
+
+                case 1:
+                    if (start.X > end.X) return false;
+                    if (start.Y < end.Y) return false;
+                    break;
+
+                case 2:
+                    if (Abs(start.Y - end.Y) > DELTA) return false;
+                    if (start.X > end.X) return false;
+                    break;
+
+                case 3:
+                    if (start.X > end.X) return false;
+                    if (start.Y > end.Y) return false;
+                    break;
+
+                case 4:
+                    if (Abs(start.X - end.X) > DELTA) return false;
+                    if (start.Y > end.Y) return false;
+                    break;
+
+                case 5:
+                    if (start.X < end.X) return false;
+                    if (start.Y > end.Y) return false;
+                    break;
+
+                case 6:
+                    if (Abs(start.Y - end.Y) > DELTA) return false;
+                    if (start.X < end.X) return false;
+                    break;
+
+                case 7:
+                    if (start.X < end.X) return false;
+                    if (start.Y < end.Y) return false;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(side));
+            }
+
+            return true;
         }
 
         private static Line LineOffset(SideOffset model)
@@ -141,6 +151,19 @@ namespace WindowOffset.Models
             float height = Abs(this.Start.Y - this.End.Y);
 
             return new SizeF(width, height);
+        }
+
+        internal bool IsValid()
+        {
+            return IsValidLineSide(this.Start, this.End, this.Side);
+        }
+
+        internal bool ContinuesWith(Line other)
+        {
+            if (Abs(this.End.X - other.Start.X) > DELTA) return false;
+            if (Abs(this.End.Y - other.Start.Y) > DELTA) return false;
+
+            return true;
         }
     }
 }
