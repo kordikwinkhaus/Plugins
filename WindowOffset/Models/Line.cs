@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using static System.Math;
 
 namespace WindowOffset.Models
 {
+    [DebuggerDisplay("{Start}  ->  {End}")]
     internal class Line
     {
         private const float DELTA = 0.00001f;
@@ -56,10 +58,10 @@ namespace WindowOffset.Models
                     throw new ArgumentOutOfRangeException();
             }
 
-            return Offset(model);
+            return LineOffset(model);
         }
 
-        internal static Line Offset(SideOffset model)
+        private static Line LineOffset(SideOffset model)
         {
             float x1 = model.Start.X;
             float x2 = model.End.X;
@@ -131,6 +133,14 @@ namespace WindowOffset.Models
         private float GetC()
         {
             return this.GetA() * this.Start.X + this.GetB() * this.Start.Y;
+        }
+
+        internal SizeF GetSlant()
+        {
+            float width = Abs(this.Start.X - this.End.X);
+            float height = Abs(this.Start.Y - this.End.Y);
+
+            return new SizeF(width, height);
         }
     }
 }

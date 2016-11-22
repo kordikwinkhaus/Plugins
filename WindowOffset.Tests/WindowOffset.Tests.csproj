@@ -64,7 +64,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Models\DimensionLayerTest.cs" />
-    <Compile Include="Models\LineTest_Intersection.cs" />
+    <Compile Include="Models\LineTest.cs" />
     <Compile Include="Models\LineTest_Create.cs" />
     <Compile Include="Models\MainOffsetTest.cs" />
     <Compile Include="Models\SideOffsetTest.cs" />

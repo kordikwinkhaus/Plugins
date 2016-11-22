@@ -6,7 +6,7 @@ using WindowOffset.Models;
 namespace WindowOffset.Tests.Models
 {
     [TestClass]
-    public class LineTest_Intersection
+    public class LineTest
     {
         const float DELTA = 0.01f;
 
@@ -57,6 +57,17 @@ namespace WindowOffset.Tests.Models
         {
             Assert.AreEqual(expected.X, actual.X, DELTA);
             Assert.AreEqual(expected.Y, actual.Y, DELTA);
+        }
+
+        [TestMethod]
+        public void GetSlant_Test()
+        {
+            var target = new Line(1, new PointF(0, 1000), new PointF(500, 0));
+
+            var result = target.GetSlant();
+
+            Assert.AreEqual(500, result.Width);
+            Assert.AreEqual(1000, result.Height);
         }
     }
 }

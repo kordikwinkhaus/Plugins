@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Xml.Linq;
 using WHOkna;
 
@@ -250,7 +251,67 @@ namespace WindowOffset.Models
                 lines.Add(Line.Create(sideOffset));
             }
 
-            return new WindowOutline();
+            for (int i = 1; i < lines.Count; i++)
+            {
+                IntersectLines(lines[i - 1], lines[i]);
+            }
+            IntersectLines(lines.Last(), lines.First());
+
+            RectangleF area = GetBoundingRectangle(lines);
+
+            var result = new WindowOutline
+            {
+                Size = area.Size
+            };
+            result.TopLeft = TryGetSlant(lines, 1);
+            result.TopRight = TryGetSlant(lines, 3);
+            result.BottomRight = TryGetSlant(lines, 5);
+            result.BottomLeft = TryGetSlant(lines, 7);
+
+            return result;
+        }
+
+        private static void IntersectLines(Line line, Line nextLine)
+        {
+            var intersection = line.Intersection(nextLine);
+            line.End = intersection;
+            nextLine.Start = intersection;
+        }
+
+        private static RectangleF GetBoundingRectangle(List<Line> lines)
+        {
+            float minX = float.MaxValue;
+            float minY = float.MaxValue;
+            float maxX = float.MinValue;
+            float maxY = float.MinValue;
+
+            foreach (var line in lines)
+            {
+                TestPoint(line.Start, ref minX, ref minY, ref maxX, ref maxY);
+                TestPoint(line.End, ref minX, ref minY, ref maxX, ref maxY);
+            }
+
+            return new RectangleF(minX, minY, maxX - minX, maxY - minY);
+        }
+
+        private static void TestPoint(PointF point, ref float minX, ref float minY, ref float maxX, ref float maxY)
+        {
+            if (point.X < minX) minX = point.X;
+            if (point.Y < minY) minY = point.Y;
+            if (point.X > maxX) maxX = point.X;
+            if (point.Y > maxY) maxY = point.Y;
+        }
+
+        private SizeF TryGetSlant(List<Line> lines, int side)
+        {
+            foreach (var line in lines)
+            {
+                if (line.Side == side)
+                {
+                    return line.GetSlant();
+                }
+            }
+            return SizeF.Empty;
         }
 
         #endregion
