@@ -78,7 +78,7 @@ namespace WindowOffset.Models
             return new Line(model.Side, new PointF(x1p, y1p), new PointF(x2p, y2p));
         }
 
-        private Line(int side, PointF start, PointF end)
+        internal Line(int side, PointF start, PointF end)
         {
             this.Side = side;
             this.Start = start;
@@ -90,5 +90,47 @@ namespace WindowOffset.Models
         internal PointF Start { get; set; }
 
         internal PointF End { get; set; }
+
+        internal PointF Intersection(Line other)
+        {
+            // rovnice přímky: Ax + By = C
+
+            float A1 = this.GetA();
+            float B1 = this.GetB();
+            float C1 = this.GetC();
+
+            float A2 = other.GetA();
+            float B2 = other.GetB();
+            float C2 = other.GetC();
+
+            float determinant = A1 * B2 - A2 * B1;
+
+            if (determinant == 0)
+            {
+                // parallel lines
+                throw new InvalidOperationException();
+            }
+            else
+            {
+                float x = (B2 * C1 - B1 * C2) / determinant;
+                float y = (A1 * C2 - A2 * C1) / determinant;
+                return new PointF(x, y);
+            }
+        }
+
+        private float GetA()
+        {
+            return this.End.Y - this.Start.Y;
+        }
+
+        private float GetB()
+        {
+            return this.Start.X - this.End.X;
+        }
+
+        private float GetC()
+        {
+            return this.GetA() * this.Start.X + this.GetB() * this.Start.Y;
+        }
     }
 }

@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WindowOffset.Models;
 
 namespace WindowOffset.Tests.Models
 {
     [TestClass]
-    public class LineTest
+    public class LineTest_Create
     {
         const float DELTA = 0.01f;
 
