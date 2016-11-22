@@ -25,6 +25,8 @@ namespace WindowOffset.Models
             Init();
         }
 
+        #region Input
+
         private void Init()
         {
             this.MainOffset = new MainOffset();
@@ -235,5 +237,23 @@ namespace WindowOffset.Models
         internal IList<DimensionLayer> BottomDims { get; } = new List<DimensionLayer>();
 
         internal PointF Centroid { get; private set; }
+
+        #endregion
+
+        #region Output
+
+        internal WindowOutline GetWindowOutline()
+        {
+            List<Line> lines = new List<Line>();
+            foreach (var sideOffset in this.SideOffsets)
+            {
+                lines.Add(Line.Create(sideOffset));
+            }
+
+            return new WindowOutline();
+        }
+
+        #endregion
+
     }
 }

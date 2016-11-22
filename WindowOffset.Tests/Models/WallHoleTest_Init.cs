@@ -10,7 +10,7 @@ using WindowOffset.Models;
 namespace WindowOffset.Tests.Models
 {
     [TestClass]
-    public class WallHoleTest
+    public class WallHoleTest_Init
     {
         MockRepository _mocks;
         ITopObject _topObject;

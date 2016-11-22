@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionsFactory.cs" />
+    <Compile Include="Models\Line.cs" />
     <Compile Include="Models\Polygon.cs" />
     <Compile Include="Models\Dimension.cs" />
     <Compile Include="Models\DimensionLayer.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Models\MainOffset.cs" />
     <Compile Include="Models\SideOffset.cs" />
     <Compile Include="Models\WallHole.cs" />
+    <Compile Include="Models\WindowOutline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
