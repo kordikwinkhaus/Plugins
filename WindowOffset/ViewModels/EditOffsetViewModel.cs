@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using System.Xml.Linq;
+using Okna.Plugins;
 using Okna.Plugins.ViewModels;
 using WHOkna;
 using WindowOffset.Models;
@@ -23,6 +25,8 @@ namespace WindowOffset.ViewModels
             _wallHole = new WallHole(data, topObject);
 
             Init();
+
+            this.SubmitCommand = new RelayCommand(Submit);
         }
 
         private void Init()
@@ -126,5 +130,29 @@ namespace WindowOffset.ViewModels
         public IList<SideOffsetViewModel> OffsetItems { get; } = new List<SideOffsetViewModel>();
 
         public IList<IScaleable> CanvasItems { get; } = new List<IScaleable>();
+
+        public ICommand SubmitCommand { get; private set; }
+
+        private void Submit(object param)
+        {
+            var outline = _wallHole.GetWindowOutline();
+            bool result = outline.ApplyTo(_topObject);
+
+            this.DialogResult = true;
+        }
+
+        private bool? _dialogResult;
+        public bool? DialogResult
+        {
+            get { return _dialogResult; }
+            set
+            {
+                if (_dialogResult != value)
+                {
+                    _dialogResult = value;
+                    OnPropertyChanged(nameof(DialogResult));
+                }
+            }
+        }
     }
 }

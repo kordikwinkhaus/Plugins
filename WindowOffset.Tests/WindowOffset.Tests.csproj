@@ -70,6 +70,7 @@
     <Compile Include="Models\SideOffsetTest.cs" />
     <Compile Include="Models\WallHoleTest_Outline.cs" />
     <Compile Include="Models\WallHoleTest_Init.cs" />
+    <Compile Include="Models\WindowOutlineTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\EditOffsetViewModelTest.cs" />
     <Compile Include="ViewModels\MainOffsetItemViewModelTest.cs" />

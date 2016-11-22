@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wh="http://schemas.winkhaus.com/windows"
         xmlns:v="clr-namespace:WindowOffset.Views"
         xmlns:res="clr-namespace:WindowOffset.Properties"
         mc:Ignorable="d"
@@ -18,6 +19,7 @@
         SizeChanged="Window_SizeChanged"
         MinHeight="350"
         MinWidth="500"
+        wh:DialogCloser.DialogResult="{Binding DialogResult}"
         >
   <Window.Resources>
     <ResourceDictionary>
@@ -124,7 +126,7 @@
       </StackPanel.Resources>
 
       <TextBlock x:Name="tbFontSettings" />
-      <Button Content="{x:Static res:Resources.OK}" />
+      <Button Content="{x:Static res:Resources.OK}" Command="{Binding SubmitCommand}" />
       <Button Content="{x:Static res:Resources.Cancel}" IsCancel="True"/>
     </StackPanel>
   </Grid>
