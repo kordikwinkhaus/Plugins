@@ -65,11 +65,13 @@
     <Compile Include="Models\Polygon.cs" />
     <Compile Include="Models\Dimension.cs" />
     <Compile Include="Models\DimensionLayer.cs" />
-    <Compile Include="Models\DimLayerSide.cs" />
     <Compile Include="Models\MainOffset.cs" />
     <Compile Include="Models\SideOffset.cs" />
     <Compile Include="Models\WallHole.cs" />
+    <Compile Include="Models\WallHoleData.cs" />
     <Compile Include="Models\WindowOutline.cs" />
+    <Compile Include="Models\Xml.cs" />
+    <Compile Include="Models\XmlAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

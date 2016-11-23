@@ -74,6 +74,29 @@ namespace WindowOffset.Tests.Models
             VerifyOutline(result, 798.728f, 783.622f, topRight: new SizeF(435.346f, 783.622f), bottomLeft: new SizeF(798.728f, 375.872f));
         }
 
+        [TestMethod]
+        public void SaveToXml_Test()
+        {
+            using (_mocks.Record())
+            {
+                SetupCommonResults(topLeft: new SizeF(10, 20),
+                    topRight: new SizeF(30, 40), 
+                    bottomRight: new SizeF(50, 60),
+                    bottomLeft: new SizeF(70, 80));
+            }
+            var target = new WallHole(_data, _topObject);
+            target.MainOffset.Offset = 50;
+            target.SideOffsets.Single(s => s.Side == 3).Offset = 100;
+            target.SideOffsets.Single(s => s.Side == 7).Offset = 150;
+
+            target.SaveToPositionData();
+
+            string expectedXml = @"";
+            string actualXml = _data.ToString();
+
+            Assert.AreEqual(expectedXml, actualXml);
+        }
+
         private void VerifyOutline(WindowOutline result, float width, float height, 
             SizeF topLeft = new SizeF(), SizeF topRight = new SizeF(), SizeF bottomLeft = new SizeF(), SizeF bottomRight = new SizeF())
         {

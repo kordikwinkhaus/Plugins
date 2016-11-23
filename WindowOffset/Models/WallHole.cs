@@ -12,7 +12,7 @@ namespace WindowOffset.Models
     /// </summary>
     internal class WallHole
     {
-        private XElement _data;
+        private XmlAdapter _xmlData;
         private ITopObject _topObject;
 
         internal WallHole(XElement data, ITopObject topObject)
@@ -20,7 +20,7 @@ namespace WindowOffset.Models
             if (data == null) throw new ArgumentNullException(nameof(data));
             if (topObject == null) throw new ArgumentNullException(nameof(topObject));
 
-            _data = data;
+            _xmlData = new XmlAdapter(data);
             _topObject = topObject;
 
             Init();
@@ -340,6 +340,11 @@ namespace WindowOffset.Models
                 }
             }
             return SizeF.Empty;
+        }
+
+        internal void SaveToPositionData()
+        {
+            
         }
 
         #endregion
