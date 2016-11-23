@@ -165,4 +165,7 @@
   <data name="ResetValue" xml:space="preserve">
     <value>Reset value</value>
   </data>
+  <data name="CannotEditOffset" xml:space="preserve">
+    <value>Cannot edit offset for this position.</value>
+  </data>
 </root>

@@ -41,11 +41,7 @@ namespace WindowOffset.Views
         public IOknaDocument OknaDoc
         {
             get { return _oknaDoc; }
-            set
-            {
-                _oknaDoc = value;
-                //_viewmodel.OknaDocument = value;
-            }
+            set { _oknaDoc = value; }
         }
 
         public IDataRequest DataCallback { get; set; }
@@ -68,9 +64,21 @@ namespace WindowOffset.Views
             if (_topObject.Position == null) return false;
 
             var type = _topObject.Position.Type;
-            return type == EPosType.kOkno || 
-                type == EPosType.kDrzwi || 
-                type == EPosType.kDrzwiPrzesuwne;
+            bool typeOk = type == EPosType.kOkno || 
+                          type == EPosType.kDrzwi || 
+                          type == EPosType.kDrzwiPrzesuwne;
+
+            if (!typeOk) return false;
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (_topObject.get_Radiuses(i) > 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public bool SetData(XElement data, int document, int position, int profileType)
@@ -101,6 +109,13 @@ namespace WindowOffset.Views
         {
             try
             {
+                // znovu otestovat - mohlo dojít k editaci pozice
+                if (!IsButtonEnabled())
+                {
+                    MessageBox.Show(Properties.Resources.CannotEditOffset, Properties.Resources.PluginTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return; 
+                }
+
                 var dlg = new EditOffsetDialog();
                 var vm = new EditOffsetViewModel(_data, _topObject);
                 dlg.ViewModel = vm;

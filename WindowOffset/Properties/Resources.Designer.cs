@@ -97,6 +97,15 @@ namespace WindowOffset.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot edit offset for this position..
+        /// </summary>
+        public static string CannotEditOffset {
+            get {
+                return ResourceManager.GetString("CannotEditOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit window offset.
         /// </summary>
         public static string EditOffset {
