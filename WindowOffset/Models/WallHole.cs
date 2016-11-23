@@ -315,14 +315,14 @@ namespace WindowOffset.Models
 
             foreach (var line in lines)
             {
-                TestPoint(line.Start, ref minX, ref minY, ref maxX, ref maxY);
-                TestPoint(line.End, ref minX, ref minY, ref maxX, ref maxY);
+                FindMinMax(line.Start, ref minX, ref minY, ref maxX, ref maxY);
+                FindMinMax(line.End, ref minX, ref minY, ref maxX, ref maxY);
             }
 
             return new RectangleF(minX, minY, maxX - minX, maxY - minY);
         }
 
-        private static void TestPoint(PointF point, ref float minX, ref float minY, ref float maxX, ref float maxY)
+        private static void FindMinMax(PointF point, ref float minX, ref float minY, ref float maxX, ref float maxY)
         {
             if (point.X < minX) minX = point.X;
             if (point.Y < minY) minY = point.Y;
