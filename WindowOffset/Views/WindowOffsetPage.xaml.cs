@@ -120,7 +120,10 @@ namespace WindowOffset.Views
                 var vm = new EditOffsetViewModel(_data, _topObject);
                 dlg.ViewModel = vm;
             
-                dlg.ShowDialog(this.OknaDoc?.Application?.MainWindowHWND() ?? IntPtr.Zero);
+                if (!dlg.ShowDialog(this.OknaDoc?.Application?.MainWindowHWND() ?? IntPtr.Zero))
+                {
+                    MessageBox.Show(Properties.Resources.EditOffsetFailed, Properties.Resources.PluginTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             catch (Exception ex)
             {

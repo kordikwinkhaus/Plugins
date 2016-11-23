@@ -168,4 +168,7 @@
   <data name="CannotEditOffset" xml:space="preserve">
     <value>Cannot edit offset for this position.</value>
   </data>
+  <data name="EditOffsetFailed" xml:space="preserve">
+    <value>Changing of position failed. Please verify position.</value>
+  </data>
 </root>

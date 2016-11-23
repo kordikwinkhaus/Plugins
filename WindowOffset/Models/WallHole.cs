@@ -14,6 +14,7 @@ namespace WindowOffset.Models
     {
         private XmlAdapter _xmlData;
         private ITopObject _topObject;
+        private SizeF[] _slants;
 
         internal WallHole(XElement data, ITopObject topObject)
         {
@@ -46,6 +47,8 @@ namespace WindowOffset.Models
 
         private void InitOffsetItems(RectangleF size, SizeF topLeft, SizeF topRight, SizeF bottomRight, SizeF bottomLeft)
         {
+            _slants = new SizeF[] { topLeft, topRight, bottomRight, bottomLeft };
+
             // left?
             if ((size.Height - topLeft.Height - bottomLeft.Height) > 0)
             {
@@ -344,7 +347,35 @@ namespace WindowOffset.Models
 
         internal void SaveToPositionData()
         {
-            
+            var wallHoleData = GetWallHoleData();
+            _xmlData.SetCurrentData(wallHoleData);
+        }
+
+        internal WallHoleData GetWallHoleData()
+        {
+            return new WallHoleData
+            {
+                MainDimension = this.Size,
+                Slants = _slants,
+                Offsets = GetOffsets()
+            };
+        }
+
+        private IDictionary<int, int> GetOffsets()
+        {
+            Dictionary<int, int> result = new Dictionary<int, int>();
+
+            result.Add(-1, this.MainOffset.Offset);
+
+            foreach (var item in this.SideOffsets)
+            {
+                if (item.HasOwnValue)
+                {
+                    result.Add(item.Side, item.Offset);
+                }
+            }
+
+            return result;
         }
 
         #endregion

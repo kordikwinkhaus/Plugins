@@ -136,9 +136,15 @@ namespace WindowOffset.ViewModels
         private void Submit(object param)
         {
             var outline = _wallHole.GetWindowOutline();
-            bool result = outline.ApplyTo(_topObject);
-
-            this.DialogResult = true;
+            if (outline.ApplyTo(_topObject))
+            {
+                _wallHole.SaveToPositionData();
+                this.DialogResult = true;
+            }
+            else
+            {
+                this.DialogResult = false;
+            }
         }
 
         private bool? _dialogResult;

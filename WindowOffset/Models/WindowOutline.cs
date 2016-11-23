@@ -142,13 +142,15 @@ namespace WindowOffset.Models
             {
                 topObject.CheckPoint();
                 topObject.Invalidate();
+
+                return true;
             }
             else
             {
                 topObject.Undo(null);
-            }
 
-            return true;
+                return false;
+            }
         }
 
         private bool ShouldScale(float totalLen, float len1, float len2)

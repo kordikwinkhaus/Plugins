@@ -115,6 +115,15 @@ namespace WindowOffset.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changing of position failed. Please verify position..
+        /// </summary>
+        public static string EditOffsetFailed {
+            get {
+                return ResourceManager.GetString("EditOffsetFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Left.
         /// </summary>
         public static string Left {

@@ -75,26 +75,34 @@ namespace WindowOffset.Tests.Models
         }
 
         [TestMethod]
-        public void SaveToXml_Test()
+        public void GetWallHoleData_Test()
         {
+            var tl = new SizeF(10, 20);
+            var tr = new SizeF(30, 40);
+            var br = new SizeF(50, 60);
+            var bl = new SizeF(70, 80);
+
             using (_mocks.Record())
             {
-                SetupCommonResults(topLeft: new SizeF(10, 20),
-                    topRight: new SizeF(30, 40), 
-                    bottomRight: new SizeF(50, 60),
-                    bottomLeft: new SizeF(70, 80));
+                SetupCommonResults(topLeft: tl, topRight: tr, bottomRight: br, bottomLeft: bl);
             }
             var target = new WallHole(_data, _topObject);
             target.MainOffset.Offset = 50;
             target.SideOffsets.Single(s => s.Side == 3).Offset = 100;
             target.SideOffsets.Single(s => s.Side == 7).Offset = 150;
 
-            target.SaveToPositionData();
+            var wallHoleData = target.GetWallHoleData();
 
-            string expectedXml = @"";
-            string actualXml = _data.ToString();
+            VerifySize(_dimensions.Size, wallHoleData.MainDimension);
+            VerifySize(tl, wallHoleData.Slants[0]);
+            VerifySize(tr, wallHoleData.Slants[1]);
+            VerifySize(br, wallHoleData.Slants[2]);
+            VerifySize(bl, wallHoleData.Slants[3]);
 
-            Assert.AreEqual(expectedXml, actualXml);
+            Assert.AreEqual(3, wallHoleData.Offsets.Count);
+            Assert.AreEqual(50, wallHoleData.Offsets[-1]);
+            Assert.AreEqual(100, wallHoleData.Offsets[3]);
+            Assert.AreEqual(150, wallHoleData.Offsets[7]);
         }
 
         private void VerifyOutline(WindowOutline result, float width, float height, 
