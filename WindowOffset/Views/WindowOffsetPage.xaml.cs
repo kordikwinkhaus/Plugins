@@ -54,11 +54,11 @@ namespace WindowOffset.Views
             {
                 _part = value;
                 _topObject = value as ITopObject;
-                this.cmdEdit.IsEnabled = IsButtonEnabled();
+                this.cmdEdit.IsEnabled = CanEditOffset();
             }
         }
 
-        private bool IsButtonEnabled()
+        private bool CanEditOffset()
         {
             if (_topObject == null) return false;
             if (_topObject.Position == null) return false;
@@ -110,7 +110,7 @@ namespace WindowOffset.Views
             try
             {
                 // znovu otestovat - mohlo dojít k editaci pozice
-                if (!IsButtonEnabled())
+                if (!CanEditOffset())
                 {
                     MessageBox.Show(Properties.Resources.CannotEditOffset, Properties.Resources.PluginTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                     return; 
@@ -120,7 +120,7 @@ namespace WindowOffset.Views
                 var vm = new EditOffsetViewModel(_data, _topObject);
                 dlg.ViewModel = vm;
             
-                if (!dlg.ShowDialog(this.OknaDoc?.Application?.MainWindowHWND() ?? IntPtr.Zero))
+                if (dlg.ShowDialog(this.OknaDoc?.Application?.MainWindowHWND() ?? IntPtr.Zero) && vm.Failed)
                 {
                     MessageBox.Show(Properties.Resources.EditOffsetFailed, Properties.Resources.PluginTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 }

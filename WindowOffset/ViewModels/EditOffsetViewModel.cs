@@ -139,13 +139,16 @@ namespace WindowOffset.ViewModels
             if (outline.ApplyTo(_topObject))
             {
                 _wallHole.SaveToPositionData();
-                this.DialogResult = true;
             }
             else
             {
-                this.DialogResult = false;
+                this.Failed = true;
             }
+
+            this.DialogResult = false;
         }
+
+        internal bool Failed { get; set; }
 
         private bool? _dialogResult;
         public bool? DialogResult
