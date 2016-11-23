@@ -82,6 +82,7 @@ namespace WindowOffset.Models
         internal void SetCurrentData(WallHoleData data)
         {
             var winOffset = GetMainElement(createIfNotExists: true);
+            winOffset.RemoveAll();
             winOffset.Add(new XElement(Xml.Dimensions, Serialize(data.MainDimension)));
 
             for (int i = 0; i < s_slantKeys.Length; i++)

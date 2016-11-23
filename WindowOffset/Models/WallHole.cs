@@ -24,31 +24,47 @@ namespace WindowOffset.Models
             _xmlData = new XmlAdapter(data);
             _topObject = topObject;
 
-            Init();
+            WallHoleData wallHoleData = (_xmlData.IsWinOffsetSpecified()) ? _xmlData.GetCurrentData() : GetTopObjectWallHoleData();
+            Init(wallHoleData);
         }
 
         #region Input
 
-        private void Init()
+        private WallHoleData GetTopObjectWallHoleData()
         {
-            this.MainOffset = new MainOffset();
+            SizeF[] slants = new SizeF[4];
 
-            var size = _topObject.Dimensions;
-            this.Size = new SizeF(size.Width, size.Height);
-            var topLeft = _topObject.get_Slants(0);
-            var topRight = _topObject.get_Slants(1);
-            var bottomRight = _topObject.get_Slants(2);
-            var bottomLeft = _topObject.get_Slants(3);
+            for (int i = 0; i < slants.Length; i++)
+            {
+                slants[i] = _topObject.get_Slants(i);
+            }
+
+            return new WallHoleData
+            {
+                MainDimension = _topObject.Dimensions.Size,
+                Slants = slants
+            };
+        }
+
+        private void Init(WallHoleData data)
+        {
+            _slants = data.Slants;
+
+            this.MainOffset = new MainOffset();
+            var size = this.Size = data.MainDimension;
+            var topLeft = data.Slants[0];
+            var topRight = data.Slants[1];
+            var bottomRight = data.Slants[2];
+            var bottomLeft = data.Slants[3];
 
             InitOffsetItems(size, topLeft, topRight, bottomRight, bottomLeft);
             InitDimensions(size, topLeft, topRight, bottomRight, bottomLeft);
             ComputeCentroid();
+            InitOffsetValues(data.Offsets);
         }
 
-        private void InitOffsetItems(RectangleF size, SizeF topLeft, SizeF topRight, SizeF bottomRight, SizeF bottomLeft)
+        private void InitOffsetItems(SizeF size, SizeF topLeft, SizeF topRight, SizeF bottomRight, SizeF bottomLeft)
         {
-            _slants = new SizeF[] { topLeft, topRight, bottomRight, bottomLeft };
-
             // left?
             if ((size.Height - topLeft.Height - bottomLeft.Height) > 0)
             {
@@ -110,7 +126,7 @@ namespace WindowOffset.Models
             this.MainOffset.Add(item);
         }
 
-        private void InitDimensions(RectangleF size, SizeF topLeft, SizeF topRight, SizeF bottomRight, SizeF bottomLeft)
+        private void InitDimensions(SizeF size, SizeF topLeft, SizeF topRight, SizeF bottomRight, SizeF bottomLeft)
         {
             var topMainLayer = new DimensionLayer();
             this.TopDims.Add(topMainLayer);
@@ -224,6 +240,23 @@ namespace WindowOffset.Models
             vertices.Add(this.SideOffsets[0].Start);
 
             this.Centroid = Polygon.ComputeCentroid(vertices);
+        }
+
+        private void InitOffsetValues(IDictionary<int, int> offsets)
+        {
+            if (offsets != null && offsets.Count != 0)
+            {
+                int offset;
+                if (offsets.TryGetValue(-1, out offset))
+                {
+                    this.MainOffset.Offset = offset;
+                }
+
+                foreach (int id in offsets.Keys.Where(id => id != -1))
+                {
+                    this.SideOffsets.Single(s => s.Side == id).Offset = offsets[id];
+                }
+            }
         }
 
         internal SizeF Size { get; private set; }
