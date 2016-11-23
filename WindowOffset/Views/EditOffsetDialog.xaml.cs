@@ -48,54 +48,53 @@ namespace WindowOffset.Views
             {
                 bool shiftPressed = (e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
 
-                FocusNextParameter(e, shiftPressed);
+                FocusNextOffset(e, shiftPressed);
             }
             else if (e.Key == Key.Down)
             {
-                FocusNextParameter(e, false);
+                FocusNextOffset(e, false);
             }
             else if (e.Key == Key.Up)
             {
-                FocusNextParameter(e, true);
+                FocusNextOffset(e, true);
             }
         }
-        private void FocusNextParameter(KeyEventArgs e, bool reversed)
+        private void FocusNextOffset(KeyEventArgs e, bool reversed)
         {
-            //int index = grid.SelectedIndex;
-            //int newIndex = (reversed) ? index - 1 : index + 1;
+            int index = grid.SelectedIndex;
+            int newIndex = (reversed) ? index - 1 : index + 1;
 
-            //if (newIndex < 0)
-            //{
-            //    if (reversed)
-            //    {
-            //        cmdRun.Focus();
-            //        e.Handled = true;
-            //    }
-            //}
-            //else if (newIndex < grid.Items.Count)
-            //{
-            //    FocusTextBoxInRow(e, newIndex);
-            //}
-            //else
-            //{
-            //    // aktivovat tlačítko "Run"
-            //    e.Handled = true;
-            //    cmdRun.Focus();
-            //}
+            if (newIndex < 0)
+            {
+                if (reversed)
+                {
+                    // TODO: vybrat textbox na canvasu?
+                    e.Handled = true;
+                }
+            }
+            else if (newIndex < grid.Items.Count)
+            {
+                FocusTextBoxInRow(e, newIndex);
+            }
+            else
+            {
+                // TODO: vybrat textbox na canvasu?
+                e.Handled = true;
+            }
         }
 
         private void FocusTextBoxInRow(KeyEventArgs e, int newIndex)
         {
-            //// vybrat nový řádek
-            //DataGridRow newRow = (DataGridRow)grid.ItemContainerGenerator.ContainerFromIndex(newIndex);
+            // vybrat nový řádek
+            DataGridRow newRow = (DataGridRow)grid.ItemContainerGenerator.ContainerFromIndex(newIndex);
 
-            //TextBox txt = FindTextBox(newRow);
-            //if (txt != null)
-            //{
-            //    e.Handled = true;
-            //    grid.SelectedIndex = newIndex;
-            //    txt.Focus();
-            //}
+            TextBox txt = FindTextBox(newRow);
+            if (txt != null)
+            {
+                e.Handled = true;
+                grid.SelectedIndex = newIndex;
+                txt.Focus();
+            }
         }
 
         private TextBox FindTextBox(DependencyObject parent)
