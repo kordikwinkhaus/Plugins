@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BoolNegateConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RoundWrapPanel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SelectingTextBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DoubleUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interception\InterceptionView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interception\InterceptionView2.cs" />

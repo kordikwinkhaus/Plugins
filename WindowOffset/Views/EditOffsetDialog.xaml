@@ -6,6 +6,7 @@
         xmlns:wh="http://schemas.winkhaus.com/windows"
         xmlns:v="clr-namespace:WindowOffset.Views"
         xmlns:res="clr-namespace:WindowOffset.Properties"
+        xmlns:sharedCtrls="clr-namespace:Okna.Plugins.Controls"
         mc:Ignorable="d"
         Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
         TextOptions.TextFormattingMode="Display"
@@ -89,10 +90,11 @@
               <DataTemplate>
                 <StackPanel Orientation="Horizontal"
                             Margin="0,3,6,3">
-                  <TextBox Text="{Binding Mode=TwoWay, Path=Offset, UpdateSourceTrigger=LostFocus}" 
-                           Width="40" 
-                           HorizontalContentAlignment="Right"
-                           />
+                  <sharedCtrls:SelectingTextBox Text="{Binding Mode=TwoWay, Path=Offset, UpdateSourceTrigger=LostFocus}" 
+                                                Width="40" 
+                                                HorizontalContentAlignment="Right"
+                                                Numeric="True"
+                                                />
                   <!--
                            TextChanged="TextBox_TextChanged" 
                            LostFocus="TextBox_LostFocus" 
