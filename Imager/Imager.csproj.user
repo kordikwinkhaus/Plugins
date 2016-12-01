@@ -2,6 +2,6 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartAction>Program</StartAction>
-    <StartProgram>C:\WHOkna5132\Okna.exe</StartProgram>
+    <StartProgram>C:\WHOkna5136\Okna.exe</StartProgram>
   </PropertyGroup>
 </Project>
