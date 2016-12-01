@@ -6,4 +6,8 @@
     <StartAction>Program</StartAction>
     <StartProgram>C:\WHOkna5115\Okna.exe</StartProgram>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <StartProgram>C:\WHOkna5115\Okna.exe</StartProgram>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
 </Project>
