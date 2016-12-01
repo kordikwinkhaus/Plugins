@@ -5,4 +5,9 @@
     <StartProgram>D:\code\projects\whokna\Plugins\PluginTester\bin\Debug\PluginTester.exe</StartProgram>
     <StartArguments>D:\code\projects\whokna\Plugins\Union\bin\Debug\Union.dll "Application Name=Okna_Shared%3bProvider=SQLNCLI11%3bDataTypeCompatibility=80%3bMARS Connection=True%3bServer=.\OKNA%3bDatabase=wh_union%3bTrusted_Connection=yes%3bAuto Translate=False"</StartArguments>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <StartProgram>D:\code\projects\whokna\Plugins\PluginTester\bin\Debug\PluginTester.exe</StartProgram>
+    <StartArguments>D:\code\projects\whokna\Plugins\Union\bin\Debug\Union.dll "Application Name=Okna_Shared%3bProvider=SQLNCLI11%3bDataTypeCompatibility=80%3bMARS Connection=True%3bServer=.\OKNA%3bDatabase=wh_union%3bTrusted_Connection=yes%3bAuto Translate=False"</StartArguments>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
 </Project>
