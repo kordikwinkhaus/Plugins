@@ -124,7 +124,7 @@ namespace Imager.ViewModels
                 var ms = drawing.Picture as MemoryStream;
                 ms.Position = 0;
 
-                File.WriteAllBytes(System.IO.Path.Combine(this.DirectoryPath, this.Filename + ".png"), ms.GetBuffer());
+                File.WriteAllBytes(System.IO.Path.Combine(this.DirectoryPath, this.Filename + ".png"), ms.ToArray());
             }
         }
     }
