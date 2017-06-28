@@ -57,6 +57,19 @@ namespace EOkno.Tests
             }
         }
 
+        public XElement CollectedMessages
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public DateTime CompletionDate
         {
             get

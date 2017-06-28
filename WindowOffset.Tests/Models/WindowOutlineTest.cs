@@ -518,6 +518,27 @@ namespace WindowOffset.Tests.Models
                     throw new NotImplementedException();
                 }
             }
+
+            public int WeatherboardsColor
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public Dictionary<ISymbolColor, List<IPart>> Gaskets
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+            }
 #pragma warning disable 0067
             public event AfterPaintEvent AfterPaint;
             public event AfterUpdateEvent AfterUpdate;
@@ -727,6 +748,11 @@ namespace WindowOffset.Tests.Models
             }
 
             public void Undo(string reason)
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool ExchangeGaskets(ISymbolColor from, ISymbolColor to)
             {
                 throw new NotImplementedException();
             }
