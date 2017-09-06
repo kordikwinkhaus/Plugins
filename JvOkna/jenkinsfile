@@ -39,6 +39,7 @@ pipeline
                     set /p AsmVerze=<\"%WORKSPACE%\\AsmVersion.txt\"
                     
                     XCOPY \"%WORKSPACE%\\JvOkna\\bin\\Release\\JvOkna.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\JvOkna_%AsmVerze%\\" /Y
+                    XCOPY \"%WORKSPACE%\\JvOkna\\bin\\Release\\Xceed.Wpf.Toolkit.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\JvOkna_%AsmVerze%\\" /Y
                 """
             }
         }
