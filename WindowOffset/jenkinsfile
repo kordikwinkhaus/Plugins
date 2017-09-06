@@ -40,7 +40,7 @@ pipeline
                     set /p AsmVerze=<\"%WORKSPACE%\\AsmVersion.txt\"
                     
                     XCOPY \"%WORKSPACE%\\WindowOffset\\bin\\Release\\WindowOffset.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\WindowOffset_%AsmVerze%\\" /Y
-                    XCOPY \"%WORKSPACE%\\WindowOffset\\bin\\Release\\cs\\WindowOffset.resources.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\WindowOffset_%AsmVerze%\\" /Y
+                    XCOPY \"%WORKSPACE%\\WindowOffset\\bin\\Release\\cs\\WindowOffset.resources.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\WindowOffset_%AsmVerze%\\cs\\" /Y
                     XCOPY \"%WORKSPACE%\\WindowOffset\\bin\\Release\\WinkhausCR.Bugs.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\WindowOffset_%AsmVerze%\\" /Y
                 """
             }
