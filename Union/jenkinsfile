@@ -21,7 +21,7 @@ pipeline
         {
             steps
             {
-                bat "\"${tool 'MSBuild'}\" Union\\Union.csproj /p:Configuration=Release /t:Rebuild"
+                bat "\"${tool 'MSBuild'}\" Union\\Union.csproj /p:Configuration=Release;Platform=x86 /t:Rebuild"
                 script 
                 {
                     currentBuild.displayName += " " + params.WhoVerze
