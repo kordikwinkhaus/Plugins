@@ -1,0 +1,45 @@
+pipeline 
+{
+    agent any
+    
+    parameters 
+    {
+        string(defaultValue: '5.6.0.1', description: 'Verze WH Oken', name: 'WhoVerze')
+    }
+    
+    stages
+    {
+        stage('Prepare deps')
+        {
+            steps
+            {
+                bat "C:\\bin\\alize\\Alize.ApiDownloader.exe okna_v56 ${params.WhoVerze} UserExtContract.dll \"%WORKSPACE%\\Libs\""
+            }
+        }
+    
+        stage('Build') 
+        {
+            steps
+            {
+                bat "\"${tool 'MSBuild'}\" Imager\\Imager.csproj /p:Configuration=Release;Platform=x86 /t:Rebuild"
+                script 
+                {
+                    currentBuild.displayName += " " + params.WhoVerze
+                }
+            }
+        }
+    
+        stage('Publish')
+        {
+            steps
+            {
+                bat """
+                    python C:\\bin\\GetAssemblyVersion.py \"%WORKSPACE%\\Imager\\Properties\\AssemblyInfo.cs\" \"%WORKSPACE%\\AsmVersion.txt\" 3
+                    set /p AsmVerze=<\"%WORKSPACE%\\AsmVersion.txt\"
+                    
+                    XCOPY \"%WORKSPACE%\\Imager\\bin\\Release\\Imager.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\Imager_%AsmVerze%\\" /Y
+                """
+            }
+        }
+    }
+}
