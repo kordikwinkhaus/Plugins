@@ -1,0 +1,47 @@
+pipeline 
+{
+    agent any
+    
+    parameters 
+    {
+        string(defaultValue: '5.6.0.1', description: 'Verze WH Oken', name: 'WhoVerze')
+    }
+    
+    stages
+    {
+        stage('Prepare deps')
+        {
+            steps
+            {
+                bat "C:\\bin\\alize\\Alize.ApiDownloader.exe okna_v56 ${params.WhoVerze} UserExtContract.dll \"%WORKSPACE%\\Libs\""
+                bat "C:\\bin\\nuget\\NuGet.exe restore \"%WORKSPACE%\\Plugins.sln\" -ConfigFile C:\\bin\\nuget\\NuGet.config"
+            }
+        }
+    
+        stage('Build') 
+        {
+            steps
+            {
+                bat "\"${tool 'MSBuild'}\" WindowOffset\\WindowOffset.csproj /p:Configuration=Release /t:Rebuild"
+                script 
+                {
+                    currentBuild.displayName += " " + params.WhoVerze
+                }
+            }
+        }
+    
+        stage('Publish')
+        {
+            steps
+            {
+                bat """
+                    python C:\\bin\\GetAssemblyVersion.py \"%WORKSPACE%\\Imager\\Properties\\AssemblyInfo.cs\" \"%WORKSPACE%\\AsmVersion.txt\" 3
+                    set /p AsmVerze=<\"%WORKSPACE%\\AsmVersion.txt\"
+                    
+                    XCOPY \"%WORKSPACE%\\WindowOffset\\bin\\Release\\WindowOffset.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\WindowOffset_%AsmVerze%\\" /Y
+                    XCOPY \"%WORKSPACE%\\WindowOffset\\bin\\Release\\WinkhausCR.Bugs.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\WindowOffset_%AsmVerze%\\" /Y
+                """
+            }
+        }
+    }
+}
