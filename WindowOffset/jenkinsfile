@@ -4,7 +4,7 @@ pipeline
     
     parameters 
     {
-        string(defaultValue: '5.6.0.1', description: 'Verze WH Oken', name: 'WhoVerze')
+        string(defaultValue: '5.6.0.200', description: 'Verze WH Oken', name: 'WhoVerze')
     }
     
     stages
@@ -40,6 +40,7 @@ pipeline
                     set /p AsmVerze=<\"%WORKSPACE%\\AsmVersion.txt\"
                     
                     XCOPY \"%WORKSPACE%\\WindowOffset\\bin\\Release\\WindowOffset.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\WindowOffset_%AsmVerze%\\" /Y
+                    XCOPY \"%WORKSPACE%\\WindowOffset\\bin\\Release\\cs\\WindowOffset.resources.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\WindowOffset_%AsmVerze%\\" /Y
                     XCOPY \"%WORKSPACE%\\WindowOffset\\bin\\Release\\WinkhausCR.Bugs.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\WindowOffset_%AsmVerze%\\" /Y
                 """
             }
