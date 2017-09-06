@@ -3,7 +3,7 @@ pipeline
     agent any
     
     parameters {
-        string(defaultValue: '5.6.0.1', description: 'Verze WH Oken', name: 'WhoVerze')
+        string(defaultValue: '5.6.0.301', description: 'Verze WH Oken', name: 'WhoVerze')
     }
     
     stages
@@ -12,7 +12,9 @@ pipeline
         {
             steps
             {
-				bat "C:\\bin\\alize\\Alize.ApiDownloader.exe okna_v56 ${params.WhoVerze} UserExtContract.dll \"%WORKSPACE%\\Lib\""
+				bat "C:\\bin\\alize\\Alize.ApiDownloader.exe okna_v56 ${params.WhoVerze} UserExtContract.dll \"%WORKSPACE%\\Libs\""
+				bat "C:\\bin\\alize\\Alize.ApiDownloader.exe okna_v56 ${params.WhoVerze} QuickInsert.dll \"%WORKSPACE%\\Libs\""
+				bat "C:\\bin\\alize\\Alize.ApiDownloader.exe okna_v56 ${params.WhoVerze} QuickInsert.Core.dll \"%WORKSPACE%\\Libs\""
 				bat "ECHO ${params.WhoVerze} > \"%WORKSPACE%\\WhoVersion.txt\""
             }
         }

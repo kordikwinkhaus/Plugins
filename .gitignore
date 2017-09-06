@@ -7,5 +7,5 @@
 *.vsmdi
 Thumbs.db
 packages/*
-Libs/*
+Libs/*.dll
 Help/*
