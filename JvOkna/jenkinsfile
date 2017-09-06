@@ -35,7 +35,7 @@ pipeline
             steps
             {
                 bat """
-                    python C:\\bin\\GetAssemblyVersion.py \"%WORKSPACE%\\Imager\\Properties\\AssemblyInfo.cs\" \"%WORKSPACE%\\AsmVersion.txt\" 3
+                    python C:\\bin\\GetAssemblyVersion.py \"%WORKSPACE%\\JvOkna\\Properties\\AssemblyInfo.cs\" \"%WORKSPACE%\\AsmVersion.txt\" 3
                     set /p AsmVerze=<\"%WORKSPACE%\\AsmVersion.txt\"
                     
                     XCOPY \"%WORKSPACE%\\JvOkna\\bin\\Release\\JvOkna.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\JvOkna_%AsmVerze%\\" /Y

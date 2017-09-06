@@ -34,7 +34,7 @@ pipeline
             steps
             {
                 bat """
-                    python C:\\bin\\GetAssemblyVersion.py \"%WORKSPACE%\\Imager\\Properties\\AssemblyInfo.cs\" \"%WORKSPACE%\\AsmVersion.txt\" 3
+                    python C:\\bin\\GetAssemblyVersion.py \"%WORKSPACE%\\Union\\Properties\\AssemblyInfo.cs\" \"%WORKSPACE%\\AsmVersion.txt\" 3
                     set /p AsmVerze=<\"%WORKSPACE%\\AsmVersion.txt\"
                     
                     XCOPY \"%WORKSPACE%\\Union\\bin\\Release\\Union.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\Union_%AsmVerze%\\" /Y
