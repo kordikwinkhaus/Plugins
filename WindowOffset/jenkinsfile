@@ -22,7 +22,7 @@ pipeline
         {
             steps
             {
-                bat "\"${tool 'MSBuild'}\" WindowOffset\\WindowOffset.csproj /p:Configuration=Release /t:Rebuild"
+                bat "\"${tool 'MSBuild'}\" WindowOffset\\WindowOffset.csproj /p:Configuration=Release;Platform=x86 /t:Rebuild"
                 script 
                 {
                     currentBuild.displayName += " " + params.WhoVerze
@@ -35,7 +35,7 @@ pipeline
             steps
             {
                 bat """
-                    python C:\\bin\\GetAssemblyVersion.py \"%WORKSPACE%\\Imager\\Properties\\AssemblyInfo.cs\" \"%WORKSPACE%\\AsmVersion.txt\" 3
+                    python C:\\bin\\GetAssemblyVersion.py \"%WORKSPACE%\\WindowOffset\\Properties\\AssemblyInfo.cs\" \"%WORKSPACE%\\AsmVersion.txt\" 3
                     set /p AsmVerze=<\"%WORKSPACE%\\AsmVersion.txt\"
                     
                     XCOPY \"%WORKSPACE%\\WindowOffset\\bin\\Release\\WindowOffset.dll\" \"D:\\publish\\whokna-doplnky\\pro-${params.WhoVerze}\\WindowOffset_%AsmVerze%\\" /Y
